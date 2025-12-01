@@ -1,4 +1,4 @@
-import { Category, Question } from '@/types/types';
+import { Category } from '@/types/types';
 import NavigationButtons from './NavigationButtons';
 import { AlertCircle, Info } from 'lucide-react';
 
@@ -10,11 +10,10 @@ interface QuestionPageProps {
   totalSteps: number;
   onNext: () => void;
   onPrev: () => void;
-  categoryValidation: {
-    isValid: boolean;
-    selectedCount: number;
-    min: number;
-    max: number;
+  totalSelected: number;
+  selectionRules: {
+    minTotal: number;
+    maxTotal: number;
   };
 }
 
@@ -26,14 +25,35 @@ export default function QuestionPage({
   totalSteps,
   onNext,
   onPrev,
-  categoryValidation
+  totalSelected,
+  selectionRules
 }: QuestionPageProps) {
 
   const handleCheckboxClick = (questionId: number, isChecked: boolean) => {
-    if (isChecked && answers.length >= category.maxSelection) {
-      return; // جلوگیری از انتخاب بیشتر
+    if (isChecked && totalSelected >= selectionRules.maxTotal) {
+      return;
     }
+    
     onAnswerChange(category.id, questionId, isChecked);
+  };
+
+  const getStatusMessage = () => {
+    const remaining = selectionRules.maxTotal - totalSelected;
+    const needed = selectionRules.minTotal - totalSelected;
+    
+    if (totalSelected < selectionRules.minTotal) {
+      return `حداقل ${needed} مورد دیگر باید انتخاب کنید (مجموعاً ${selectionRules.minTotal} مورد)`;
+    }
+    
+    if (totalSelected >= selectionRules.minTotal && totalSelected < selectionRules.maxTotal) {
+      return `می‌توانید تا ${remaining} مورد دیگر انتخاب کنید (تا حداکثر ${selectionRules.maxTotal} مورد)`;
+    }
+    
+    if (totalSelected === selectionRules.maxTotal) {
+      return "شما حداکثر موارد مجاز را انتخاب کرده‌اید.";
+    }
+    
+    return "";
   };
 
   return (
@@ -46,15 +66,12 @@ export default function QuestionPage({
             </div>
             <div>
               <h2 className="text-2xl font-bold text-gray-800">
-                {category.title}
+                {category.categoryTitle}
               </h2>
               <p className="text-gray-500 text-sm mt-1">
                 دسته {step} از {totalSteps}
               </p>
             </div>
-          </div>
-          <div className="text-gray-500 hidden md:block">
-            {category.questions.length} مورد
           </div>
         </div>
         
@@ -64,20 +81,15 @@ export default function QuestionPage({
             <div>
               <p className="text-blue-800 font-medium mb-1">راهنمایی انتخاب:</p>
               <p className="text-blue-700 text-sm">
-                لطفاً بین <span className="font-bold">{category.minSelection}</span> تا <span className="font-bold">{category.maxSelection}</span> مورد از موارد زیر را انتخاب کنید.
-                {answers.length < category.minSelection && (
-                  <span className="block mt-1 text-red-600">
-                    حداقل {category.minSelection - answers.length} مورد دیگر باید انتخاب کنید.
-                  </span>
-                )}
-                {answers.length >= category.minSelection && answers.length < category.maxSelection && (
-                  <span className="block mt-1 text-green-600">
-                    ✓ می‌توانید تا {category.maxSelection - answers.length} مورد دیگر انتخاب کنید.
-                  </span>
-                )}
-                {answers.length === category.maxSelection && (
-                  <span className="block mt-1 text-amber-600">
-                    ⚠️ شما حداکثر موارد را انتخاب کرده‌اید.
+                {category.description}
+                <span className="block mt-2 font-bold text-gray-800">
+                  وضعیت کلی انتخاب‌ها: {totalSelected} از {selectionRules.maxTotal} مورد
+                </span>
+                {getStatusMessage() && (
+                  <span className={`block mt-1 ${
+                    totalSelected >= selectionRules.minTotal ? 'text-green-600' : 'text-amber-600'
+                  }`}>
+                    {getStatusMessage()}
                   </span>
                 )}
               </p>
@@ -87,9 +99,9 @@ export default function QuestionPage({
       </div>
 
       <div className="space-y-3 mb-8 max-h-[400px] overflow-y-auto pr-2">
-        {category.questions.map((question: Question) => {
+        {category.questions.map((question) => {
           const isChecked = answers.includes(question.id);
-          const isDisabled = !isChecked && answers.length >= category.maxSelection;
+          const isDisabled = !isChecked && totalSelected >= selectionRules.maxTotal;
           
           return (
             <div
@@ -126,34 +138,37 @@ export default function QuestionPage({
         })}
       </div>
 
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mb-6">
+      <div className={`p-4 rounded-lg border mb-6 ${
+        totalSelected >= selectionRules.minTotal && totalSelected <= selectionRules.maxTotal
+          ? 'bg-green-50 border-green-200'
+          : 'bg-red-50 border-red-200'
+      }`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <AlertCircle className="h-6 w-6 text-amber-600" />
+            <AlertCircle className="h-6 w-6 text-blue-600" />
             <div>
-              <p className="text-amber-800 font-medium">وضعیت انتخاب:</p>
-              <p className="text-amber-700 text-sm">
-                {answers.length} از {category.questions.length} مورد انتخاب شده است
+              <p className="text-blue-800 font-medium">وضعیت انتخاب‌ها:</p>
+              <p className="text-blue-700 text-sm">
+                در این بخش: {answers.length} مورد انتخاب شده است
               </p>
             </div>
           </div>
-          <div className={`px-3 py-1 rounded-full text-sm font-bold ${
-            categoryValidation.isValid 
-              ? 'bg-green-100 text-green-800' 
-              : 'bg-red-100 text-red-800'
-          }`}>
-            {categoryValidation.isValid ? 'معتبر ✓' : 'نامعتبر ✗'}
+          <div className="text-center">
+            <div className="text-2xl font-bold text-indigo-700">{totalSelected}</div>
+            <div className="text-gray-600 text-sm">کل انتخاب‌ها</div>
           </div>
         </div>
-        {!categoryValidation.isValid && (
-          <p className="text-red-600 text-sm mt-2 pr-9">
-            {answers.length < category.minSelection
-              ? `حداقل ${category.minSelection} مورد باید انتخاب کنید. (${category.minSelection - answers.length} مورد باقی مانده)`
-              : answers.length > category.maxSelection
-              ? `حداکثر ${category.maxSelection} مورد می‌توانید انتخاب کنید.`
-              : 'تعداد انتخاب‌ها نامعتبر است.'}
-          </p>
-        )}
+        <p className={`text-sm mt-2 ${
+          totalSelected >= selectionRules.minTotal && totalSelected <= selectionRules.maxTotal
+            ? 'text-green-600'
+            : 'text-red-600'
+        }`}>
+          {totalSelected < selectionRules.minTotal
+            ? `⚠️ کمتر از حداقل (${selectionRules.minTotal} مورد نیاز)`
+            : totalSelected > selectionRules.maxTotal
+            ? `⚠️ بیشتر از حداکثر (${selectionRules.maxTotal} مورد مجاز)`
+            : '✓ تعداد انتخاب‌ها مناسب است'}
+        </p>
       </div>
 
       <div className="mt-8 pt-6 border-t border-gray-200">
@@ -162,7 +177,7 @@ export default function QuestionPage({
             <div className="flex flex-col md:flex-row items-center gap-2">
               <span>انتخاب‌های این بخش:</span>
               <span className="font-bold text-indigo-700">
-                {answers.length} / {category.maxSelection}
+                {answers.length} / {category.questions.length}
               </span>
             </div>
           </div>
@@ -172,7 +187,7 @@ export default function QuestionPage({
               onNext={onNext}
               isFirst={step === 1}
               isLast={step === totalSteps}
-              isNextDisabled={!categoryValidation.isValid}
+              isNextDisabled={false}
             />
           </div>
         </div>

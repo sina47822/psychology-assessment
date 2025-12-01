@@ -1,4 +1,5 @@
 import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { scrollToTop } from '@/lib/utils';
 
 interface NavigationButtonsProps {
   onPrev: () => void;
@@ -15,11 +16,22 @@ export default function NavigationButtons({
   isLast,
   isNextDisabled = false
 }: NavigationButtonsProps) {
+  
+  const handleNext = () => {
+    scrollToTop();
+    setTimeout(() => onNext(), 100); // تأخیر کوچک برای اطمینان از اسکرول
+  };
+
+  const handlePrev = () => {
+    scrollToTop();
+    setTimeout(() => onPrev(), 100);
+  };
   return (
     <div className="flex flex-col md:flex-row gap-3 w-full">
       {!isFirst && (
         <button
-          onClick={onPrev}
+          type="button"
+          onClick={handlePrev}
           className="btn-secondary flex items-center justify-center gap-2 py-3 px-4 w-full md:w-auto order-2 md:order-1"
         >
             قبلی
@@ -29,7 +41,8 @@ export default function NavigationButtons({
       )}
       
       <button
-        onClick={onNext}
+        type="button"
+        onClick={handleNext}
         disabled={isNextDisabled}
         className={`btn-primary flex items-center justify-center gap-2 py-3 px-4 w-full md:w-auto ${
           isNextDisabled ? 'opacity-50 cursor-not-allowed' : ''
