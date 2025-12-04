@@ -267,13 +267,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header 
-        showAssessmentNav={true}
-        currentStep={step}
-        totalSteps={categories.length + 3}
-        userName={user.fullName}
-        userInitials={`${user.firstName?.charAt(0) || ''}${user.lastName?.charAt(0) || ''}`.toUpperCase()}
-      />
+
       
       <main className="flex-1 bg-gradient-to-b from-gray-50 to-sky-50">
         <div className="max-w-4xl mx-auto p-4 md:p-6">
@@ -341,8 +335,6 @@ export default function Home() {
           </div>
         </div>
       </main>
-      
-      <Footer simplified={true} showPrivacyNotice={true} />
     </div>
   );
 }

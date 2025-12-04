@@ -1,28 +1,21 @@
-// src\components\RegisterForm.tsx
-
+// src/components/RegisterForm.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/providers/AuthProvider';
+import { useRouter } from 'next/navigation';
 import { User, Mail, Lock, Smartphone, Eye, EyeOff, Check, X } from 'lucide-react';
-import { validatePassword } from '@/lib/auth';
+import { validatePassword, formatPhoneNumber } from '@/lib/utils';
 
 interface RegisterFormProps {
-  onSubmit: (data: {
-    firstName: string;
-    lastName: string;
-    email?: string;
-    username?: string;
-    phone?: string;
-    password: string;
-    confirmPassword: string;
-  }) => void;
-  isLoading: boolean;
-  error: string;
-  success: string;
+  onSuccess?: () => void;
 }
 
-export default function RegisterForm({ onSubmit, isLoading, error, success }: RegisterFormProps) {
+export default function RegisterForm({ onSuccess }: RegisterFormProps) {
+  const router = useRouter();
+  const { register, isLoading: authLoading } = useAuth();
+  
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -46,6 +39,13 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
   });
 
   const [registrationMethod, setRegistrationMethod] = useState<'email' | 'phone' | 'username'>('email');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  useEffect(() => {
+    setError('');
+  }, [formData, registrationMethod]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -84,7 +84,8 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
       
       case 'phone':
         if (registrationMethod === 'phone') {
-          isValid = /^09\d{9}$/.test(value);
+          const cleanPhone = value.replace(/\D/g, '');
+          isValid = /^09\d{9}$/.test(cleanPhone);
         } else {
           isValid = true; // اگر موبایل ضروری نیست
         }
@@ -117,8 +118,10 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
     validateField(name, value);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
     
     // اعتبارسنجی نهایی همه فیلدها
     Object.keys(formData).forEach(key => {
@@ -133,34 +136,90 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
     
     // بررسی اعتبار بر اساس روش ثبت‌نام
     let isIdentifierValid = false;
+    let identifierError = '';
+    
     switch (registrationMethod) {
       case 'email':
         isIdentifierValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email);
+        if (!isIdentifierValid) identifierError = 'لطفاً یک ایمیل معتبر وارد کنید';
         break;
       case 'username':
         isIdentifierValid = formData.username.trim().length >= 3 && /^[a-zA-Z0-9_]+$/.test(formData.username);
+        if (!isIdentifierValid) identifierError = 'نام کاربری باید حداقل ۳ کاراکتر و فقط شامل حروف، اعداد و زیرخط باشد';
         break;
       case 'phone':
-        isIdentifierValid = /^09\d{9}$/.test(formData.phone);
+        const cleanPhone = formData.phone.replace(/\D/g, '');
+        isIdentifierValid = /^09\d{9}$/.test(cleanPhone);
+        if (!isIdentifierValid) identifierError = 'لطفاً شماره موبایل معتبر وارد کنید (مثال: 09123456789)';
         break;
     }
 
-    if (!isFirstNameValid || !isLastNameValid || !isIdentifierValid || !isPasswordValid || !isConfirmPasswordValid) {
+    if (!isFirstNameValid) {
+      setError('نام باید حداقل ۲ حرف داشته باشد');
+      return;
+    }
+    
+    if (!isLastNameValid) {
+      setError('نام خانوادگی باید حداقل ۲ حرف داشته باشد');
+      return;
+    }
+    
+    if (!isIdentifierValid) {
+      setError(identifierError);
+      return;
+    }
+    
+    if (!isPasswordValid) {
+      setError('رمز عبور معتبر نیست');
+      return;
+    }
+    
+    if (!isConfirmPasswordValid) {
+      setError('رمز عبور و تأیید آن مطابقت ندارند');
       return;
     }
 
-    // آماده‌سازی داده‌ها برای ارسال
-    const submitData = {
-      firstName: formData.firstName.trim(),
-      lastName: formData.lastName.trim(),
-      email: registrationMethod === 'email' ? formData.email.trim() : undefined,
-      username: registrationMethod === 'username' ? formData.username.trim() : undefined,
-      phone: registrationMethod === 'phone' ? formData.phone.trim() : undefined,
-      password: formData.password,
-      confirmPassword: formData.confirmPassword
-    };
+    setIsLoading(true);
 
-    onSubmit(submitData);
+    try {
+      // آماده‌سازی داده‌ها برای ارسال به backend
+      const registerData = {
+        first_name: formData.firstName.trim(),
+        last_name: formData.lastName.trim(),
+        email: registrationMethod === 'email' ? formData.email.trim() : (formData.email.trim() || undefined),
+        username: registrationMethod === 'username' ? formData.username.trim() : (formData.username.trim() || undefined),
+        phone: registrationMethod === 'phone' ? formData.phone.replace(/\D/g, '') : (formData.phone.replace(/\D/g, '') || undefined),
+        password: formData.password,
+        confirm_password: formData.confirmPassword
+      };
+
+      // بررسی که حداقل یک شناسه (ایمیل، نام کاربری یا موبایل) وجود دارد
+      if (!registerData.email && !registerData.username && !registerData.phone) {
+        throw new Error('حداقل یکی از ایمیل، نام کاربری یا شماره موبایل باید وارد شود');
+      }
+
+      // فراخوانی تابع register از AuthProvider
+      const result = await register(registerData);
+      
+      if (result.success) {
+        setSuccess('ثبت‌نام با موفقیت انجام شد! در حال هدایت...');
+        
+        // تأخیر برای نمایش پیام موفقیت
+        setTimeout(() => {
+          if (onSuccess) {
+            onSuccess();
+          } else {
+            router.push('/dashboard');
+          }
+        }, 2000);
+      } else {
+        throw new Error(result.error?.detail || result.error?.message || 'خطا در ثبت‌نام');
+      }
+    } catch (error) {
+      setError(error instanceof Error ? error.message : 'خطا در ثبت‌نام. لطفاً دوباره تلاش کنید.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isFormValid = () => {
@@ -192,12 +251,20 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
     if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
     
     const texts = ['خیلی ضعیف', 'ضعیف', 'متوسط', 'قوی', 'خیلی قوی'];
-    const colors = ['bg-red-500', 'bg-sky-500', 'bg-yellow-500', 'bg-sky-500', 'bg-sky-800'];
+    const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500', 'bg-green-700'];
     
     return { score, text: texts[score - 1] || '', color: colors[score - 1] || 'bg-red-500' };
   };
 
   const passwordStrength = getPasswordStrength(formData.password);
+
+  if (authLoading) {
+    return (
+      <div className="flex justify-center items-center p-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600"></div>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
@@ -255,7 +322,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             نام <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               <User className="h-5 w-5" />
             </div>
             <input
@@ -264,11 +331,11 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.firstName}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.firstName.touched
                   ? validation.firstName.isValid
-                    ? 'border-green-500 bg-blue-50'
-                    : 'border-red-500 bg-red-50'
+                    ? 'border-green-500'
+                    : 'border-red-500'
                   : 'border-gray-300'
               }`}
               placeholder="نام"
@@ -278,7 +345,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.firstName.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.firstName.isValid ? (
-                  <Check className="h-5 w-5 text-sky-500" />
+                  <Check className="h-5 w-5 text-green-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -297,7 +364,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             نام خانوادگی <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               <User className="h-5 w-5" />
             </div>
             <input
@@ -306,11 +373,11 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.lastName}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.lastName.touched
                   ? validation.lastName.isValid
-                    ? 'border-green-500 bg-blue-50'
-                    : 'border-red-500 bg-red-50'
+                    ? 'border-green-500'
+                    : 'border-red-500'
                   : 'border-gray-300'
               }`}
               placeholder="نام خانوادگی"
@@ -320,7 +387,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.lastName.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.lastName.isValid ? (
-                  <Check className="h-5 w-5 text-sky-500" />
+                  <Check className="h-5 w-5 text-green-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -342,7 +409,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             ایمیل <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               <Mail className="h-5 w-5" />
             </div>
             <input
@@ -351,11 +418,11 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.email.touched
                   ? validation.email.isValid
-                    ? 'border-green-500 bg-blue-50'
-                    : 'border-red-500 bg-red-50'
+                    ? 'border-green-500'
+                    : 'border-red-500'
                   : 'border-gray-300'
               }`}
               placeholder="example@email.com"
@@ -365,7 +432,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.email.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.email.isValid ? (
-                  <Check className="h-5 w-5 text-sky-500" />
+                  <Check className="h-5 w-5 text-green-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -386,7 +453,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             نام کاربری <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               <User className="h-5 w-5" />
             </div>
             <input
@@ -395,11 +462,11 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.username}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.username.touched
                   ? validation.username.isValid
-                    ? 'border-green-500 bg-blue-50'
-                    : 'border-red-500 bg-red-50'
+                    ? 'border-green-500'
+                    : 'border-red-500'
                   : 'border-gray-300'
               }`}
               placeholder="username"
@@ -409,7 +476,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.username.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.username.isValid ? (
-                  <Check className="h-5 w-5 text-sky-500" />
+                  <Check className="h-5 w-5 text-green-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -430,7 +497,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             شماره موبایل <span className="text-red-500">*</span>
           </label>
           <div className="relative">
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
               <Smartphone className="h-5 w-5" />
             </div>
             <input
@@ -439,11 +506,11 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.phone}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.phone.touched
                   ? validation.phone.isValid
-                    ? 'border-green-500 bg-blue-50'
-                    : 'border-red-500 bg-red-50'
+                    ? 'border-green-500'
+                    : 'border-red-500'
                   : 'border-gray-300'
               }`}
               placeholder="09123456789"
@@ -453,7 +520,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.phone.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.phone.isValid ? (
-                  <Check className="h-5 w-5 text-sky-500" />
+                  <Check className="h-5 w-5 text-green-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -465,11 +532,70 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               لطفاً شماره موبایل معتبر وارد کنید (مثال: 09123456789)
             </p>
           )}
-          <p className="text-gray-500 text-xs mt-1">
-            کد تأیید به این شماره ارسال خواهد شد
-          </p>
+          {formData.phone && validation.phone.isValid && (
+            <p className="text-green-600 text-xs mt-1">
+              کد تأیید به شماره {formatPhoneNumber(formData.phone)} ارسال خواهد شد
+            </p>
+          )}
         </div>
       )}
+
+      {/* سایر فیلدهای اختیاری */}
+      <div className="text-sm text-gray-600">
+        <p className="mb-2">فیلدهای اختیاری (برای ثبت‌نام با روش‌های دیگر):</p>
+        <div className="space-y-3">
+          {registrationMethod !== 'email' && (
+            <div>
+              <label className="block text-gray-600 mb-1">
+                ایمیل (اختیاری)
+              </label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-1 focus:ring-gray-400 focus:border-gray-400 transition-all"
+                placeholder="ایمیل (اختیاری)"
+                dir="ltr"
+              />
+            </div>
+          )}
+          
+          {registrationMethod !== 'username' && (
+            <div>
+              <label className="block text-gray-600 mb-1">
+                نام کاربری (اختیاری)
+              </label>
+              <input
+                type="text"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-1 focus:ring-gray-400 focus:border-gray-400 transition-all"
+                placeholder="نام کاربری (اختیاری)"
+                dir="ltr"
+              />
+            </div>
+          )}
+          
+          {registrationMethod !== 'phone' && (
+            <div>
+              <label className="block text-gray-600 mb-1">
+                شماره موبایل (اختیاری)
+              </label>
+              <input
+                type="tel"
+                name="phone"
+                value={formData.phone}
+                onChange={handleChange}
+                className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-1 focus:ring-gray-400 focus:border-gray-400 transition-all"
+                placeholder="شماره موبایل (اختیاری)"
+                dir="ltr"
+              />
+            </div>
+          )}
+        </div>
+      </div>
 
       {/* رمز عبور */}
       <div>
@@ -477,7 +603,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
           رمز عبور <span className="text-red-500">*</span>
         </label>
         <div className="relative">
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
             <Lock className="h-5 w-5" />
           </div>
           <input
@@ -486,11 +612,11 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             value={formData.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
+            className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
               validation.password.touched
                 ? validation.password.isValid
-                  ? 'border-green-500 bg-blue-50'
-                  : 'border-red-500 bg-red-50'
+                  ? 'border-green-500'
+                  : 'border-red-500'
                 : 'border-gray-300'
             }`}
             placeholder="رمز عبور"
@@ -500,14 +626,14 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute left-12 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >
             {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
           {validation.password.touched && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+            <div className="absolute left-12 top-1/2 transform -translate-y-1/2">
               {validation.password.isValid ? (
-                <Check className="h-5 w-5 text-sky-500" />
+                <Check className="h-5 w-5 text-green-500" />
               ) : (
                 <X className="h-5 w-5 text-red-500" />
               )}
@@ -521,9 +647,9 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             <div className="flex justify-between items-center mb-1">
               <span className="text-xs text-gray-600">قدرت رمز عبور:</span>
               <span className={`text-xs font-medium ${
-                passwordStrength.score >= 4 ? 'text-sky-600' :
-                passwordStrength.score >= 3 ? 'text-sky-600' :
-                passwordStrength.score >= 2 ? 'text-yellow-600' :
+                passwordStrength.score >= 4 ? 'text-green-600' :
+                passwordStrength.score >= 3 ? 'text-yellow-600' :
+                passwordStrength.score >= 2 ? 'text-orange-600' :
                 'text-red-600'
               }`}>
                 {passwordStrength.text}
@@ -542,23 +668,23 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
         <div className="mt-3 space-y-1">
           <p className="text-sm text-gray-600">رمز عبور باید شامل:</p>
           <ul className="text-xs text-gray-500 space-y-1 pr-4">
-            <li className={`flex items-center gap-1 ${formData.password.length >= 8 ? 'text-sky-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${formData.password.length >= 8 ? 'text-green-600' : ''}`}>
               {formData.password.length >= 8 ? <Check className="h-3 w-3" /> : '○'}
               حداقل ۸ کاراکتر
             </li>
-            <li className={`flex items-center gap-1 ${/[A-Z]/.test(formData.password) ? 'text-sky-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/[A-Z]/.test(formData.password) ? 'text-green-600' : ''}`}>
               {/[A-Z]/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک حرف بزرگ
             </li>
-            <li className={`flex items-center gap-1 ${/[a-z]/.test(formData.password) ? 'text-sky-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/[a-z]/.test(formData.password) ? 'text-green-600' : ''}`}>
               {/[a-z]/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک حرف کوچک
             </li>
-            <li className={`flex items-center gap-1 ${/\d/.test(formData.password) ? 'text-sky-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/\d/.test(formData.password) ? 'text-green-600' : ''}`}>
               {/\d/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک عدد
             </li>
-            <li className={`flex items-center gap-1 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-sky-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-green-600' : ''}`}>
               {/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک نماد ویژه
             </li>
@@ -572,7 +698,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
           تأیید رمز عبور <span className="text-red-500">*</span>
         </label>
         <div className="relative">
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
             <Lock className="h-5 w-5" />
           </div>
           <input
@@ -581,11 +707,11 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             value={formData.confirmPassword}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
+            className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
               validation.confirmPassword.touched
                 ? validation.confirmPassword.isValid
-                  ? 'border-green-500 bg-blue-50'
-                  : 'border-red-500 bg-red-50'
+                  ? 'border-green-500'
+                  : 'border-red-500'
                 : 'border-gray-300'
             }`}
             placeholder="تکرار رمز عبور"
@@ -595,14 +721,14 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute left-12 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >
             {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
           {validation.confirmPassword.touched && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+            <div className="absolute left-12 top-1/2 transform -translate-y-1/2">
               {validation.confirmPassword.isValid ? (
-                <Check className="h-5 w-5 text-sky-500" />
+                <Check className="h-5 w-5 text-green-500" />
               ) : (
                 <X className="h-5 w-5 text-red-500" />
               )}
@@ -616,73 +742,22 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
         )}
       </div>
 
-      {/* سایر فیلدهای اختیاری */}
-      <div className="text-sm text-gray-600">
-        <p className="mb-2">فیلدهای اختیاری (برای ثبت‌نام با روش‌های دیگر):</p>
-        <div className="space-y-3">
-          {registrationMethod !== 'email' && (
-            <div>
-              <label className="block text-gray-600 mb-1">
-                ایمیل (اختیاری)
-              </label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full p-2 text-right border border-gray-300 rounded-lg focus:ring-1 focus:ring-gray-400 focus:border-transparent"
-                placeholder="ایمیل (اختیاری)"
-                dir="ltr"
-              />
-            </div>
-          )}
-          
-          {registrationMethod !== 'username' && (
-            <div>
-              <label className="block text-gray-600 mb-1">
-                نام کاربری (اختیاری)
-              </label>
-              <input
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleChange}
-                className="w-full p-2 text-right border border-gray-300 rounded-lg focus:ring-1 focus:ring-gray-400 focus:border-transparent"
-                placeholder="نام کاربری (اختیاری)"
-                dir="ltr"
-              />
-            </div>
-          )}
-          
-          {registrationMethod !== 'phone' && (
-            <div>
-              <label className="block text-gray-600 mb-1">
-                شماره موبایل (اختیاری)
-              </label>
-              <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
-                onChange={handleChange}
-                className="w-full p-2 text-right border border-gray-300 rounded-lg focus:ring-1 focus:ring-gray-400 focus:border-transparent"
-                placeholder="شماره موبایل (اختیاری)"
-                dir="ltr"
-              />
-            </div>
-          )}
-        </div>
-      </div>
-
       {/* پیام‌های خطا و موفقیت */}
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-          {error}
+          <div className="flex items-center">
+            <X className="h-5 w-5 ml-2" />
+            {error}
+          </div>
         </div>
       )}
 
       {success && (
-        <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg">
-          {success}
+        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+          <div className="flex items-center">
+            <Check className="h-5 w-5 ml-2" />
+            {success}
+          </div>
         </div>
       )}
 

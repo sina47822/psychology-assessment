@@ -133,13 +133,65 @@ export const scrollToTop = () => {
 };
 
 // تابع برای فرمت کردن تاریخ
-export const formatDate = (date: string | Date): string => {
+export const formatDate = (date: string | Date | null | undefined): string => {
+  if (!date) return '-'; // یا هر مقدار پیش‌فرض دیگر
+  
   const d = new Date(date);
-  return new Intl.DateTimeFormat('fa-IR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  }).format(d);
+  
+  // بررسی معتبر بودن تاریخ
+  if (isNaN(d.getTime())) {
+    console.warn('Invalid date value:', date);
+    return '-';
+  }
+  
+  // محدودیت‌های اضافی برای تاریخ‌های بسیار قدیمی یا آینده
+  const now = new Date();
+  const minDate = new Date('1900-01-01');
+  const maxDate = new Date('2100-01-01');
+  
+  if (d < minDate || d > maxDate) {
+    console.warn('Date out of expected range:', date);
+    return '-';
+  }
+  
+  try {
+    return new Intl.DateTimeFormat('fa-IR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    }).format(d);
+  } catch (error) {
+    console.error('Error formatting date:', error);
+    return '-';
+  }
+};
+
+// بررسی معتبر بودن رشته تاریخ
+export const isValidDateString = (dateString: string | null | undefined): boolean => {
+  if (!dateString) return false;
+  
+  const date = new Date(dateString);
+  if (isNaN(date.getTime())) return false;
+  
+  // بررسی فرمت‌های رایج
+  const isoRegex = /^\d{4}-\d{2}-\d{2}/;
+  const timestampRegex = /^\d+$/;
+  
+  if (isoRegex.test(dateString)) {
+    // بررسی قسمت‌های تاریخ
+    const parts = dateString.split('-');
+    if (parts.length < 3) return false;
+    
+    const year = parseInt(parts[0], 10);
+    const month = parseInt(parts[1], 10);
+    const day = parseInt(parts[2], 10);
+    
+    if (year < 1900 || year > 2100) return false;
+    if (month < 1 || month > 12) return false;
+    if (day < 1 || day > 31) return false;
+  }
+  
+  return true;
 };
 
 // تابع برای فرمت کردن شماره موبایل

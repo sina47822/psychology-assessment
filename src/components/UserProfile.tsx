@@ -1,10 +1,11 @@
+// src/components/UserProfile.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { User, Mail, Smartphone, User as UserIcon, Lock, Save, X, Check, Eye, EyeOff } from 'lucide-react';
 import { useAuth } from '@/providers/AuthProvider';
-import { changePassword } from '@/lib/auth';
 import { formatDate, formatPhoneNumber } from '@/lib/utils';
+import api from '@/lib/api';
 
 interface UserProfileProps {
   onClose?: () => void;
@@ -12,20 +13,25 @@ interface UserProfileProps {
 }
 
 export default function UserProfile({ onClose, isModal = false }: UserProfileProps) {
-  const { user, updateUser } = useAuth();
+  const { user, updateProfile, checkSession, logout } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
-    username: user?.username || ''
+    first_name: '',
+    last_name: '',
+    email: '',
+    phone: '',
+    national_code: '',
+    birth_date: '',
+    gender: '',
+    province: '',
+    city: '',
+    address: ''
   });
   const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: ''
+    current_password: '',
+    new_password: '',
+    confirm_password: ''
   });
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -34,7 +40,25 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // مقداردهی اولیه formData با داده‌های کاربر
+  useEffect(() => {
+    if (user) {
+      setFormData({
+        first_name: user.first_name || '',
+        last_name: user.last_name || '',
+        email: user.email || '',
+        phone: user.phone || '',
+        national_code: user.national_code || '',
+        birth_date: user.birth_date || '',
+        gender: user.gender || '',
+        province: user.province || '',
+        city: user.city || '',
+        address: user.address || ''
+      });
+    }
+  }, [user]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
@@ -52,26 +76,35 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
 
     try {
       // اعتبارسنجی
-      if (!formData.firstName.trim() || !formData.lastName.trim()) {
+      if (!formData.first_name.trim() || !formData.last_name.trim()) {
         throw new Error('نام و نام خانوادگی ضروری است');
       }
 
-      // در محیط واقعی، اینجا API call می‌شود
-      await new Promise(resolve => setTimeout(resolve, 1000)); // شبیه‌سازی delay
+      // بررسی session قبل از به‌روزرسانی
+      const sessionValid = await checkSession();
+      if (!sessionValid) {
+        throw new Error('نشست شما منقضی شده است. لطفاً دوباره وارد شوید.');
+      }
 
-      updateUser({
-        firstName: formData.firstName.trim(),
-        lastName: formData.lastName.trim(),
-        fullName: `${formData.firstName.trim()} ${formData.lastName.trim()}`,
-        email: formData.email.trim() || undefined,
-        phone: formData.phone.trim() || undefined,
-        username: formData.username.trim() || undefined
-      });
-
-      setSuccess('اطلاعات پروفایل با موفقیت به‌روزرسانی شد');
-      setIsEditing(false);
+      // استفاده از تابع updateProfile از AuthProvider
+      const result = await updateProfile(formData);
+      
+      if (result.success) {
+        setSuccess('اطلاعات پروفایل با موفقیت به‌روزرسانی شد');
+        setIsEditing(false);
+        
+        // پاک کردن پیام موفقیت بعد از 3 ثانیه
+        setTimeout(() => setSuccess(''), 3000);
+      } else {
+        throw new Error(result.error?.detail || 'خطا در به‌روزرسانی پروفایل');
+      }
     } catch (error) {
       setError(error instanceof Error ? error.message : 'خطا در به‌روزرسانی پروفایل');
+      
+      // اگر session نامعتبر است، کاربر را logout کن
+      if (error instanceof Error && error.message.includes('نشست')) {
+        setTimeout(() => logout(), 2000);
+      }
     } finally {
       setLoading(false);
     }
@@ -84,53 +117,94 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
     setSuccess('');
 
     try {
-      const { currentPassword, newPassword, confirmPassword } = passwordData;
+      const { current_password, new_password, confirm_password } = passwordData;
 
-      if (newPassword !== confirmPassword) {
+      // اعتبارسنجی
+      if (!current_password) {
+        throw new Error('رمز عبور فعلی الزامی است');
+      }
+      
+      if (new_password !== confirm_password) {
         throw new Error('رمز عبور جدید و تأیید آن مطابقت ندارند');
       }
 
-      if (newPassword.length < 8) {
+      if (new_password.length < 8) {
         throw new Error('رمز عبور جدید باید حداقل ۸ کاراکتر باشد');
       }
 
-      if (!user) {
-        throw new Error('کاربر یافت نشد');
+      // بررسی session
+      const sessionValid = await checkSession();
+      if (!sessionValid) {
+        throw new Error('نشست شما منقضی شده است. لطفاً دوباره وارد شوید.');
       }
 
-      // در محیط واقعی، باید API call شود
-      const result = await changePassword(user.id, currentPassword, newPassword);
-
-      if (!result.success) {
-        throw new Error(result.message || 'خطا در تغییر رمز عبور');
-      }
-
-      setSuccess('رمز عبور با موفقیت تغییر کرد');
-      setIsChangingPassword(false);
-      setPasswordData({
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: ''
+      // ارسال درخواست تغییر رمز عبور
+      const response = await api.post('/users/password/change/', {
+        current_password,
+        new_password,
+        confirm_password
       });
-    } catch (error) {
-      setError(error instanceof Error ? error.message : 'خطا در تغییر رمز عبور');
+
+      if (response.status === 200) {
+        setSuccess('رمز عبور با موفقیت تغییر کرد');
+        setIsChangingPassword(false);
+        setPasswordData({
+          current_password: '',
+          new_password: '',
+          confirm_password: ''
+        });
+        
+        setTimeout(() => setSuccess(''), 3000);
+      }
+    } catch (error: any) {
+      setError(error.response?.data?.detail || error.message || 'خطا در تغییر رمز عبور');
+      
+      // اگر session نامعتبر است، کاربر را logout کن
+      if (error.message.includes('نشست')) {
+        setTimeout(() => logout(), 2000);
+      }
     } finally {
       setLoading(false);
     }
   };
 
   const cancelEdit = () => {
-    setFormData({
-      firstName: user?.firstName || '',
-      lastName: user?.lastName || '',
-      email: user?.email || '',
-      phone: user?.phone || '',
-      username: user?.username || ''
-    });
+    if (user) {
+      setFormData({
+        first_name: user.first_name || '',
+        last_name: user.last_name || '',
+        email: user.email || '',
+        phone: user.phone || '',
+        national_code: user.national_code || '',
+        birth_date: user.birth_date || '',
+        gender: user.gender || '',
+        province: user.province || '',
+        city: user.city || '',
+        address: user.address || ''
+      });
+    }
     setError('');
     setSuccess('');
     setIsEditing(false);
     setIsChangingPassword(false);
+  };
+
+  const verifyAccount = async () => {
+    try {
+      setLoading(true);
+      setError('');
+      
+      // ارسال درخواست تأیید حساب
+      const response = await api.post('/users/verify/send-email/');
+      
+      if (response.status === 200) {
+        setSuccess('ایمیل تأیید حساب ارسال شد. لطفاً صندوق ایمیل خود را بررسی کنید.');
+      }
+    } catch (error: any) {
+      setError(error.response?.data?.detail || 'خطا در ارسال ایمیل تأیید');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!user) {
@@ -142,8 +216,15 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
     );
   }
 
+  const genderOptions = [
+    { value: '', label: 'انتخاب کنید' },
+    { value: 'male', label: 'مرد' },
+    { value: 'female', label: 'زن' },
+    { value: 'other', label: 'سایر' }
+  ];
+
   return (
-    <div className={`${isModal ? '' : 'max-w-4xl mx-auto p-4 md:p-6'}`}>
+    <div className={`${isModal ? '' : 'max-w-6xl mx-auto p-4 md:p-6'}`}>
       {/* هدر */}
       <div className="flex justify-between items-center mb-8">
         <div>
@@ -168,16 +249,30 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
               <div className="inline-flex items-center justify-center w-24 h-24 bg-sky-100 rounded-full mb-4">
                 <User className="h-12 w-12 text-sky-600" />
               </div>
-              <h3 className="text-xl font-bold text-gray-800">{user.fullName}</h3>
+              <h3 className="text-xl font-bold text-gray-800">{user.full_name}</h3>
               <div className="mt-2">
                 <span className={`px-3 py-1 rounded-full text-sm ${
-                  user.isVerified 
-                    ? 'bg-sky-100 text-sky-800' 
+                  user.is_verified 
+                    ? 'bg-green-100 text-green-800' 
                     : 'bg-yellow-100 text-yellow-800'
                 }`}>
-                  {user.isVerified ? 'حساب تأیید شده ✓' : 'نیاز به تأیید حساب'}
+                  {user.is_verified ? 'حساب تأیید شده ✓' : 'نیاز به تأیید حساب'}
                 </span>
               </div>
+              {user.is_staff && (
+                <div className="mt-2">
+                  <span className="px-3 py-1 rounded-full text-sm bg-purple-100 text-purple-800">
+                    کارمند سیستم
+                  </span>
+                </div>
+              )}
+              {user.is_parent && (
+                <div className="mt-2">
+                  <span className="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
+                    والدین
+                  </span>
+                </div>
+              )}
             </div>
 
             <div className="mt-6 space-y-4">
@@ -185,7 +280,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                 <UserIcon className="h-5 w-5 text-gray-600" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600">نام کاربری</p>
-                  <p className="font-medium">{user.username || 'تعیین نشده'}</p>
+                  <p className="font-medium">{user.username}</p>
                 </div>
               </div>
 
@@ -210,11 +305,15 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
               <div className="space-y-2">
                 <div className="flex justify-between">
                   <span className="text-gray-600">عضویت از</span>
-                  <span className="font-medium">{formatDate(user.createdAt)}</span>
+                  <span className="font-medium">{formatDate(user.created_at)}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">آخرین ورود</span>
-                  <span className="font-medium">{formatDate(user.lastLogin)}</span>
+                  <span className="font-medium">{formatDate(user.last_login)}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">آخرین فعالیت</span>
+                  <span className="font-medium">{formatDate(user.last_activity)}</span>
                 </div>
               </div>
             </div>
@@ -267,10 +366,10 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                     </label>
                     <input
                       type="text"
-                      name="firstName"
-                      value={formData.firstName}
+                      name="first_name"
+                      value={formData.first_name}
                       onChange={handleInputChange}
-                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                       placeholder="نام"
                       required
                       dir="rtl"
@@ -283,10 +382,10 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                     </label>
                     <input
                       type="text"
-                      name="lastName"
-                      value={formData.lastName}
+                      name="last_name"
+                      value={formData.last_name}
                       onChange={handleInputChange}
-                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                       placeholder="نام خانوادگی"
                       required
                       dir="rtl"
@@ -294,69 +393,157 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-gray-700 mb-2 font-medium">
-                    ایمیل
-                  </label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
-                      placeholder="example@email.com"
-                      dir="ltr"
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-gray-700 mb-2 font-medium">
+                      ایمیل
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full p-3 pl-12 text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                        placeholder="example@email.com"
+                        dir="ltr"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 mb-2 font-medium">
+                      شماره موبایل
+                    </label>
+                    <div className="relative">
+                      <Smartphone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="w-full p-3 pl-12 text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                        placeholder="09123456789"
+                        dir="ltr"
+                      />
+                    </div>
                   </div>
                 </div>
 
-                <div>
-                  <label className="block text-gray-700 mb-2 font-medium">
-                    نام کاربری
-                  </label>
-                  <div className="relative">
-                    <UserIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-gray-700 mb-2 font-medium">
+                      کد ملی
+                    </label>
                     <input
                       type="text"
-                      name="username"
-                      value={formData.username}
+                      name="national_code"
+                      value={formData.national_code}
                       onChange={handleInputChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
-                      placeholder="username"
+                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                      placeholder="کد ملی"
                       dir="ltr"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 mb-2 font-medium">
+                      تاریخ تولد
+                    </label>
+                    <input
+                      type="date"
+                      name="birth_date"
+                      value={formData.birth_date}
+                      onChange={handleInputChange}
+                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                      dir="ltr"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-gray-700 mb-2 font-medium">
+                      جنسیت
+                    </label>
+                    <select
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleInputChange}
+                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                    >
+                      {genderOptions.map(option => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-gray-700 mb-2 font-medium">
+                      استان
+                    </label>
+                    <input
+                      type="text"
+                      name="province"
+                      value={formData.province}
+                      onChange={handleInputChange}
+                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                      placeholder="استان"
+                      dir="rtl"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-gray-700 mb-2 font-medium">
+                      شهر
+                    </label>
+                    <input
+                      type="text"
+                      name="city"
+                      value={formData.city}
+                      onChange={handleInputChange}
+                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                      placeholder="شهر"
+                      dir="rtl"
                     />
                   </div>
                 </div>
 
                 <div>
                   <label className="block text-gray-700 mb-2 font-medium">
-                    شماره موبایل
+                    آدرس
                   </label>
-                  <div className="relative">
-                    <Smartphone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
-                      placeholder="09123456789"
-                      dir="ltr"
-                    />
-                  </div>
+                  <textarea
+                    name="address"
+                    value={formData.address}
+                    onChange={handleInputChange}
+                    rows={3}
+                    className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                    placeholder="آدرس کامل"
+                    dir="rtl"
+                  />
                 </div>
 
                 {error && (
                   <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                    {error}
+                    <div className="flex items-center">
+                      <X className="h-5 w-5 ml-2" />
+                      {error}
+                    </div>
                   </div>
                 )}
 
                 {success && (
-                  <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg">
-                    {success}
+                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                    <div className="flex items-center">
+                      <Check className="h-5 w-5 ml-2" />
+                      {success}
+                    </div>
                   </div>
                 )}
 
@@ -406,10 +593,10 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <input
                       type={showCurrentPassword ? "text" : "password"}
-                      name="currentPassword"
-                      value={passwordData.currentPassword}
+                      name="current_password"
+                      value={passwordData.current_password}
                       onChange={handlePasswordChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+                      className="w-full p-3 pl-12 text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                       placeholder="رمز عبور فعلی"
                       required
                       dir="ltr"
@@ -432,10 +619,10 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <input
                       type={showNewPassword ? "text" : "password"}
-                      name="newPassword"
-                      value={passwordData.newPassword}
+                      name="new_password"
+                      value={passwordData.new_password}
                       onChange={handlePasswordChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+                      className="w-full p-3 pl-12 text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                       placeholder="رمز عبور جدید"
                       required
                       dir="ltr"
@@ -449,7 +636,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                     </button>
                   </div>
                   <p className="text-sm text-gray-500 mt-1">
-                    رمز عبور باید حداقل ۸ کاراکتر شامل حروف بزرگ، کوچک، عدد و نماد باشد
+                    رمز عبور باید حداقل ۸ کاراکتر باشد
                   </p>
                 </div>
 
@@ -461,10 +648,10 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                     <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                     <input
                       type={showConfirmPassword ? "text" : "password"}
-                      name="confirmPassword"
-                      value={passwordData.confirmPassword}
+                      name="confirm_password"
+                      value={passwordData.confirm_password}
                       onChange={handlePasswordChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
+                      className="w-full p-3 pl-12 text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                       placeholder="تکرار رمز عبور جدید"
                       required
                       dir="ltr"
@@ -481,13 +668,19 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
 
                 {error && (
                   <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-                    {error}
+                    <div className="flex items-center">
+                      <X className="h-5 w-5 ml-2" />
+                      {error}
+                    </div>
                   </div>
                 )}
 
                 {success && (
-                  <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg">
-                    {success}
+                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                    <div className="flex items-center">
+                      <Check className="h-5 w-5 ml-2" />
+                      {success}
+                    </div>
                   </div>
                 )}
 
@@ -527,38 +720,36 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
           {!isEditing && !isChangingPassword && (
             <>
               {/* اطلاعات ارزیابی */}
-              <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
-                <h3 className="text-xl font-bold text-gray-800 mb-6">اطلاعات ارزیابی</h3>
-                
-                <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                    <div>
-                      <p className="font-medium text-gray-800">وضعیت ارزیابی</p>
-                      <p className="text-sm text-gray-600">آخرین ارزیابی انجام شده</p>
+              {user.assessmentCompleted && (
+                <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
+                  <h3 className="text-xl font-bold text-gray-800 mb-6">اطلاعات ارزیابی</h3>
+                  
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                      <div>
+                        <p className="font-medium text-gray-800">وضعیت ارزیابی</p>
+                        <p className="text-sm text-gray-600">آخرین ارزیابی انجام شده</p>
+                      </div>
+                      <span className="px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
+                        تکمیل شده
+                      </span>
                     </div>
-                    <span className={`px-3 py-1 rounded-full text-sm font-medium ${
-                      user.assessmentCompleted 
-                        ? 'bg-sky-100 text-sky-800' 
-                        : 'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {user.assessmentCompleted ? 'تکمیل شده' : 'شروع نشده'}
-                    </span>
-                  </div>
 
-                  {user.assessmentData && (
-                    <div className="space-y-3">
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-600">تاریخ تکمیل</span>
-                        <span className="font-medium">{formatDate(user.assessmentData.completedAt)}</span>
+                    {user.assessmentData && (
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">تاریخ تکمیل</span>
+                          <span className="font-medium">{formatDate(user.assessmentData.completedAt)}</span>
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <span className="text-gray-600">تعداد موارد انتخاب شده</span>
+                          <span className="font-medium">{user.assessmentData.totalSelected} مورد</span>
+                        </div>
                       </div>
-                      <div className="flex justify-between items-center">
-                        <span className="text-gray-600">تعداد موارد انتخاب شده</span>
-                        <span className="font-medium">{Object.values(user.assessmentData.answers).flat().length} مورد</span>
-                      </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-              </div>
+              )}
 
               {/* امنیت حساب */}
               <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
@@ -571,10 +762,10 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       <p className="text-sm text-gray-600">تأیید ایمیل و موبایل</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      {user.isVerified ? (
+                      {user.is_verified ? (
                         <>
-                          <Check className="h-5 w-5 text-sky-600" />
-                          <span className="text-sky-600 font-medium">تأیید شده</span>
+                          <Check className="h-5 w-5 text-green-600" />
+                          <span className="text-green-600 font-medium">تأیید شده</span>
                         </>
                       ) : (
                         <>
@@ -587,30 +778,42 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
 
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                     <div>
-                      <p className="font-medium text-gray-800">آخرین تغییر رمز عبور</p>
-                      <p className="text-sm text-gray-600">تاریخ آخرین تغییر</p>
+                      <p className="font-medium text-gray-800">احراز هویت دو مرحله‌ای</p>
+                      <p className="text-sm text-gray-600">افزایش امنیت حساب</p>
                     </div>
-                    <span className="text-gray-800 font-medium">-</span>
+                    <div className="flex items-center gap-2">
+                      {user.two_factor_auth ? (
+                        <>
+                          <Check className="h-5 w-5 text-green-600" />
+                          <span className="text-green-600 font-medium">فعال</span>
+                        </>
+                      ) : (
+                        <>
+                          <X className="h-5 w-5 text-gray-600" />
+                          <span className="text-gray-600 font-medium">غیرفعال</span>
+                        </>
+                      )}
+                    </div>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-6 border-t border-gray-200">
-                  <div className="flex gap-4">
+                  <div className="flex flex-col sm:flex-row gap-4">
                     <button
                       onClick={() => setIsChangingPassword(true)}
                       className="flex-1 bg-sky-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-sky-700 transition-colors"
                     >
                       تغییر رمز عبور
                     </button>
-                    <button
-                      onClick={() => {
-                        // در محیط واقعی، باید ایمیل تأیید ارسال شود
-                        alert('ایمیل تأیید حساب ارسال شد');
-                      }}
-                      className="flex-1 bg-gray-100 text-gray-800 font-medium py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors"
-                    >
-                      ارسال ایمیل تأیید
-                    </button>
+                    {!user.is_verified && (
+                      <button
+                        onClick={verifyAccount}
+                        disabled={loading}
+                        className="flex-1 bg-gray-100 text-gray-800 font-medium py-3 px-4 rounded-lg hover:bg-gray-200 transition-colors"
+                      >
+                        ارسال ایمیل تأیید
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
