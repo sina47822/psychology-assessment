@@ -6,7 +6,7 @@
 
 @layer base {
   :root {
-    --primary: #4f46e5;
+    --primary: oklch(50% 0.134 242.749);
     --secondary: #7c3aed;
   }
 
@@ -36,11 +36,11 @@
 
 @layer components {
   .checkbox-custom {
-    @apply h-5 w-5 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500;
+    @apply h-5 w-5 rounded border-gray-300 text-sky-600 focus:ring-sky-500;
   }
 
   .btn-primary {
-    @apply bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 shadow-md hover:shadow-lg;
+    @apply bg-sky-600 hover:bg-sky-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 shadow-md hover:shadow-lg;
   }
 
   .btn-secondary {

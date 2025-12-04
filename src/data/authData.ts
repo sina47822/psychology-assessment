@@ -1,3 +1,4 @@
+// src/data/authData.ts
 // کاربران تستی
 export const testUsers = [
   {
@@ -5,14 +6,15 @@ export const testUsers = [
     username: 'testuser',
     email: 'test@example.com',
     phone: '09123456789',
-    password: 'Test@1234', // رمز تست
+    password: 'Test@1234',
     firstName: 'کاربر',
     lastName: 'تست',
     fullName: 'کاربر تست',
     isVerified: true,
     createdAt: '2024-01-01',
     lastLogin: new Date().toISOString(),
-    assessmentCompleted: false
+    assessmentCompleted: false,
+    assessmentData: null
   },
   {
     id: '2',
@@ -26,7 +28,35 @@ export const testUsers = [
     isVerified: true,
     createdAt: '2024-01-15',
     lastLogin: new Date().toISOString(),
-    assessmentCompleted: true
+    assessmentCompleted: true,
+    assessmentData: {
+      demographics: {
+        age: '16-18 سال',
+        education: 'متوسطه دوم',
+        occupation: 'دانش‌آموز',
+        livingWith: 'با پدر و مادر',
+        fatherAge: '41 تا 50 سال',
+        fatherEducation: 'کارشناسی',
+        fatherOccupation: 'مهندس',
+        motherAge: '41 تا 50 سال',
+        motherEducation: 'کارشناسی',
+        motherOccupation: 'کارمند',
+        maritalStatus: 'متاهل',
+        province: 'تهران',
+        city: 'تهران'
+      },
+      answers: {
+        1: [1, 3],
+        2: [2, 4],
+        3: [1],
+        4: [2, 3],
+        5: [1, 4],
+        6: [2],
+        7: [3],
+        8: [1, 2]
+      },
+      completedAt: '2024-01-20T10:30:00Z'
+    }
   }
 ];
 
@@ -51,4 +81,15 @@ export const authErrors = {
   otpExpired: 'کد تایید منقضی شده است',
   passwordMismatch: 'رمز عبور و تأیید رمز عبور مطابقت ندارند',
   weakPassword: 'رمز عبور باید حداقل ۸ کاراکتر و شامل حروف بزرگ، کوچک، عدد و نماد باشد'
+};
+
+// مدت زمان اعتبار OTP (دقیقه)
+export const OTP_EXPIRY_MINUTES = 5;
+
+// تنظیمات جلسه
+export const SESSION_SETTINGS = {
+  tokenExpiry: '24h',
+  refreshTokenExpiry: '7d',
+  maxLoginAttempts: 5,
+  lockoutDuration: 15 // دقیقه
 };

@@ -1,3 +1,4 @@
+// app/layout.tsx
 import type { Metadata } from 'next'
 import './globals.css'
 import { APP_INFO, CONTACT_INFO } from '@/data/constants'
@@ -24,10 +25,24 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vazirmatn@33.003/font.css" />
         <meta name="version" content={APP_INFO.version} />
         <meta name="last-update" content={APP_INFO.lastUpdate} />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              // بررسی session در localStorage هنگام لود صفحه
+              (function() {
+                const sessionId = localStorage.getItem('session_id');
+                if (sessionId && sessionId !== 'null') {
+                  // کوکی sessionid را به صورت خودکار برای تمام درخواست‌ها اضافه می‌کنیم
+                  document.cookie = 'sessionid=' + sessionId + '; path=/; SameSite=Lax';
+                }
+              })();
+            `,
+          }}
+        />
       </head>
       <body className="bg-gray-50">
         <AuthProvider>
-          <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50">
+          <div className="min-h-screen bg-gradient-to-br from-blue-50 to-sky-50">
             {children}
           </div>
         </AuthProvider>

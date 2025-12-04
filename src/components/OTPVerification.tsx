@@ -203,14 +203,14 @@ export default function OTPVerification({
       {/* هدر */}
       <div className="text-center mb-8">
         <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
-          isVerified ? 'bg-green-100' : 'bg-blue-100'
+          isVerified ? 'bg-sky-100' : 'bg-sky-100'
         }`}>
           {isVerified ? (
-            <CheckCircle className="h-8 w-8 text-green-600" />
+            <CheckCircle className="h-8 w-8 text-sky-600" />
           ) : verificationType === 'phone' ? (
-            <Smartphone className="h-8 w-8 text-blue-600" />
+            <Smartphone className="h-8 w-8 text-sky-600" />
           ) : (
-            <Lock className="h-8 w-8 text-blue-600" />
+            <Lock className="h-8 w-8 text-sky-600" />
           )}
         </div>
         
@@ -222,7 +222,7 @@ export default function OTPVerification({
           {defaultSubtitle}
         </p>
         
-        <div className="mt-4 inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-4 py-2 rounded-full">
+        <div className="mt-4 inline-flex items-center gap-2 bg-sky-50 text-sky-700 px-4 py-2 rounded-full">
           <span className="font-medium">{getIdentifier()}</span>
         </div>
       </div>
@@ -248,11 +248,11 @@ export default function OTPVerification({
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 onPaste={handlePaste}
                 onFocus={() => setActiveInput(index)}
-                className={`w-12 h-12 md:w-14 md:h-14 text-center text-2xl font-bold border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all ${
+                className={`w-12 h-12 md:w-14 md:h-14 text-center text-2xl font-bold border-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500 transition-all ${
                   activeInput === index
-                    ? 'border-blue-500 bg-blue-50'
+                    ? 'border-sky-500 bg-sky-50'
                     : digit
-                    ? 'border-green-500 bg-green-50'
+                    ? 'border-green-500 bg-blue-50'
                     : 'border-gray-300 bg-white'
                 } ${
                   error ? 'border-red-300' : ''
@@ -277,7 +277,7 @@ export default function OTPVerification({
         )}
 
         {success && (
-          <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex items-center gap-3">
+          <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg flex items-center gap-3">
             <CheckCircle className="h-5 w-5 flex-shrink-0" />
             <span>{success}</span>
           </div>
@@ -290,7 +290,7 @@ export default function OTPVerification({
           className={`w-full py-3 px-6 rounded-lg font-medium text-white transition-all ${
             isLoading || otp.join('').length !== 6 || isVerified
               ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-blue-600 hover:bg-blue-700 shadow-md hover:shadow-lg'
+              : 'bg-sky-600 hover:bg-sky-700 shadow-md hover:shadow-lg'
           }`}
         >
           {isLoading ? (
@@ -322,7 +322,7 @@ export default function OTPVerification({
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 isResending || timeLeft > 0
                   ? 'text-gray-400 cursor-not-allowed'
-                  : 'text-blue-600 hover:text-blue-800 hover:bg-blue-50'
+                  : 'text-sky-600 hover:text-sky-800 hover:bg-sky-50'
               }`}
             >
               <RotateCcw className={`h-5 w-5 ${isResending ? 'animate-spin' : ''}`} />

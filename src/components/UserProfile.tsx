@@ -136,7 +136,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
   if (!user) {
     return (
       <div className="text-center py-8">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto"></div>
         <p className="mt-4 text-gray-600">در حال بارگذاری اطلاعات کاربر...</p>
       </div>
     );
@@ -165,14 +165,14 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
         <div className="lg:col-span-1">
           <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
             <div className="text-center">
-              <div className="inline-flex items-center justify-center w-24 h-24 bg-indigo-100 rounded-full mb-4">
-                <User className="h-12 w-12 text-indigo-600" />
+              <div className="inline-flex items-center justify-center w-24 h-24 bg-sky-100 rounded-full mb-4">
+                <User className="h-12 w-12 text-sky-600" />
               </div>
               <h3 className="text-xl font-bold text-gray-800">{user.fullName}</h3>
               <div className="mt-2">
                 <span className={`px-3 py-1 rounded-full text-sm ${
                   user.isVerified 
-                    ? 'bg-green-100 text-green-800' 
+                    ? 'bg-sky-100 text-sky-800' 
                     : 'bg-yellow-100 text-yellow-800'
                 }`}>
                   {user.isVerified ? 'حساب تأیید شده ✓' : 'نیاز به تأیید حساب'}
@@ -226,7 +226,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
               <>
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="w-full bg-indigo-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-sky-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <User className="h-5 w-5" />
                   ویرایش پروفایل
@@ -270,7 +270,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       name="firstName"
                       value={formData.firstName}
                       onChange={handleInputChange}
-                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
                       placeholder="نام"
                       required
                       dir="rtl"
@@ -286,7 +286,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       name="lastName"
                       value={formData.lastName}
                       onChange={handleInputChange}
-                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                      className="w-full p-3 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
                       placeholder="نام خانوادگی"
                       required
                       dir="rtl"
@@ -305,7 +305,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
                       placeholder="example@email.com"
                       dir="ltr"
                     />
@@ -323,7 +323,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       name="username"
                       value={formData.username}
                       onChange={handleInputChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
                       placeholder="username"
                       dir="ltr"
                     />
@@ -341,7 +341,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
                       placeholder="09123456789"
                       dir="ltr"
                     />
@@ -355,7 +355,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                 )}
 
                 {success && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                  <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg">
                     {success}
                   </div>
                 )}
@@ -371,8 +371,8 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                   <button
                     type="submit"
                     disabled={loading}
-                    className={`flex-1 bg-indigo-600 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
-                      loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-700'
+                    className={`flex-1 bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
+                      loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-sky-700'
                     }`}
                   >
                     {loading ? (
@@ -409,7 +409,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       name="currentPassword"
                       value={passwordData.currentPassword}
                       onChange={handlePasswordChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
                       placeholder="رمز عبور فعلی"
                       required
                       dir="ltr"
@@ -435,7 +435,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       name="newPassword"
                       value={passwordData.newPassword}
                       onChange={handlePasswordChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
                       placeholder="رمز عبور جدید"
                       required
                       dir="ltr"
@@ -464,7 +464,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       name="confirmPassword"
                       value={passwordData.confirmPassword}
                       onChange={handlePasswordChange}
-                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                      className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
                       placeholder="تکرار رمز عبور جدید"
                       required
                       dir="ltr"
@@ -486,7 +486,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                 )}
 
                 {success && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                  <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg">
                     {success}
                   </div>
                 )}
@@ -502,8 +502,8 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                   <button
                     type="submit"
                     disabled={loading}
-                    className={`flex-1 bg-indigo-600 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
-                      loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-indigo-700'
+                    className={`flex-1 bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
+                      loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-sky-700'
                     }`}
                   >
                     {loading ? (
@@ -538,7 +538,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                     </div>
                     <span className={`px-3 py-1 rounded-full text-sm font-medium ${
                       user.assessmentCompleted 
-                        ? 'bg-green-100 text-green-800' 
+                        ? 'bg-sky-100 text-sky-800' 
                         : 'bg-yellow-100 text-yellow-800'
                     }`}>
                       {user.assessmentCompleted ? 'تکمیل شده' : 'شروع نشده'}
@@ -573,8 +573,8 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                     <div className="flex items-center gap-2">
                       {user.isVerified ? (
                         <>
-                          <Check className="h-5 w-5 text-green-600" />
-                          <span className="text-green-600 font-medium">تأیید شده</span>
+                          <Check className="h-5 w-5 text-sky-600" />
+                          <span className="text-sky-600 font-medium">تأیید شده</span>
                         </>
                       ) : (
                         <>
@@ -598,7 +598,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                   <div className="flex gap-4">
                     <button
                       onClick={() => setIsChangingPassword(true)}
-                      className="flex-1 bg-indigo-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors"
+                      className="flex-1 bg-sky-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-sky-700 transition-colors"
                     >
                       تغییر رمز عبور
                     </button>

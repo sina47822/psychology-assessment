@@ -68,7 +68,7 @@ export default function SummaryScreen({
     const prefix = parentType === 'father' ? 'پدر' : 'مادر';
     
     return (
-      <div className="border border-gray-200 rounded-lg p-4 bg-blue-50">
+      <div className="border border-gray-200 rounded-lg p-4 bg-sky-50">
         <h4 className="font-bold text-gray-800 mb-2">اطلاعات {prefix}:</h4>
         <div className="space-y-1 text-sm">
           <div className="flex justify-between">
@@ -91,8 +91,8 @@ export default function SummaryScreen({
   return (
     <div className="p-6">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-          <Check className="h-8 w-8 text-green-600" />
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-sky-100 rounded-full mb-4">
+          <Check className="h-8 w-8 text-sky-600" />
         </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-3">خلاصه و بررسی نهایی</h2>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -101,10 +101,10 @@ export default function SummaryScreen({
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100">
+        <div className="bg-gradient-to-r from-sky-50 to-sky-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-xl text-gray-800">اطلاعات کلی</h3>
-            <User className="h-8 w-8 text-blue-600" />
+            <User className="h-8 w-8 text-sky-600" />
           </div>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
@@ -122,15 +122,15 @@ export default function SummaryScreen({
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-100">
+        <div className="bg-gradient-to-r from-sky-50 to-pink-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-xl text-gray-800">آمار کلی انتخاب‌ها</h3>
-            <BarChart className="h-8 w-8 text-purple-600" />
+            <BarChart className="h-8 w-8 text-sky-600" />
           </div>
           <div className="text-center py-4">
-            <div className="text-5xl font-bold text-indigo-700 mb-2">{totalSelected}</div>
+            <div className="text-5xl font-bold text-sky-700 mb-2">{totalSelected}</div>
             <div className="text-gray-600">مورد انتخاب شده در کل</div>
-            <div className={`mt-2 text-sm font-medium ${isFormValid ? 'text-green-600' : 'text-red-600'}`}>
+            <div className={`mt-2 text-sm font-medium ${isFormValid ? 'text-sky-600' : 'text-red-600'}`}>
               {isFormValid 
                 ? `✓ در محدوده مجاز (${selectionRules.minTotal}-${selectionRules.maxTotal})` 
                 : `✗ خارج از محدوده مجاز`}
@@ -141,7 +141,7 @@ export default function SummaryScreen({
         <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border border-green-100">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-xl text-gray-800">والدین</h3>
-            <User className="h-8 w-8 text-green-600" />
+            <User className="h-8 w-8 text-sky-600" />
           </div>
           <div className="space-y-4">
             {renderParentInfo('father')}
@@ -184,7 +184,7 @@ export default function SummaryScreen({
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex items-center gap-3">
                     <h4 className="font-bold text-lg text-gray-800">{category.categoryTitle}</h4>
-                    <span className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm font-bold">
+                    <span className="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm font-bold">
                       {stats.selectedCount} / {category.questions.length}
                     </span>
                   </div>
@@ -194,7 +194,7 @@ export default function SummaryScreen({
                   <ul className="space-y-2 pr-4 max-h-40 overflow-y-auto">
                     {selectedQuestions.map(question => (
                       <li key={question.id} className="flex items-start gap-2">
-                        <div className="h-2 w-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
+                        <div className="h-2 w-2 rounded-full bg-sky-800 mt-2 flex-shrink-0"></div>
                         <span className="text-gray-700 text-sm">{question.text}</span>
                       </li>
                     ))}
@@ -227,7 +227,7 @@ export default function SummaryScreen({
         
         <button
           onClick={downloadData}
-          className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2 order-2 md:order-3"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2 order-2 md:order-3"
         >
           <Download className="h-5 w-5" />
           دانلود پاسخ‌ها

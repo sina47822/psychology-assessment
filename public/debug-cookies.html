@@ -1,0 +1,106 @@
+<!-- public/debug-cookies.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Cookies</title>
+</head>
+<body>
+    <h1>Debug Cookies and Session</h1>
+    
+    <div>
+        <button onclick="setTestCookie()">Set Test Cookie</button>
+        <button onclick="checkCookies()">Check Cookies</button>
+        <button onclick="checkSession()">Check Session</button>
+        <button onclick="clearAll()">Clear All</button>
+    </div>
+    
+    <div id="output" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+    
+    <script>
+        const API_BASE = 'http://localhost:8000/api/users';
+        
+        async function setTestCookie() {
+            try {
+                const response = await fetch(`${API_BASE}/test-cookie/`, {
+                    method: 'GET',
+                    credentials: 'include', // 🔥 این خط مهم است
+                    headers: {
+                        'Accept': 'application/json',
+                    }
+                });
+                
+                const data = await response.json();
+                document.getElementById('output').innerHTML = `
+                    <h3>Test Cookie Response:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                    <p>Response Headers:</p>
+                    <pre>${JSON.stringify(Object.fromEntries([...response.headers]), null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('output').innerHTML = `
+                    <h3>Error:</h3>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+        
+        function checkCookies() {
+            const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                const [name, value] = cookie.trim().split('=');
+                acc[name] = value;
+                return acc;
+            }, {});
+            
+            document.getElementById('output').innerHTML = `
+                <h3>Current Cookies:</h3>
+                <pre>${JSON.stringify(cookies, null, 2)}</pre>
+                <p>LocalStorage:</p>
+                <ul>
+                    <li>sessionid: ${localStorage.getItem('session_id') || 'Not set'}</li>
+                    <li>access_token: ${localStorage.getItem('access_token') ? 'Set' : 'Not set'}</li>
+                    <li>user: ${localStorage.getItem('user') ? 'Set' : 'Not set'}</li>
+                </ul>
+            `;
+        }
+        
+        async function checkSession() {
+            try {
+                const response = await fetch(`${API_BASE}/session/check/`, {
+                    method: 'GET',
+                    credentials: 'include',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('access_token') || ''}`
+                    }
+                });
+                
+                const data = await response.json();
+                document.getElementById('output').innerHTML = `
+                    <h3>Session Check Response:</h3>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (error) {
+                document.getElementById('output').innerHTML = `
+                    <h3>Session Check Error:</h3>
+                    <pre>${error.message}</pre>
+                `;
+            }
+        }
+        
+        function clearAll() {
+            // پاک کردن همه کوکی‌ها
+            document.cookie.split(";").forEach(function(c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+            
+            // پاک کردن localStorage
+            localStorage.clear();
+            
+            document.getElementById('output').innerHTML = '<p>All cookies and localStorage cleared!</p>';
+        }
+        
+        // اتوماتیک چک کن
+        window.onload = checkCookies;
+    </script>
+</body>
+</html>

@@ -61,7 +61,7 @@ export default function QuestionPage({
       <div className="mb-8">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
-            <div className="bg-indigo-100 text-indigo-800 w-10 h-10 rounded-full flex items-center justify-center font-bold">
+            <div className="bg-sky-100 text-sky-800 w-10 h-10 rounded-full flex items-center justify-center font-bold">
               {step}
             </div>
             <div>
@@ -75,19 +75,19 @@ export default function QuestionPage({
           </div>
         </div>
         
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <div className="bg-sky-50 border border-sky-200 rounded-lg p-4 mb-6">
           <div className="flex items-start gap-3">
-            <Info className="h-6 w-6 text-blue-600 mt-0.5 flex-shrink-0" />
+            <Info className="h-6 w-6 text-sky-600 mt-0.5 flex-shrink-0" />
             <div>
-              <p className="text-blue-800 font-medium mb-1">راهنمایی انتخاب:</p>
-              <p className="text-blue-700 text-sm">
+              <p className="text-sky-800 font-medium mb-1">راهنمایی انتخاب:</p>
+              <p className="text-sky-700 text-sm">
                 {category.description}
                 <span className="block mt-2 font-bold text-gray-800">
                   وضعیت کلی انتخاب‌ها: {totalSelected} از {selectionRules.maxTotal} مورد
                 </span>
                 {getStatusMessage() && (
                   <span className={`block mt-1 ${
-                    totalSelected >= selectionRules.minTotal ? 'text-green-600' : 'text-amber-600'
+                    totalSelected >= selectionRules.minTotal ? 'text-sky-600' : 'text-amber-600'
                   }`}>
                     {getStatusMessage()}
                   </span>
@@ -108,7 +108,7 @@ export default function QuestionPage({
               key={question.id}
               className={`flex items-start p-4 rounded-lg border transition-all duration-200 ${
                 isChecked
-                  ? 'border-indigo-300 bg-indigo-50'
+                  ? 'border-sky-300 bg-sky-50'
                   : isDisabled
                   ? 'border-gray-200 bg-gray-50'
                   : 'border-gray-200 bg-white hover:shadow-md'
@@ -140,27 +140,27 @@ export default function QuestionPage({
 
       <div className={`p-4 rounded-lg border mb-6 ${
         totalSelected >= selectionRules.minTotal && totalSelected <= selectionRules.maxTotal
-          ? 'bg-green-50 border-green-200'
+          ? 'bg-blue-50 border-green-200'
           : 'bg-red-50 border-red-200'
       }`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <AlertCircle className="h-6 w-6 text-blue-600" />
+            <AlertCircle className="h-6 w-6 text-sky-600" />
             <div>
-              <p className="text-blue-800 font-medium">وضعیت انتخاب‌ها:</p>
-              <p className="text-blue-700 text-sm">
+              <p className="text-sky-800 font-medium">وضعیت انتخاب‌ها:</p>
+              <p className="text-sky-700 text-sm">
                 در این بخش: {answers.length} مورد انتخاب شده است
               </p>
             </div>
           </div>
           <div className="text-center">
-            <div className="text-2xl font-bold text-indigo-700">{totalSelected}</div>
+            <div className="text-2xl font-bold text-sky-700">{totalSelected}</div>
             <div className="text-gray-600 text-sm">کل انتخاب‌ها</div>
           </div>
         </div>
         <p className={`text-sm mt-2 ${
           totalSelected >= selectionRules.minTotal && totalSelected <= selectionRules.maxTotal
-            ? 'text-green-600'
+            ? 'text-sky-600'
             : 'text-red-600'
         }`}>
           {totalSelected < selectionRules.minTotal
@@ -176,7 +176,7 @@ export default function QuestionPage({
           <div className="text-gray-600 text-center md:text-right order-2 md:order-1">
             <div className="flex flex-col md:flex-row items-center gap-2">
               <span>انتخاب‌های این بخش:</span>
-              <span className="font-bold text-indigo-700">
+              <span className="font-bold text-sky-700">
                 {answers.length} / {category.questions.length}
               </span>
             </div>

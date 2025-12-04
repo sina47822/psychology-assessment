@@ -1,355 +1,80 @@
+// app/page.tsx
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/providers/AuthProvider';
-import WelcomeScreen from '@/components/WelcomeScreen';
-import DemographicsScreen from '@/components/DemographicsScreen';
-import QuestionPage from '@/components/QuestionPage';
-import ProgressBar from '@/components/ProgressBar';
-import SummaryScreen from '@/components/SummaryScreen';
-import ConfirmationScreen from '@/components/ConfirmationScreen';
-import { UserAnswers, DemographicsData } from '@/types/types';
-import { selectionRules } from '@/data/welcomeData';
-import { APP_INFO, CONTACT_INFO } from '@/data/constants';
-import { scrollToTop } from '@/lib/utils';
-import category1 from '@/data/category1.json';
-import category2 from '@/data/category2.json';
-import category3 from '@/data/category3.json';
-import category4 from '@/data/category4.json';
-import category5 from '@/data/category5.json';
-import category6 from '@/data/category6.json';
-import category7 from '@/data/category7.json';
-import category8 from '@/data/category8.json';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import { Loader2 } from 'lucide-react';
 
-export default function Home() {
+export default function HomePage() {
   const router = useRouter();
   const { user, isLoading } = useAuth();
-  const [step, setStep] = useState<number>(0);
-  const [userAnswers, setUserAnswers] = useState<UserAnswers>({
-    1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: []
-  });
-  
-  const [demographics, setDemographics] = useState<DemographicsData>({
-    livingWith: '',
-    fatherLiving: false,
-    fatherAge: '',
-    fatherEducation: '',
-    fatherOccupation: '',
-    motherLiving: false,
-    motherAge: '',
-    motherEducation: '',
-    motherOccupation: '',
-    province: '',
-    city: '',
-    maritalStatus: ''
-  });
 
-  // هدایت به لاگین اگر کاربر لاگین نکرده
   useEffect(() => {
-    if (!isLoading && !user) {
-      router.push('/login');
+    // فقط اگر کاربر لاگین کرده است، به داشبورد هدایت شود
+    if (!isLoading && user) {
+      console.log('User is authenticated, redirecting to dashboard');
+      router.replace('/dashboard');
     }
   }, [user, isLoading, router]);
 
-  // بارگذاری دسته‌ها از JSON
-  const categories = [
-    { ...category1, id: 1 },
-    { ...category2, id: 2 },
-    { ...category3, id: 3 },
-    { ...category4, id: 4 },
-    { ...category5, id: 5 },
-    { ...category6, id: 6 },
-    { ...category7, id: 7 },
-    { ...category8, id: 8 }
-  ];
-
-  // ذخیره در localStorage برای حفظ وضعیت
-  useEffect(() => {
-    if (!user) return;
-    
-    const savedAnswers = localStorage.getItem(`assessment-answers-${user.id}`);
-    const savedDemographics = localStorage.getItem(`assessment-demographics-${user.id}`);
-    
-    if (savedAnswers) {
-      setUserAnswers(JSON.parse(savedAnswers));
-    }
-    if (savedDemographics) {
-      const parsed = JSON.parse(savedDemographics);
-      setDemographics(parsed);
-      
-      const fatherLiving = parsed.livingWith?.includes('پدر') || false;
-      const motherLiving = parsed.livingWith?.includes('مادر') || false;
-      
-      setDemographics(prev => ({
-        ...prev,
-        fatherLiving,
-        motherLiving
-      }));
-    }
-  }, [user]);
-
-  useEffect(() => {
-    if (!user) return;
-    localStorage.setItem(`assessment-answers-${user.id}`, JSON.stringify(userAnswers));
-  }, [userAnswers, user]);
-
-  useEffect(() => {
-    if (!user) return;
-    localStorage.setItem(`assessment-demographics-${user.id}`, JSON.stringify(demographics));
-  }, [demographics, user]);
-
-  const handleAnswerChange = (categoryId: number, questionId: number, isChecked: boolean) => {
-    setUserAnswers(prev => {
-      const categoryAnswers = [...prev[categoryId]];
-      
-      if (isChecked) {
-        if (!categoryAnswers.includes(questionId)) {
-          return { ...prev, [categoryId]: [...categoryAnswers, questionId] };
-        }
-      } else {
-        return { ...prev, [categoryId]: categoryAnswers.filter(id => id !== questionId) };
-      }
-      
-      return prev;
-    });
-  };
-
-  const handleDemographicsChange = (field: keyof DemographicsData, value: string) => {
-    setDemographics(prev => {
-      const newData = { ...prev, [field]: value };
-      
-      if (field === 'livingWith') {
-        const fatherLiving = value.includes('پدر');
-        const motherLiving = value.includes('مادر');
-        
-        return {
-          ...newData,
-          fatherLiving,
-          motherLiving,
-          ...(!fatherLiving && {
-            fatherAge: '',
-            fatherEducation: '',
-            fatherOccupation: ''
-          }),
-          ...(!motherLiving && {
-            motherAge: '',
-            motherEducation: '',
-            motherOccupation: ''
-          })
-        };
-      }
-      
-      return newData;
-    });
-  };
-
-  // بررسی اعتبار فرم دموگرافیک
-  const isDemographicsValid = () => {
-    const baseFieldsValid = demographics.livingWith && demographics.province && demographics.city && demographics.maritalStatus;
-    
-    if (!baseFieldsValid) return false;
-    
-    if (demographics.fatherLiving) {
-      if (!demographics.fatherAge || !demographics.fatherEducation || !demographics.fatherOccupation) {
-        return false;
-      }
-    }
-    
-    if (demographics.motherLiving) {
-      if (!demographics.motherAge || !demographics.motherEducation || !demographics.motherOccupation) {
-        return false;
-      }
-    }
-    
-    return true;
-  };
-
-  // محاسبه کل گزینه‌های انتخاب شده
-  const totalSelected = Object.values(userAnswers).flat().length;
-  
-  // بررسی اعتبار کل فرم
-  const isFormValid = () => {
-    return totalSelected >= selectionRules.minTotal && totalSelected <= selectionRules.maxTotal;
-  };
-
-  const handleNext = () => {
-    if (step < categories.length + 2) {
-      setStep(step + 1);
-      scrollToTop(); // اسکرول به بالای صفحه
-    }
-  };
-
-  const handlePrev = () => {
-    if (step > 0) {
-      setStep(step - 1);
-      scrollToTop(); // اسکرول به بالای صفحه
-    }
-  };
-
-  const handleStart = () => {
-    setStep(1);
-    scrollToTop(); // اسکرول به بالای صفحه
-  };
-
-  const handleReset = () => {
-    setStep(0);
-    setUserAnswers({
-      1: [], 2: [], 3: [], 4: [], 5: [], 6: [], 7: [], 8: []
-    });
-    setDemographics({
-      livingWith: '',
-      fatherLiving: false,
-      fatherAge: '',
-      fatherEducation: '',
-      fatherOccupation: '',
-      motherLiving: false,
-      motherAge: '',
-      motherEducation: '',
-      motherOccupation: '',
-      province: '',
-      city: '',
-      maritalStatus: ''
-    });
-    
-    if (user) {
-      localStorage.removeItem(`assessment-answers-${user.id}`);
-      localStorage.removeItem(`assessment-demographics-${user.id}`);
-    }
-  };
-
-  const handleSubmitToBackend = async () => {
-    if (!user) return;
-    
-    const submissionData = {
-      userId: user.id,
-      demographics,
-      answers: userAnswers,
-      totalSelected,
-      timestamp: new Date().toISOString(),
-      summary: {
-        categories: categories.map(category => ({
-          title: category.categoryTitle,
-          selected: userAnswers[category.id]?.length || 0
-        }))
-      }
-    };
-    
-    console.log('داده‌های ارسالی:', submissionData);
-    
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      alert('پاسخ‌های شما با موفقیت ثبت شد. نتایج تحلیلی به زودی ارائه خواهد شد.');
-      setStep(categories.length + 3);
-      
-      // ذخیره در localStorage
-      localStorage.setItem(`assessment-completed-${user.id}`, JSON.stringify(submissionData));
-    } catch (error) {
-      console.error('خطا در ارسال:', error);
-      alert('خطا در ثبت پاسخ‌ها. لطفاً مجدداً تلاش کنید.');
-    }
-  };
-
-  // مراحل: 0=خوش‌آمدگویی, 1=دموگرافیک, 2-9=سوالات, 10=خلاصه, 11=تأیید
-  const totalSteps = categories.length + 3;
-
-  // نمایش صفحه loading در حال بررسی احراز هویت
-  if (isLoading || !user) {
+  if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">در حال بارگذاری...</p>
-        </div>
+      <div className="min-h-screen flex flex-col items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-sky-600" />
+        <p className="mt-4 text-gray-600">در حال بارگذاری...</p>
       </div>
     );
   }
 
-  return (
-    <main className="min-h-screen p-4 md:p-6">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-8 text-center">
-          <div className="flex justify-between items-center mb-4">
-            <div className="text-left">
-              <p className="text-sm text-gray-600">خوش آمدید،</p>
-              <p className="font-bold text-gray-800">{user?.fullName}</p>
-            </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-              سامانه ارزیابی رفتاری نوجوانان
-            </h1>
-          </div>
-          <p className="text-gray-600">
-            شناخت چالش‌ها، قدم اول برای بهبود است
-          </p>
-        </header>
-
-        <ProgressBar currentStep={step} totalSteps={categories.length + 3} />
-
-        <div className="card mt-6 min-h-[500px]">
-          {step === 0 && <WelcomeScreen onStart={handleStart} />}
-          
-          {step === 1 && (
-            <DemographicsScreen
-              demographics={demographics}
-              onChange={handleDemographicsChange}
-              onNext={handleNext}
-              onPrev={handlePrev}
-              isValid={isDemographicsValid()}
-            />
-          )}
-          
-          {step > 1 && step <= categories.length + 1 && (
-            <QuestionPage
-              category={categories[step - 2]}
-              answers={userAnswers[categories[step - 2].id] || []}
-              onAnswerChange={handleAnswerChange}
-              step={step - 1}
-              totalSteps={categories.length}
-              onNext={handleNext}
-              onPrev={handlePrev}
-              totalSelected={totalSelected}
-              selectionRules={selectionRules}
-            />
-          )}
-          
-          {step === categories.length + 2 && (
-            <SummaryScreen
-              categories={categories}
-              userAnswers={userAnswers}
-              demographics={demographics}
-              onReset={handleReset}
-              onPrev={() => {
-                setStep(categories.length + 1);
-                scrollToTop();
-              }}
-              onSubmit={handleSubmitToBackend}
-              totalSelected={totalSelected}
-              isFormValid={isFormValid()}
-              selectionRules={selectionRules}
-            />
-          )}
-          
-          {step === categories.length + 3 && (
-            <ConfirmationScreen
-              demographics={demographics}
-              userAnswers={userAnswers}
-              totalSelected={totalSelected}
-              onReset={handleReset}
-            />
-          )}
-        </div>
-
-        <footer className="mt-8 text-center text-gray-500 text-sm">
-          <p>تمامی اطلاعات شما محرمانه باقی خواهد ماند و فقط برای ارائه خدمات مشاوره‌ای استفاده می‌شود.</p>
-          <p className="mt-1">
-            ورژن {APP_INFO.version} | آخرین بروزرسانی: {APP_INFO.lastUpdate} | 
-            پشتیبانی: {CONTACT_INFO.supportPhone}
-          </p>
-          <p className="mt-1 text-xs text-gray-400">
-            {CONTACT_INFO.organization} © {APP_INFO.currentYear}
-          </p>
-        </footer>
+  // اگر کاربر لاگین کرده بود، این بخش نمایش داده نمی‌شود (به دشبورد ریدایرکت شده)
+  if (user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="h-12 w-12 animate-spin text-sky-600" />
       </div>
-    </main>
+    );
+  }
+
+  // صفحه اصلی فقط برای کاربران لاگین نکرده
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <main className="flex-1 flex flex-col items-center justify-center p-8">
+        <div className="max-w-4xl text-center">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+            سامانه ارزیابی نوجوانان
+          </h1>
+          <p className="text-lg text-gray-600 mb-8">
+            سیستم تخصصی ارزیابی و تحلیل ویژگی‌های رفتاری نوجوانان
+          </p>
+          <div className="bg-gradient-to-r from-sky-50 to-blue-50 rounded-2xl p-8 shadow-lg">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-4">
+              خوش آمدید
+            </h2>
+            <p className="text-gray-700 mb-6">
+              برای شروع ارزیابی، لطفاً وارد حساب کاربری خود شوید یا ثبت‌نام کنید.
+            </p>
+            <div className="flex justify-center gap-4">
+              <button
+                onClick={() => router.push('/login')}
+                className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+              >
+                ورود به سیستم
+              </button>
+              <button
+                onClick={() => router.push('/register')}
+                className="bg-white hover:bg-gray-50 text-sky-600 border border-sky-600 px-6 py-3 rounded-lg font-medium transition-colors"
+              >
+                ثبت‌نام
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
   );
 }

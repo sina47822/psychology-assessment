@@ -40,8 +40,8 @@ export default function SummaryScreen({
   return (
     <div className="p-6">
       <div className="text-center mb-10">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
-          <Check className="h-8 w-8 text-green-600" />
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-sky-100 rounded-full mb-4">
+          <Check className="h-8 w-8 text-sky-600" />
         </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-3">تأیید پاسخ‌های شما</h2>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -62,21 +62,21 @@ export default function SummaryScreen({
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 p-6 rounded-xl border border-blue-100">
+        <div className="bg-gradient-to-r from-sky-50 to-sky-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-xl text-gray-800">آمار کلی</h3>
-            <FileText className="h-8 w-8 text-blue-600" />
+            <FileText className="h-8 w-8 text-sky-600" />
           </div>
           <div className="text-center py-4">
-            <div className="text-5xl font-bold text-indigo-700 mb-2">{totalSelected}</div>
+            <div className="text-5xl font-bold text-sky-700 mb-2">{totalSelected}</div>
             <div className="text-gray-600">مورد انتخاب شده در کل</div>
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-100">
+        <div className="bg-gradient-to-r from-sky-50 to-pink-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-xl text-gray-800">دسته‌بندی‌ها</h3>
-            <Check className="h-8 w-8 text-purple-600" />
+            <Check className="h-8 w-8 text-sky-600" />
           </div>
           <div className="space-y-3">
             {categories.map(category => {
@@ -107,7 +107,7 @@ export default function SummaryScreen({
               <div key={category.id} className="border border-gray-200 rounded-lg p-5">
                 <div className="flex justify-between items-center mb-4">
                   <h4 className="font-bold text-lg text-gray-800">{category.title}</h4>
-                  <span className="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-sm">
+                  <span className="bg-sky-100 text-sky-800 px-3 py-1 rounded-full text-sm">
                     {stats.selectedCount} مورد
                   </span>
                 </div>
@@ -116,7 +116,7 @@ export default function SummaryScreen({
                   <ul className="space-y-2 pr-4">
                     {selectedQuestions.map(question => (
                       <li key={question.id} className="flex items-start gap-2">
-                        <div className="h-2 w-2 rounded-full bg-indigo-500 mt-2 flex-shrink-0"></div>
+                        <div className="h-2 w-2 rounded-full bg-sky-500 mt-2 flex-shrink-0"></div>
                         <span className="text-gray-700">{question.text}</span>
                       </li>
                     ))}
@@ -141,7 +141,7 @@ export default function SummaryScreen({
         
         <button
           onClick={downloadAnswers}
-          className="bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 order-2"
+          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 shadow-md hover:shadow-lg flex items-center justify-center gap-2 order-2"
         >
           <Download className="h-5 w-5" />
           دانلود پاسخ‌ها

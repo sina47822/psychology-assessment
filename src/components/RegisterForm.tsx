@@ -1,3 +1,5 @@
+// src\components\RegisterForm.tsx
+
 'use client';
 
 import { useState } from 'react';
@@ -190,7 +192,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
     if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
     
     const texts = ['خیلی ضعیف', 'ضعیف', 'متوسط', 'قوی', 'خیلی قوی'];
-    const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-blue-500', 'bg-green-500'];
+    const colors = ['bg-red-500', 'bg-sky-500', 'bg-yellow-500', 'bg-sky-500', 'bg-sky-800'];
     
     return { score, text: texts[score - 1] || '', color: colors[score - 1] || 'bg-red-500' };
   };
@@ -210,7 +212,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             onClick={() => setRegistrationMethod('email')}
             className={`p-4 rounded-lg border transition-all duration-200 flex flex-col items-center gap-2 ${
               registrationMethod === 'email'
-                ? 'border-blue-500 bg-blue-50 text-blue-700'
+                ? 'border-sky-500 bg-sky-50 text-sky-700'
                 : 'border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700'
             }`}
           >
@@ -223,7 +225,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             onClick={() => setRegistrationMethod('username')}
             className={`p-4 rounded-lg border transition-all duration-200 flex flex-col items-center gap-2 ${
               registrationMethod === 'username'
-                ? 'border-blue-500 bg-blue-50 text-blue-700'
+                ? 'border-sky-500 bg-sky-50 text-sky-700'
                 : 'border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700'
             }`}
           >
@@ -236,7 +238,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             onClick={() => setRegistrationMethod('phone')}
             className={`p-4 rounded-lg border transition-all duration-200 flex flex-col items-center gap-2 ${
               registrationMethod === 'phone'
-                ? 'border-blue-500 bg-blue-50 text-blue-700'
+                ? 'border-sky-500 bg-sky-50 text-sky-700'
                 : 'border-gray-200 bg-gray-50 hover:bg-gray-100 text-gray-700'
             }`}
           >
@@ -262,10 +264,10 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.firstName}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
                 validation.firstName.touched
                   ? validation.firstName.isValid
-                    ? 'border-green-500 bg-green-50'
+                    ? 'border-green-500 bg-blue-50'
                     : 'border-red-500 bg-red-50'
                   : 'border-gray-300'
               }`}
@@ -276,7 +278,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.firstName.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.firstName.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -304,10 +306,10 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.lastName}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
                 validation.lastName.touched
                   ? validation.lastName.isValid
-                    ? 'border-green-500 bg-green-50'
+                    ? 'border-green-500 bg-blue-50'
                     : 'border-red-500 bg-red-50'
                   : 'border-gray-300'
               }`}
@@ -318,7 +320,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.lastName.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.lastName.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -349,10 +351,10 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.email}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
                 validation.email.touched
                   ? validation.email.isValid
-                    ? 'border-green-500 bg-green-50'
+                    ? 'border-green-500 bg-blue-50'
                     : 'border-red-500 bg-red-50'
                   : 'border-gray-300'
               }`}
@@ -363,7 +365,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.email.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.email.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -393,10 +395,10 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.username}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
                 validation.username.touched
                   ? validation.username.isValid
-                    ? 'border-green-500 bg-green-50'
+                    ? 'border-green-500 bg-blue-50'
                     : 'border-red-500 bg-red-50'
                   : 'border-gray-300'
               }`}
@@ -407,7 +409,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.username.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.username.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -437,10 +439,10 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
               value={formData.phone}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+              className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
                 validation.phone.touched
                   ? validation.phone.isValid
-                    ? 'border-green-500 bg-green-50'
+                    ? 'border-green-500 bg-blue-50'
                     : 'border-red-500 bg-red-50'
                   : 'border-gray-300'
               }`}
@@ -451,7 +453,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             {validation.phone.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.phone.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -484,10 +486,10 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             value={formData.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+            className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
               validation.password.touched
                 ? validation.password.isValid
-                  ? 'border-green-500 bg-green-50'
+                  ? 'border-green-500 bg-blue-50'
                   : 'border-red-500 bg-red-50'
                 : 'border-gray-300'
             }`}
@@ -505,7 +507,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
           {validation.password.touched && (
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
               {validation.password.isValid ? (
-                <Check className="h-5 w-5 text-green-500" />
+                <Check className="h-5 w-5 text-sky-500" />
               ) : (
                 <X className="h-5 w-5 text-red-500" />
               )}
@@ -519,8 +521,8 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             <div className="flex justify-between items-center mb-1">
               <span className="text-xs text-gray-600">قدرت رمز عبور:</span>
               <span className={`text-xs font-medium ${
-                passwordStrength.score >= 4 ? 'text-green-600' :
-                passwordStrength.score >= 3 ? 'text-blue-600' :
+                passwordStrength.score >= 4 ? 'text-sky-600' :
+                passwordStrength.score >= 3 ? 'text-sky-600' :
                 passwordStrength.score >= 2 ? 'text-yellow-600' :
                 'text-red-600'
               }`}>
@@ -540,23 +542,23 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
         <div className="mt-3 space-y-1">
           <p className="text-sm text-gray-600">رمز عبور باید شامل:</p>
           <ul className="text-xs text-gray-500 space-y-1 pr-4">
-            <li className={`flex items-center gap-1 ${formData.password.length >= 8 ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${formData.password.length >= 8 ? 'text-sky-600' : ''}`}>
               {formData.password.length >= 8 ? <Check className="h-3 w-3" /> : '○'}
               حداقل ۸ کاراکتر
             </li>
-            <li className={`flex items-center gap-1 ${/[A-Z]/.test(formData.password) ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/[A-Z]/.test(formData.password) ? 'text-sky-600' : ''}`}>
               {/[A-Z]/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک حرف بزرگ
             </li>
-            <li className={`flex items-center gap-1 ${/[a-z]/.test(formData.password) ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/[a-z]/.test(formData.password) ? 'text-sky-600' : ''}`}>
               {/[a-z]/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک حرف کوچک
             </li>
-            <li className={`flex items-center gap-1 ${/\d/.test(formData.password) ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/\d/.test(formData.password) ? 'text-sky-600' : ''}`}>
               {/\d/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک عدد
             </li>
-            <li className={`flex items-center gap-1 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-sky-600' : ''}`}>
               {/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک نماد ویژه
             </li>
@@ -579,10 +581,10 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
             value={formData.confirmPassword}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all ${
+            className={`w-full p-3 pl-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all ${
               validation.confirmPassword.touched
                 ? validation.confirmPassword.isValid
-                  ? 'border-green-500 bg-green-50'
+                  ? 'border-green-500 bg-blue-50'
                   : 'border-red-500 bg-red-50'
                 : 'border-gray-300'
             }`}
@@ -600,7 +602,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
           {validation.confirmPassword.touched && (
             <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
               {validation.confirmPassword.isValid ? (
-                <Check className="h-5 w-5 text-green-500" />
+                <Check className="h-5 w-5 text-sky-500" />
               ) : (
                 <X className="h-5 w-5 text-red-500" />
               )}
@@ -679,7 +681,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
       )}
 
       {success && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+        <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg">
           {success}
         </div>
       )}
@@ -688,10 +690,10 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
       <button
         type="submit"
         disabled={isLoading || !isFormValid()}
-        className={`w-full bg-indigo-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 ${
+        className={`w-full bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 ${
           isLoading || !isFormValid()
             ? 'opacity-50 cursor-not-allowed'
-            : 'hover:bg-indigo-700 shadow-md hover:shadow-lg'
+            : 'hover:bg-sky-700 shadow-md hover:shadow-lg'
         }`}
       >
         {isLoading ? (
@@ -709,7 +711,7 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
         قبلاً حساب کاربری دارید؟{' '}
         <Link 
           href="/login" 
-          className="text-indigo-600 font-medium hover:text-indigo-800 transition-colors"
+          className="text-sky-600 font-medium hover:text-sky-800 transition-colors"
         >
           وارد شوید
         </Link>
@@ -719,11 +721,11 @@ export default function RegisterForm({ onSubmit, isLoading, error, success }: Re
       <div className="pt-4 border-t border-gray-200">
         <p className="text-xs text-gray-500 text-center">
           با ثبت‌نام، شما با{' '}
-          <Link href="/terms" className="text-indigo-600 hover:text-indigo-800">
+          <Link href="/terms" className="text-sky-600 hover:text-sky-800">
             شرایط استفاده
           </Link>{' '}
           و{' '}
-          <Link href="/privacy" className="text-indigo-600 hover:text-indigo-800">
+          <Link href="/privacy" className="text-sky-600 hover:text-sky-800">
             حریم خصوصی
           </Link>{' '}
           موافقت می‌کنید

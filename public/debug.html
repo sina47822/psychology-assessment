@@ -1,0 +1,45 @@
+<!-- در public/debug.html یک فایل ایجاد کنید -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Auth</title>
+</head>
+<body>
+    <h1>Debug Authentication</h1>
+    <button onclick="checkAuth()">Check Auth Status</button>
+    <button onclick="clearAuth()">Clear Auth</button>
+    <button onclick="goToDashboard()">Go to Dashboard</button>
+    
+    <div id="output" style="margin-top: 20px; padding: 10px; background: #f0f0f0;"></div>
+    
+    <script>
+        function checkAuth() {
+            const output = document.getElementById('output');
+            output.innerHTML = `
+                <h3>Authentication Status:</h3>
+                <p>Access Token: ${localStorage.getItem('access_token') ? '✅ Present' : '❌ Missing'}</p>
+                <p>User: ${localStorage.getItem('user') ? '✅ Present' : '❌ Missing'}</p>
+                <p>Current URL: ${window.location.href}</p>
+                <p>User Data: ${localStorage.getItem('user')}</p>
+            `;
+        }
+        
+        function clearAuth() {
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            localStorage.removeItem('token_expires_at');
+            localStorage.removeItem('user');
+            sessionStorage.clear();
+            alert('Auth cleared!');
+            checkAuth();
+        }
+        
+        function goToDashboard() {
+            window.location.href = '/dashboard';
+        }
+        
+        // Auto check on load
+        window.onload = checkAuth;
+    </script>
+</body>
+</html>

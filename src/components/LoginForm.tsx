@@ -44,7 +44,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
             type="text"
             value={identifier}
             onChange={(e) => setIdentifier(e.target.value)}
-            className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+            className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
             placeholder="example@email.com یا username یا 09123456789"
             required
             dir="ltr"
@@ -67,7 +67,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+            className="w-full p-3 pl-12 text-right border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all"
             placeholder="رمز عبور"
             required
             dir="ltr"
@@ -76,7 +76,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
         <div className="mt-2">
           <Link 
             href="/forgot-password" 
-            className="text-sm text-indigo-600 hover:text-indigo-800 transition-colors"
+            className="text-sm text-sky-600 hover:text-sky-800 transition-colors"
           >
             رمز عبور را فراموش کرده‌اید؟
           </Link>
@@ -93,10 +93,10 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
         <button
           type="submit"
           disabled={isLoading}
-          className={`w-full bg-indigo-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 ${
+          className={`w-full bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 ${
             isLoading 
               ? 'opacity-50 cursor-not-allowed' 
-              : 'hover:bg-indigo-700 shadow-md hover:shadow-lg'
+              : 'hover:bg-sky-700 shadow-md hover:shadow-lg'
           }`}
         >
           {isLoading ? (
@@ -113,7 +113,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
           حساب کاربری ندارید؟{' '}
           <Link 
             href="/register" 
-            className="text-indigo-600 font-medium hover:text-indigo-800 transition-colors"
+            className="text-sky-600 font-medium hover:text-sky-800 transition-colors"
           >
             ثبت نام کنید
           </Link>

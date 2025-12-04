@@ -1,0 +1,169 @@
+<!-- public/debug-session.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced Session Debug</title>
+</head>
+<body>
+    <h1>Advanced Session Debug</h1>
+    
+    <div style="margin: 20px 0;">
+        <button onclick="getSessionInfo()">Get Session Info (GET)</button>
+        <button onclick="setSession()">Set Session (POST)</button>
+        <button onclick="clearAll()">Clear All</button>
+        <button onclick="testLogin()">Test Login</button>
+    </div>
+    
+    <div style="display: flex; gap: 20px;">
+        <div style="flex: 1; padding: 10px; background: #f0f0f0;">
+            <h3>Cookies:</h3>
+            <pre id="cookies"></pre>
+        </div>
+        <div style="flex: 1; padding: 10px; background: #e6f7ff;">
+            <h3>LocalStorage:</h3>
+            <pre id="localStorage"></pre>
+        </div>
+        <div style="flex: 2; padding: 10px; background: #e6ffe6;">
+            <h3>Response:</h3>
+            <pre id="response"></pre>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE = 'http://localhost:8000/api/users';
+        
+        async function fetchWithCredentials(url, options = {}) {
+            const defaultOptions = {
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+            };
+            
+            return fetch(url, { ...defaultOptions, ...options });
+        }
+        
+        async function getSessionInfo() {
+            try {
+                const response = await fetchWithCredentials(`${API_BASE}/debug-session/`);
+                const data = await response.json();
+                
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+                updateCookies();
+                updateLocalStorage();
+                
+                console.log('GET Response headers:', Object.fromEntries([...response.headers]));
+            } catch (error) {
+                document.getElementById('response').textContent = `Error: ${error.message}`;
+            }
+        }
+        
+        async function setSession() {
+            try {
+                const response = await fetchWithCredentials(`${API_BASE}/debug-session/`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        key: 'test_data',
+                        value: 'Hello from client!',
+                    }),
+                });
+                
+                const data = await response.json();
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+                updateCookies();
+                updateLocalStorage();
+                
+                console.log('POST Response headers:', Object.fromEntries([...response.headers]));
+                console.log('Set-Cookie header:', response.headers.get('Set-Cookie'));
+            } catch (error) {
+                document.getElementById('response').textContent = `Error: ${error.message}`;
+            }
+        }
+        
+        async function testLogin() {
+            try {
+                const response = await fetchWithCredentials(`${API_BASE}/login/`, {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        username: 's',
+                        password: '1',
+                    }),
+                });
+                
+                const data = await response.json();
+                document.getElementById('response').textContent = JSON.stringify(data, null, 2);
+                
+                // نمایش هدرها
+                console.log('Response headers:', Object.fromEntries([...response.headers]));
+                // اضافه کردن هدرها به نمایش
+                const headersDiv = document.createElement('div');
+                headersDiv.innerHTML = `<h4>Response Headers:</h4><pre>${JSON.stringify(Object.fromEntries([...response.headers]), null, 2)}</pre>`;
+                document.getElementById('response').appendChild(headersDiv);
+                
+                // ذخیره در localStorage
+                if (data.user) {
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    localStorage.setItem('access_token', data.access);
+                    localStorage.setItem('refresh_token', data.refresh);
+                    localStorage.setItem('session_id', data.session_id || 'null');
+                }
+                
+                updateCookies();
+                updateLocalStorage();
+                
+            } catch (error) {
+                document.getElementById('response').textContent = `Login Error: ${error.message}`;
+            }
+        }
+        
+        function updateCookies() {
+            const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                const [name, value] = cookie.trim().split('=');
+                acc[name] = value;
+                return acc;
+            }, {});
+            
+            document.getElementById('cookies').textContent = JSON.stringify(cookies, null, 2);
+        }
+        
+        function updateLocalStorage() {
+            const lsData = {
+                user: localStorage.getItem('user'),
+                access_token: localStorage.getItem('access_token') ? 'Present' : 'Missing',
+                refresh_token: localStorage.getItem('refresh_token') ? 'Present' : 'Missing',
+                session_id: localStorage.getItem('session_id') || 'Missing',
+            };
+            
+            document.getElementById('localStorage').textContent = JSON.stringify(lsData, null, 2);
+        }
+        
+        function clearAll() {
+            // پاک کردن همه کوکی‌ها
+            document.cookie.split(";").forEach(function(c) {
+                document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+            });
+            
+            // پاک کردن localStorage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            updateCookies();
+            updateLocalStorage();
+            document.getElementById('response').textContent = 'All cleared!';
+        }
+        
+        // اتوماتیک به‌روزرسانی
+        setInterval(() => {
+            updateCookies();
+            updateLocalStorage();
+        }, 1000);
+        
+        window.onload = () => {
+            updateCookies();
+            updateLocalStorage();
+            getSessionInfo();
+        };
+    </script>
+</body>
+</html>

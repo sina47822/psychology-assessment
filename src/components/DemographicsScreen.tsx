@@ -78,7 +78,7 @@ export default function DemographicsScreen({
             onClick={() => toggleDropdown(field)}
             className={`w-full p-3 text-right rounded-lg border transition-all duration-200 flex items-center justify-between ${
               selectedValue
-                ? 'border-blue-500 bg-blue-50 text-blue-700 font-medium'
+                ? 'border-sky-500 bg-sky-50 text-sky-700 font-medium'
                 : 'border-gray-300 bg-white text-gray-700 hover:border-gray-400'
             }`}
           >
@@ -91,14 +91,14 @@ export default function DemographicsScreen({
           </button>
           
           {isOpen && (
-            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+            <div className="absolute z-10 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg  overflow-y-auto">
               {options.map((option, index) => (
                 <button
                   key={index}
                   type="button"
                   onClick={() => handleSelect(field, option)}
                   className={`w-full p-3 text-right hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-b-0 ${
-                    selectedValue === option ? 'bg-blue-50 text-blue-700 font-medium' : 'text-gray-700'
+                    selectedValue === option ? 'bg-sky-50 text-sky-700 font-medium' : 'text-gray-700'
                   }`}
                 >
                   {option}
@@ -109,8 +109,8 @@ export default function DemographicsScreen({
         </div>
         
         {selectedValue && (
-          <div className="mt-2 p-2 bg-green-50 border border-green-200 rounded">
-            <p className="text-green-700 text-sm flex items-center gap-2">
+          <div className="mt-2 p-2 bg-blue-50 border border-green-200 rounded">
+            <p className="text-sky-700 text-sm flex items-center gap-2">
               <span className="font-medium">انتخاب شما:</span>
               {selectedValue}
             </p>
@@ -126,6 +126,7 @@ export default function DemographicsScreen({
     if (!isLiving) return null;
     
     const prefix = parentType === 'father' ? 'پدر' : 'مادر';
+    
     const fields = {
       age: `${parentType}Age` as keyof DemographicsData,
       education: `${parentType}Education` as keyof DemographicsData,
@@ -133,36 +134,36 @@ export default function DemographicsScreen({
     };
     
     return (
-      <div className="space-y-6 mt-6 border-r-4 border-blue-500 pr-4">
+      <div className="space-y-6 mt-6 border-r-4 border-sky-500 pr-4">
         <h3 className="text-lg font-bold text-gray-800 mb-4">
           اطلاعات {prefix}
         </h3>
         
         {/* سن */}
         {renderDropdown(
-          fields.age,
-          demographicsQuestions[fields.age].question,
-          demographicsQuestions[fields.age].options,
+          `${parentType}Age` as keyof DemographicsData,
+          demographicsQuestions[`${parentType}Age`].question,
+          demographicsQuestions[`${parentType}Age`].options,
           <User className="h-5 w-5 text-gray-600" />,
-          demographics[fields.age]
+          demographics[`${parentType}Age`] as string
         )}
         
         {/* تحصیلات */}
         {renderDropdown(
-          fields.education,
-          demographicsQuestions[fields.education].question,
-          demographicsQuestions[fields.education].options,
+          `${parentType}Education` as keyof DemographicsData,
+          demographicsQuestions[`${parentType}Education`].question,
+          demographicsQuestions[`${parentType}Education`].options,
           <GraduationCap className="h-5 w-5 text-gray-600" />,
-          demographics[fields.education]
+          demographics[`${parentType}Education`] as string
         )}
         
         {/* شغل */}
         {renderDropdown(
-          fields.occupation,
-          demographicsQuestions[fields.occupation].question,
-          demographicsQuestions[fields.occupation].options,
+          `${parentType}Occupation` as keyof DemographicsData,
+          demographicsQuestions[`${parentType}Occupation`].question,
+          demographicsQuestions[`${parentType}Occupation`].options,
           <Briefcase className="h-5 w-5 text-gray-600" />,
-          demographics[fields.occupation]
+          demographics[`${parentType}Occupation`] as string
         )}
       </div>
     );
@@ -171,8 +172,8 @@ export default function DemographicsScreen({
   return (
     <div className="p-6">
       <div className="text-center mb-8">
-        <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
-          <User className="h-8 w-8 text-blue-600" />
+        <div className="inline-flex items-center justify-center w-16 h-16 bg-sky-100 rounded-full mb-4">
+          <User className="h-8 w-8 text-sky-600" />
         </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-3">اطلاعات دموگرافیک</h2>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -181,25 +182,210 @@ export default function DemographicsScreen({
       </div>
 
       <div className="space-y-8 overflow-y-auto pr-2">
-        {/* سوال اول: زندگی با چه کسی */}
+        {/* بخش ۱: اطلاعات نوجوان */}
+        <div className="space-y-6 border-r-4 border-green-500 pr-4">
+          <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <User className="h-6 w-6 text-sky-600" />
+            اطلاعات نوجوان
+          </h3>
+          
+          {/* سن نوجوان */}
+          {renderDropdown(
+            'age',
+            demographicsQuestions.age.question,
+            demographicsQuestions.age.options,
+            <User className="h-5 w-5 text-gray-600" />,
+            demographics.age
+          )}
+          
+          {/* تحصیلات نوجوان */}
+          {renderDropdown(
+            'education',
+            demographicsQuestions.education.question,
+            demographicsQuestions.education.options,
+            <GraduationCap className="h-5 w-5 text-gray-600" />,
+            demographics.education
+          )}
+          
+          {/* وضعیت نوجوان */}
+          {renderDropdown(
+            'occupation',
+            demographicsQuestions.occupation.question,
+            demographicsQuestions.occupation.options,
+            <Briefcase className="h-5 w-5 text-gray-600" />,
+            demographics.occupation
+          )}
+        </div>
+
+        {/* بخش ۲: سوال اول: زندگی با چه کسی */}
         {renderDropdown(
           'livingWith',
           demographicsQuestions.livingWith.question,
           demographicsQuestions.livingWith.options,
-          <Home className="h-6 w-6 text-blue-600" />,
+          <Home className="h-6 w-6 text-sky-600" />,
           demographics.livingWith
         )}
 
-        {/* اطلاعات پدر (اگر زندگی می‌کند) */}
-        {renderParentSection('father')}
+        {/* بخش ۳: وضعیت زندگی والدین */}
+        <div className="space-y-4">
+          <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
+            <Users className="h-6 w-6 text-sky-600" />
+            وضعیت والدین
+          </h3>
+          
+          {/* پدر زنده است؟ */}
+          <div className="mb-4">
+            <div className="flex items-center gap-2 mb-3">
+              <User className="h-5 w-5 text-gray-600" />
+              <label className="text-gray-700 font-medium">آیا پدر زنده است؟</label>
+            </div>
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={() => onChange('fatherLiving', true)}
+                className={`flex-1 p-3 rounded-lg border transition-all ${
+                  demographics.fatherLiving 
+                    ? 'bg-sky-100 border-green-500 text-sky-700 font-medium' 
+                    : 'border-gray-300 bg-white hover:border-gray-400'
+                }`}
+              >
+                بله
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onChange('fatherLiving', false);
+                  // پاک کردن اطلاعات پدر اگر زنده نیست
+                  onChange('fatherAge', '');
+                  onChange('fatherEducation', '');
+                  onChange('fatherOccupation', '');
+                }}
+                className={`flex-1 p-3 rounded-lg border transition-all ${
+                  !demographics.fatherLiving 
+                    ? 'bg-red-100 border-red-500 text-red-700 font-medium' 
+                    : 'border-gray-300 bg-white hover:border-gray-400'
+                }`}
+              >
+                خیر
+              </button>
+            </div>
+          </div>
 
-        {/* اطلاعات مادر (اگر زندگی می‌کند) */}
-        {renderParentSection('mother')}
+          {/* مادر زنده است؟ */}
+          <div className="mb-4">
+            <div className="flex items-center gap-2 mb-3">
+              <User className="h-5 w-5 text-gray-600" />
+              <label className="text-gray-700 font-medium">آیا مادر زنده است؟</label>
+            </div>
+            <div className="flex gap-4">
+              <button
+                type="button"
+                onClick={() => onChange('motherLiving', true)}
+                className={`flex-1 p-3 rounded-lg border transition-all ${
+                  demographics.motherLiving 
+                    ? 'bg-sky-100 border-green-500 text-sky-700 font-medium' 
+                    : 'border-gray-300 bg-white hover:border-gray-400'
+                }`}
+              >
+                بله
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  onChange('motherLiving', false);
+                  // پاک کردن اطلاعات مادر اگر زنده نیست
+                  onChange('motherAge', '');
+                  onChange('motherEducation', '');
+                  onChange('motherOccupation', '');
+                }}
+                className={`flex-1 p-3 rounded-lg border transition-all ${
+                  !demographics.motherLiving 
+                    ? 'bg-red-100 border-red-500 text-red-700 font-medium' 
+                    : 'border-gray-300 bg-white hover:border-gray-400'
+                }`}
+              >
+                خیر
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* بخش ۴: اطلاعات پدر (اگر زندگی می‌کند) */}
+        {demographics.fatherLiving && (
+          <div className="space-y-6 border-r-4 border-sky-500 pr-4">
+            <h3 className="text-lg font-bold text-gray-800 mb-4">
+              اطلاعات پدر
+            </h3>
+            
+            {/* سن پدر */}
+            {renderDropdown(
+              'fatherAge',
+              demographicsQuestions.fatherAge.question,
+              demographicsQuestions.fatherAge.options,
+              <User className="h-5 w-5 text-gray-600" />,
+              demographics.fatherAge
+            )}
+            
+            {/* تحصیلات پدر */}
+            {renderDropdown(
+              'fatherEducation',
+              demographicsQuestions.fatherEducation.question,
+              demographicsQuestions.fatherEducation.options,
+              <GraduationCap className="h-5 w-5 text-gray-600" />,
+              demographics.fatherEducation
+            )}
+            
+            {/* شغل پدر */}
+            {renderDropdown(
+              'fatherOccupation',
+              demographicsQuestions.fatherOccupation.question,
+              demographicsQuestions.fatherOccupation.options,
+              <Briefcase className="h-5 w-5 text-gray-600" />,
+              demographics.fatherOccupation
+            )}
+          </div>
+        )}
+
+        {/* بخش ۵: اطلاعات مادر (اگر زندگی می‌کند) */}
+        {demographics.motherLiving && (
+          <div className="space-y-6 border-r-4 border-pink-500 pr-4">
+            <h3 className="text-lg font-bold text-gray-800 mb-4">
+              اطلاعات مادر
+            </h3>
+            
+            {/* سن مادر */}
+            {renderDropdown(
+              'motherAge',
+              demographicsQuestions.motherAge.question,
+              demographicsQuestions.motherAge.options,
+              <User className="h-5 w-5 text-gray-600" />,
+              demographics.motherAge
+            )}
+            
+            {/* تحصیلات مادر */}
+            {renderDropdown(
+              'motherEducation',
+              demographicsQuestions.motherEducation.question,
+              demographicsQuestions.motherEducation.options,
+              <GraduationCap className="h-5 w-5 text-gray-600" />,
+              demographics.motherEducation
+            )}
+            
+            {/* شغل مادر */}
+            {renderDropdown(
+              'motherOccupation',
+              demographicsQuestions.motherOccupation.question,
+              demographicsQuestions.motherOccupation.options,
+              <Briefcase className="h-5 w-5 text-gray-600" />,
+              demographics.motherOccupation
+            )}
+          </div>
+        )}
 
         {/* استان و شهر */}
         <div className="space-y-6">
           <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-blue-600" />
+            <MapPin className="h-6 w-6 text-sky-600" />
             موقعیت جغرافیایی
           </h3>
           
@@ -222,26 +408,26 @@ export default function DemographicsScreen({
           )}
           
           {demographics.province && demographics.city && (
-            <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-blue-700 font-medium">
+            <div className="p-3 bg-sky-50 border border-sky-200 rounded-lg">
+              <p className="text-sky-700 font-medium">
                 موقعیت انتخاب شده: {demographics.province} - {demographics.city}
               </p>
             </div>
           )}
         </div>
 
-        {/* وضعیت تاهل */}
+        {/* بخش ۷: وضعیت تاهل */}
         {renderDropdown(
           'maritalStatus',
           demographicsQuestions.maritalStatus.question,
           demographicsQuestions.maritalStatus.options,
-          <Users className="h-6 w-6 text-blue-600" />,
+          <Users className="h-6 w-6 text-sky-600" />,
           demographics.maritalStatus
         )}
       </div>
 
-      <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-        <p className="text-blue-800 text-sm">
+      <div className="mt-8 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+        <p className="text-sky-800 text-sm">
           <strong>توجه:</strong> تمامی اطلاعات وارد شده کاملاً محرمانه تلقی شده و صرفاً برای تحلیل علمی و ارائه خدمات بهتر استفاده می‌شود.
         </p>
       </div>
@@ -271,13 +457,23 @@ export default function DemographicsScreen({
             <p className="text-red-700 text-sm">
               لطفاً تمامی فیلدهای ضروری را تکمیل کنید:
               <ul className="list-disc pr-5 mt-2 space-y-1">
+                {/* اطلاعات نوجوان */}
+                {!demographics.age && <li>سن نوجوان را انتخاب کنید</li>}
+                {!demographics.education && <li>تحصیلات نوجوان را انتخاب کنید</li>}
+                {!demographics.occupation && <li>وضعیت تحصیلی/شغلی نوجوان را انتخاب کنید</li>}
+                
+                {/* اطلاعات زندگی */}
                 {!demographics.livingWith && <li>نحوه زندگی نوجوان را انتخاب کنید</li>}
                 {!demographics.province && <li>استان محل سکونت را انتخاب کنید</li>}
                 {!demographics.city && <li>شهر محل سکونت را انتخاب کنید</li>}
-                {!demographics.maritalStatus && <li>وضعیت تاهل را انتخاب کنید</li>}
+                {!demographics.maritalStatus && <li>وضعیت تاهل والدین را انتخاب کنید</li>}
+                
+                {/* اطلاعات پدر - از آنجایی که پیش‌فرض زنده است */}
                 {demographics.fatherLiving && !demographics.fatherAge && <li>سن پدر را انتخاب کنید</li>}
                 {demographics.fatherLiving && !demographics.fatherEducation && <li>تحصیلات پدر را انتخاب کنید</li>}
                 {demographics.fatherLiving && !demographics.fatherOccupation && <li>شغل پدر را انتخاب کنید</li>}
+                
+                {/* اطلاعات مادر - از آنجایی که پیش‌فرض زنده است */}
                 {demographics.motherLiving && !demographics.motherAge && <li>سن مادر را انتخاب کنید</li>}
                 {demographics.motherLiving && !demographics.motherEducation && <li>تحصیلات مادر را انتخاب کنید</li>}
                 {demographics.motherLiving && !demographics.motherOccupation && <li>شغل مادر را انتخاب کنید</li>}
