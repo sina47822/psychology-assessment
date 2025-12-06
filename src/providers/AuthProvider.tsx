@@ -74,6 +74,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const checkSession = async (): Promise<boolean> => {
     try {
       const response = await api.get('/users/debug-session/');
+      console.log('🔍 Session check result:', response.data);
       return response.data.user_authenticated;
     } catch (error) {
       console.error('Session check failed:', error);
@@ -116,6 +117,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       return { success: true, user };
     } catch (error: any) {
       console.error('Login error:', error);
+      if (error.code === 'ERR_NETWORK') {
+        return {
+          success: false,
+          error: 'خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید.',
+        };
+      }
       return {
         success: false,
         error: error.response?.data?.detail || 'خطا در ورود',
@@ -161,36 +168,92 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   };
 
   // ثبت‌نام
+  // providers/AuthProvider.tsx - تابع register
   const register = async (userData: any) => {
     setIsLoading(true);
     try {
-      const response = await api.post('/users/register/', userData);
+      console.log('📤 Sending registration data:', userData);
       
-      // اگر ثبت‌نام موفق بود، کاربر را لاگین کنیم
+      // برای اطمینان، فیلدهای خالی را حذف می‌کنیم
+      const cleanedData = { ...userData };
+      
+      // حذف فیلدهای خالی رشته‌ای
+      Object.keys(cleanedData).forEach(key => {
+        if (typeof cleanedData[key] === 'string' && cleanedData[key].trim() === '') {
+          cleanedData[key] = null;
+        }
+      });
+      
+      // حذف فیلد confirm_password اگر خالی است
+      if (cleanedData.confirm_password === null) {
+        delete cleanedData.confirm_password;
+      }
+      
+      const response = await api.post('/users/register/', cleanedData);
+      console.log('✅ Registration response:', response.data);
+      
       if (response.data.user && response.data.access) {
         const { user, access, refresh, session_id } = response.data;
         
+        // ذخیره در localStorage
         localStorage.setItem('user', JSON.stringify(user));
         localStorage.setItem('access_token', access);
         localStorage.setItem('refresh_token', refresh);
         
+        // ذخیره session_id
         if (session_id) {
           localStorage.setItem('session_id', session_id);
           setSessionId(session_id);
-          document.cookie = `sessionid=${session_id}; path=/; SameSite=Lax`;
+          
+          // تنظیم کوکی sessionid برای مرورگر
+          document.cookie = `sessionid=${session_id}; path=/; max-age=86400; SameSite=Lax`;
         }
         
+        // تنظیم state
         setUser(user);
         setAccessToken(access);
         setIsAuthenticated(true);
+        
+        // تنظیم توکن برای درخواست‌های بعدی
+        api.defaults.headers.common['Authorization'] = `Bearer ${access}`;
+        
+        // بررسی سشن در سرور
+        await checkSession();
       }
       
       return { success: true, data: response.data };
     } catch (error: any) {
-      console.error('Registration error:', error);
+      console.error('❌ Registration error details:', {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+      });
+      
+      // هندل کردن خطاهای مختلف
+      if (!error.response) {
+        return {
+          success: false,
+          error: { detail: 'خطا در اتصال به سرور' },
+        };
+      }
+      
+      if (error.response?.status === 400) {
+        return {
+          success: false,
+          error: error.response.data || { detail: 'داده‌های ورودی نامعتبر است.' },
+        };
+      }
+      
+      if (error.response?.status === 500) {
+        return {
+          success: false,
+          error: { detail: 'خطای سرور. لطفاً بعداً تلاش کنید.' },
+        };
+      }
+      
       return {
         success: false,
-        error: error.response?.data || 'خطا در ثبت‌نام',
+        error: error.response?.data || { detail: 'خطا در ثبت‌نام' },
       };
     } finally {
       setIsLoading(false);

@@ -1,29 +1,44 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/providers/AuthProvider';
 import DashboardPage from '@/components/DashboardPage';
+import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 export default function Dashboard() {
   const router = useRouter();
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, isAuthenticated } = useAuth();
+  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [hasChecked, setHasChecked] = useState(false);
 
   useEffect(() => {
-    // اگر لاگین نکرده‌است، به لاگین هدایت شود
-    if (!isLoading && !user) {
-      console.log('➡️ Redirecting to login from dashboard page');
-      router.push('/login');
-    }
-  }, [user, isLoading, router]);
+    // فقط یک بار چک کن
+    if (hasChecked) return;
 
-  // اگر در حال لودینگ است، چیزی نمایش نده
-  if (isLoading) {
-    return null;
+    if (!isLoading) {
+      if (!isAuthenticated || !user) {
+        console.log('➡️ User not authenticated, redirecting to login');
+        router.push('/login');
+        setHasChecked(true);
+      } else {
+        console.log('✅ User is authenticated, showing dashboard');
+        setHasChecked(true);
+      }
+    }
+  }, [user, isAuthenticated, isLoading, router, hasChecked]);
+
+  // نمایش loading در حال بررسی
+  if (isLoading || !hasChecked) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-sky-50 to-sky-50">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
-  // اگر کاربر لاگین نکرده، چیزی نمایش نده
-  if (!user) {
+  // اگر کاربر لاگین نکرده، چیزی نمایش نده (در حال redirect است)
+  if (!isAuthenticated || !user) {
     return null;
   }
 

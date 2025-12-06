@@ -52,12 +52,28 @@ api.interceptors.response.use(
     return response;
   },
   async (error: AxiosError) => {
-    console.error('API Error:', {
-      url: error.config?.url,
-      method: error.config?.method,
-      status: error.response?.status,
-      data: error.response?.data,
-    });
+    // Check if it's a network error
+    if (!error.response) {
+      console.error('❌ Network Error:', {
+        message: error.message,
+        config: {
+          url: error.config?.url,
+          method: error.config?.method,
+          baseURL: error.config?.baseURL,
+        },
+      });
+      console.error('Please check if the server is running and accessible.');
+    } else {
+      console.error('❌ API Error Details:', {
+        url: error.config?.url,
+        method: error.config?.method,
+        status: error.response?.status,
+        statusText: error.response?.statusText,
+        headers: error.response?.headers,
+        data: error.response?.data,
+        requestHeaders: error.config?.headers,
+      });
+    }
     
     const originalRequest = error.config as any;
     

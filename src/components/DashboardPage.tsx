@@ -79,10 +79,10 @@ export default function DashboardPage() {
   ];
 
   const quickActions = [
-    { title: 'شروع ارزیابی جدید', icon: <BarChart3 className="h-6 w-6" />, path: '/assessment' },
-    { title: 'مشاهده نتایج', icon: <FileText className="h-6 w-6" />, path: '/results' },
-    { title: 'کارگاه‌ها', icon: <Users className="h-6 w-6" />, path: '/workshops' },
-    { title: 'پروفایل من', icon: <UserCheck className="h-6 w-6" />, path: '/profile' },
+    { title: 'شروع ارزیابی جدید', icon: <BarChart3 className="h-6 w-6" />, path: '/dashboard/assessment' },
+    { title: 'مشاهده نتایج', icon: <FileText className="h-6 w-6" />, path: '/dashboard/results' },
+    { title: 'کارگاه‌ها', icon: <Users className="h-6 w-6" />, path: '/dashboard/workshops' },
+    { title: 'پروفایل من', icon: <UserCheck className="h-6 w-6" />, path: '/dashboard/profile' },
   ];
 
   if (loading) {

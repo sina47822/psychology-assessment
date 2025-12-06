@@ -40,7 +40,7 @@ export default function AuthGuard({
 
         // بررسی verified بودن حساب
         if (requireVerified && !user.is_verified) {
-          router.push('/verify-account');
+          router.push('/dashboard');
           return;
         }
 

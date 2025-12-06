@@ -147,6 +147,19 @@ export interface LoginFormData {
   rememberMe?: boolean;
 }
 
+interface RegistrationData {
+  username: string;
+  email?: string;
+  phone?: string;
+  password: string;
+  confirm_password: string;
+  first_name: string;
+  last_name: string;
+  national_code?: string;
+  birth_date?: string | null;
+  gender?: string;
+}
+
 export interface RegistrationFormData {
   username: string;
   email: string;
