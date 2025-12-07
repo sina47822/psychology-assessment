@@ -92,7 +92,7 @@ export default function SummaryScreen({
     <div className="p-6">
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-sky-100 rounded-full mb-4">
-          <Check className="h-8 w-8 text-sky-600" />
+          <Check className="h-8 w-8 text-sky-500" />
         </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-3">خلاصه و بررسی نهایی</h2>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -104,7 +104,7 @@ export default function SummaryScreen({
         <div className="bg-gradient-to-r from-sky-50 to-sky-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-xl text-gray-800">اطلاعات کلی</h3>
-            <User className="h-8 w-8 text-sky-600" />
+            <User className="h-8 w-8 text-sky-500" />
           </div>
           <div className="space-y-3">
             <div className="flex justify-between items-center">
@@ -122,15 +122,15 @@ export default function SummaryScreen({
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-sky-50 to-pink-50 p-6 rounded-xl border border-sky-100">
+        <div className="bg-gradient-to-r from-sky-50 to-sky-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-xl text-gray-800">آمار کلی انتخاب‌ها</h3>
-            <BarChart className="h-8 w-8 text-sky-600" />
+            <BarChart className="h-8 w-8 text-sky-500" />
           </div>
           <div className="text-center py-4">
             <div className="text-5xl font-bold text-sky-700 mb-2">{totalSelected}</div>
             <div className="text-gray-600">مورد انتخاب شده در کل</div>
-            <div className={`mt-2 text-sm font-medium ${isFormValid ? 'text-sky-600' : 'text-red-600'}`}>
+            <div className={`mt-2 text-sm font-medium ${isFormValid ? 'text-sky-500' : 'text-red-600'}`}>
               {isFormValid 
                 ? `✓ در محدوده مجاز (${selectionRules.minTotal}-${selectionRules.maxTotal})` 
                 : `✗ خارج از محدوده مجاز`}
@@ -138,10 +138,10 @@ export default function SummaryScreen({
           </div>
         </div>
 
-        <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border border-green-100">
+        <div className="bg-gradient-to-r from-sky-50 to-sky-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-between mb-4">
             <h3 className="font-bold text-xl text-gray-800">والدین</h3>
-            <User className="h-8 w-8 text-sky-600" />
+            <User className="h-8 w-8 text-sky-500" />
           </div>
           <div className="space-y-4">
             {renderParentInfo('father')}
@@ -227,7 +227,7 @@ export default function SummaryScreen({
         
         <button
           onClick={downloadData}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2 order-2 md:order-3"
+          className="bg-sky-500 hover:bg-sky-700 text-white font-medium py-3 px-6 rounded-lg transition duration-200 flex items-center justify-center gap-2 order-2 md:order-3"
         >
           <Download className="h-5 w-5" />
           دانلود پاسخ‌ها
@@ -244,12 +244,12 @@ export default function SummaryScreen({
         </button>
       </div>
 
-      <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-        <p className="text-yellow-800 text-center">
+      <div className="mt-8 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+        <p className="text-sky-800 text-center">
           <strong>توجه:</strong> این نتایج صرفاً بر اساس پاسخ‌های شما تولید شده و جایگزین مشاوره تخصصی نیست. 
           برای ارزیابی دقیق‌تر و دریافت راهکارهای تخصصی، با مشاور نوجوان مشورت نمایید.
         </p>
-        <p className="text-yellow-700 text-center text-sm mt-2">
+        <p className="text-sky-700 text-center text-sm mt-2">
           سیستم نسخه {APP_INFO.version} | آخرین بروزرسانی: {APP_INFO.lastUpdate}
         </p>
       </div>

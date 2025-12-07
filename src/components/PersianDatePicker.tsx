@@ -185,7 +185,7 @@ export default function PersianDatePicker({ value, onChange, onClose }: PersianD
             onClick={() => handleDayClick(day)}
             className={`h-8 flex items-center justify-center rounded text-sm transition-colors
               ${selectedDay === day
-                ? 'bg-sky-600 text-white'
+                ? 'bg-sky-500 text-white'
                 : 'hover:bg-sky-100 text-gray-700'
               }
               ${day === new Date().getDate() && 

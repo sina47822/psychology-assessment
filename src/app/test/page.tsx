@@ -29,7 +29,7 @@ export default function TestPage() {
       <div className="mb-6">
         <button 
           onClick={() => router.push('/dashboard')}
-          className="bg-blue-500 text-white px-4 py-2 rounded mr-4"
+          className="bg-sky-500 text-white px-4 py-2 rounded mr-4"
         >
           Go to Dashboard
         </button>

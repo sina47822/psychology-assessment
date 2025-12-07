@@ -128,7 +128,7 @@ export default function VerifyAccountPage() {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-sky-50 p-4">
         <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
           <p className="text-gray-600">در حال بررسی وضعیت حساب...</p>
         </div>
       </div>
@@ -184,7 +184,7 @@ export default function VerifyAccountPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center shadow-md">
+                <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center shadow-md">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 <div>
@@ -196,14 +196,14 @@ export default function VerifyAccountPage() {
               <div className="flex items-center space-x-4">
                 <Link
                   href="/"
-                  className="flex items-center space-x-2 text-gray-600 hover:text-sky-600 transition-colors"
+                  className="flex items-center space-x-2 text-gray-600 hover:text-sky-500 transition-colors"
                 >
                   <Home className="h-4 w-4" />
                   <span className="text-sm font-medium hidden md:inline">صفحه اصلی</span>
                 </Link>
                 <Link
                   href="/dashboard"
-                  className="flex items-center space-x-2 text-sky-600 hover:text-sky-800 font-medium"
+                  className="flex items-center space-x-2 text-sky-500 hover:text-sky-800 font-medium"
                 >
                   <span className="text-sm">داشبورد</span>
                   <ArrowLeft className="h-4 w-4" />
@@ -253,12 +253,12 @@ export default function VerifyAccountPage() {
                     {verificationMethod === 'email' && user?.email && (
                       <div className="border border-sky-200 rounded-xl overflow-hidden">
                         <div className="bg-sky-50 p-4 flex items-center">
-                          <Mail className="h-5 w-5 text-sky-600 ml-3" />
+                          <Mail className="h-5 w-5 text-sky-500 ml-3" />
                           <div className="flex-1">
                             <h3 className="font-semibold text-gray-800">تأیید از طریق ایمیل</h3>
                             <p className="text-sm text-gray-600 mt-1">{user.email}</p>
                           </div>
-                          <div className="w-3 h-3 rounded-full bg-sky-600"></div>
+                          <div className="w-3 h-3 rounded-full bg-sky-500"></div>
                         </div>
                         
                         <div className="p-4 space-y-4">
@@ -288,14 +288,14 @@ export default function VerifyAccountPage() {
 
                     {/* تأیید از طریق پیامک */}
                     {verificationMethod === 'phone' && user?.phone && (
-                      <div className="border border-green-200 rounded-xl overflow-hidden">
-                        <div className="bg-green-50 p-4 flex items-center">
-                          <Phone className="h-5 w-5 text-green-600 ml-3" />
+                      <div className="border border-sky-200 rounded-xl overflow-hidden">
+                        <div className="bg-sky-50 p-4 flex items-center">
+                          <Phone className="h-5 w-5 text-sky-500 ml-3" />
                           <div className="flex-1">
                             <h3 className="font-semibold text-gray-800">تأیید از طریق پیامک</h3>
                             <p className="text-sm text-gray-600 mt-1">{user.phone}</p>
                           </div>
-                          <div className="w-3 h-3 rounded-full bg-green-600"></div>
+                          <div className="w-3 h-3 rounded-full bg-sky-500"></div>
                         </div>
                         
                         <div className="p-4 space-y-4">
@@ -319,7 +319,7 @@ export default function VerifyAccountPage() {
                             
                             <button
                               onClick={handleVerifyCode}
-                              className="w-full bg-green-600 text-white py-3 rounded-xl font-semibold hover:bg-green-700 transition-colors"
+                              className="w-full bg-sky-500 text-white py-3 rounded-xl font-semibold hover:bg-sky-700 transition-colors"
                             >
                               تأیید کد
                             </button>
@@ -329,7 +329,7 @@ export default function VerifyAccountPage() {
                               disabled={!canResend}
                               className={`w-full py-2 text-sm flex items-center justify-center space-x-2 ${
                                 canResend 
-                                  ? 'text-green-600 hover:text-green-800' 
+                                  ? 'text-sky-500 hover:text-sky-800' 
                                   : 'text-gray-400 cursor-not-allowed'
                               }`}
                             >
@@ -362,7 +362,7 @@ export default function VerifyAccountPage() {
                   <div className="space-y-3">
                     <button
                       onClick={() => router.push('/dashboard')}
-                      className="w-full bg-gradient-to-r from-sky-600 to-sky-600 text-white py-3 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center space-x-2"
+                      className="w-full bg-gradient-to-r from-sky-500 to-sky-500 text-white py-3 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 transition-all shadow-md hover:shadow-lg flex items-center justify-center space-x-2"
                     >
                       <span>ادامه به داشبورد</span>
                       <ArrowLeft className="h-4 w-4" />
@@ -370,7 +370,7 @@ export default function VerifyAccountPage() {
                     
                     <Link
                       href="/"
-                      className="block w-full text-center text-gray-600 hover:text-sky-600 py-2 transition-colors"
+                      className="block w-full text-center text-gray-600 hover:text-sky-500 py-2 transition-colors"
                     >
                       بازگشت به صفحه اصلی
                     </Link>
@@ -392,7 +392,7 @@ export default function VerifyAccountPage() {
             <div className="mt-6 text-center text-sm text-gray-500 space-y-2">
               <p>
                 مشکلی در تأیید حساب دارید؟{' '}
-                <Link href="/contact" className="text-sky-600 hover:text-sky-800 font-medium">
+                <Link href="/contact" className="text-sky-500 hover:text-sky-800 font-medium">
                   با پشتیبانی تماس بگیرید
                 </Link>
               </p>

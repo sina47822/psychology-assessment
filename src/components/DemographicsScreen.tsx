@@ -109,7 +109,7 @@ export default function DemographicsScreen({
         </div>
         
         {selectedValue && (
-          <div className="mt-2 p-2 bg-blue-50 border border-green-200 rounded">
+          <div className="mt-2 p-2 bg-sky-50 border border-sky-200 rounded">
             <p className="text-sky-700 text-sm flex items-center gap-2">
               <span className="font-medium">انتخاب شما:</span>
               {selectedValue}
@@ -173,7 +173,7 @@ export default function DemographicsScreen({
     <div className="p-6">
       <div className="text-center mb-8">
         <div className="inline-flex items-center justify-center w-16 h-16 bg-sky-100 rounded-full mb-4">
-          <User className="h-8 w-8 text-sky-600" />
+          <User className="h-8 w-8 text-sky-500" />
         </div>
         <h2 className="text-3xl font-bold text-gray-800 mb-3">اطلاعات دموگرافیک</h2>
         <p className="text-gray-600 text-lg max-w-2xl mx-auto">
@@ -183,9 +183,9 @@ export default function DemographicsScreen({
 
       <div className="space-y-8 overflow-y-auto pr-2">
         {/* بخش ۱: اطلاعات نوجوان */}
-        <div className="space-y-6 border-r-4 border-green-500 pr-4">
+        <div className="space-y-6 border-r-4 border-sky-500 pr-4">
           <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <User className="h-6 w-6 text-sky-600" />
+            <User className="h-6 w-6 text-sky-500" />
             اطلاعات نوجوان
           </h3>
           
@@ -222,14 +222,14 @@ export default function DemographicsScreen({
           'livingWith',
           demographicsQuestions.livingWith.question,
           demographicsQuestions.livingWith.options,
-          <Home className="h-6 w-6 text-sky-600" />,
+          <Home className="h-6 w-6 text-sky-500" />,
           demographics.livingWith
         )}
 
         {/* بخش ۳: وضعیت زندگی والدین */}
         <div className="space-y-4">
           <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <Users className="h-6 w-6 text-sky-600" />
+            <Users className="h-6 w-6 text-sky-500" />
             وضعیت والدین
           </h3>
           
@@ -245,7 +245,7 @@ export default function DemographicsScreen({
                 onClick={() => onChange('fatherLiving', true)}
                 className={`flex-1 p-3 rounded-lg border transition-all ${
                   demographics.fatherLiving 
-                    ? 'bg-sky-100 border-green-500 text-sky-700 font-medium' 
+                    ? 'bg-sky-100 border-sky-500 text-sky-700 font-medium' 
                     : 'border-gray-300 bg-white hover:border-gray-400'
                 }`}
               >
@@ -283,7 +283,7 @@ export default function DemographicsScreen({
                 onClick={() => onChange('motherLiving', true)}
                 className={`flex-1 p-3 rounded-lg border transition-all ${
                   demographics.motherLiving 
-                    ? 'bg-sky-100 border-green-500 text-sky-700 font-medium' 
+                    ? 'bg-sky-100 border-sky-500 text-sky-700 font-medium' 
                     : 'border-gray-300 bg-white hover:border-gray-400'
                 }`}
               >
@@ -348,7 +348,7 @@ export default function DemographicsScreen({
 
         {/* بخش ۵: اطلاعات مادر (اگر زندگی می‌کند) */}
         {demographics.motherLiving && (
-          <div className="space-y-6 border-r-4 border-pink-500 pr-4">
+          <div className="space-y-6 border-r-4 border-sky-500 pr-4">
             <h3 className="text-lg font-bold text-gray-800 mb-4">
               اطلاعات مادر
             </h3>
@@ -385,7 +385,7 @@ export default function DemographicsScreen({
         {/* استان و شهر */}
         <div className="space-y-6">
           <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-            <MapPin className="h-6 w-6 text-sky-600" />
+            <MapPin className="h-6 w-6 text-sky-500" />
             موقعیت جغرافیایی
           </h3>
           
@@ -421,7 +421,7 @@ export default function DemographicsScreen({
           'maritalStatus',
           demographicsQuestions.maritalStatus.question,
           demographicsQuestions.maritalStatus.options,
-          <Users className="h-6 w-6 text-sky-600" />,
+          <Users className="h-6 w-6 text-sky-500" />,
           demographics.maritalStatus
         )}
       </div>

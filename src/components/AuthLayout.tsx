@@ -46,7 +46,7 @@ export default function AuthLayout({
           subtitle: subtitle || 'برای دسترسی به امکانات سامانه وارد شوید',
           icon: <Lock className="h-8 w-8" />,
           bgColor: 'bg-gradient-to-r from-sky-100 to-sky-50',
-          iconColor: 'text-sky-600',
+          iconColor: 'text-sky-500',
           borderColor: 'border-sky-200'
         };
       case '/register':
@@ -55,7 +55,7 @@ export default function AuthLayout({
           subtitle: subtitle || 'برای ایجاد حساب کاربری فرم زیر را تکمیل کنید',
           icon: <UserPlus className="h-8 w-8" />,
           bgColor: 'bg-gradient-to-r from-sky-100 to-sky-50',
-          iconColor: 'text-sky-600',
+          iconColor: 'text-sky-500',
           borderColor: 'border-sky-200'
         };
       case '/forgot-password':
@@ -72,9 +72,9 @@ export default function AuthLayout({
           title: title || 'تأیید شماره همراه',
           subtitle: subtitle || 'کد تأیید ارسال شده به موبایل را وارد کنید',
           icon: <Smartphone className="h-8 w-8" />,
-          bgColor: 'bg-gradient-to-r from-emerald-100 to-emerald-50',
-          iconColor: 'text-emerald-600',
-          borderColor: 'border-emerald-200'
+          bgColor: 'bg-gradient-to-r from-sky-100 to-sky-50',
+          iconColor: 'text-sky-500',
+          borderColor: 'border-sky-200'
         };
       case '/verify-email':
         return {
@@ -82,7 +82,7 @@ export default function AuthLayout({
           subtitle: subtitle || 'کد تأیید ارسال شده به ایمیل را وارد کنید',
           icon: <Mail className="h-8 w-8" />,
           bgColor: 'bg-gradient-to-r from-sky-100 to-sky-50',
-          iconColor: 'text-sky-600',
+          iconColor: 'text-sky-500',
           borderColor: 'border-sky-200'
         };
       default:
@@ -106,7 +106,7 @@ export default function AuthLayout({
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-              <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center shadow-md">
+              <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center shadow-md">
                 <span className="text-white font-bold text-lg">آ</span>
               </div>
               <div>
@@ -118,14 +118,14 @@ export default function AuthLayout({
             <div className="flex items-center space-x-6">
               <a 
                 href={`tel:${CONTACT_INFO.supportPhone.replace(/-/g, '')}`}
-                className="hidden md:flex items-center space-x-2 text-gray-600 hover:text-sky-600 transition-colors"
+                className="hidden md:flex items-center space-x-2 text-gray-600 hover:text-sky-500 transition-colors"
               >
                 <Phone className="h-4 w-4" />
                 <span className="text-sm font-medium">{CONTACT_INFO.supportPhone}</span>
               </a>
               <Link
                 href="/about"
-                className="hidden md:flex items-center space-x-2 text-gray-600 hover:text-sky-600 transition-colors"
+                className="hidden md:flex items-center space-x-2 text-gray-600 hover:text-sky-500 transition-colors"
               >
                 <Info className="h-4 w-4" />
                 <span className="text-sm font-medium">درباره سامانه</span>
@@ -202,7 +202,7 @@ export default function AuthLayout({
                       <span className="text-gray-600 text-sm">حساب کاربری ندارید؟ </span>
                       <Link
                         href="/register"
-                        className="text-sm font-semibold text-sky-600 hover:text-sky-800 hover:underline transition-colors"
+                        className="text-sm font-semibold text-sky-500 hover:text-sky-800 hover:underline transition-colors"
                       >
                         ثبت‌نام کنید
                       </Link>
@@ -210,7 +210,7 @@ export default function AuthLayout({
                     <div className="text-center">
                       <Link
                         href="/forgot-password"
-                        className="text-sm text-sky-600 hover:text-sky-800 hover:underline transition-colors"
+                        className="text-sm text-sky-500 hover:text-sky-800 hover:underline transition-colors"
                       >
                         رمز عبور خود را فراموش کرده‌اید؟
                       </Link>
@@ -223,7 +223,7 @@ export default function AuthLayout({
                     <span className="text-gray-600 text-sm">قبلاً حساب دارید؟ </span>
                     <Link
                       href="/login"
-                      className="text-sm font-semibold text-sky-600 hover:text-sky-800 hover:underline transition-colors"
+                      className="text-sm font-semibold text-sky-500 hover:text-sky-800 hover:underline transition-colors"
                     >
                       وارد شوید
                     </Link>
@@ -234,7 +234,7 @@ export default function AuthLayout({
                   <div className="text-center">
                     <Link
                       href="/login"
-                      className="text-sm font-semibold text-sky-600 hover:text-sky-800 hover:underline transition-colors"
+                      className="text-sm font-semibold text-sky-500 hover:text-sky-800 hover:underline transition-colors"
                     >
                       بازگشت به صفحه ورود
                     </Link>
@@ -262,7 +262,7 @@ export default function AuthLayout({
             <div className="flex items-start space-x-4">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 bg-sky-50 rounded-lg flex items-center justify-center">
-                  <Phone className="h-6 w-6 text-sky-600" />
+                  <Phone className="h-6 w-6 text-sky-500" />
                 </div>
               </div>
               <div className="flex-1">

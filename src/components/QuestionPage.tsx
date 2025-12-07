@@ -77,7 +77,7 @@ export default function QuestionPage({
         
         <div className="bg-sky-50 border border-sky-200 rounded-lg p-4 mb-6">
           <div className="flex items-start gap-3">
-            <Info className="h-6 w-6 text-sky-600 mt-0.5 flex-shrink-0" />
+            <Info className="h-6 w-6 text-sky-500 mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-sky-800 font-medium mb-1">راهنمایی انتخاب:</p>
               <p className="text-sky-700 text-sm">
@@ -87,7 +87,7 @@ export default function QuestionPage({
                 </span>
                 {getStatusMessage() && (
                   <span className={`block mt-1 ${
-                    totalSelected >= selectionRules.minTotal ? 'text-sky-600' : 'text-amber-600'
+                    totalSelected >= selectionRules.minTotal ? 'text-sky-500' : 'text-amber-600'
                   }`}>
                     {getStatusMessage()}
                   </span>
@@ -140,12 +140,12 @@ export default function QuestionPage({
 
       <div className={`p-4 rounded-lg border mb-6 ${
         totalSelected >= selectionRules.minTotal && totalSelected <= selectionRules.maxTotal
-          ? 'bg-blue-50 border-green-200'
+          ? 'bg-sky-50 border-sky-200'
           : 'bg-red-50 border-red-200'
       }`}>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <AlertCircle className="h-6 w-6 text-sky-600" />
+            <AlertCircle className="h-6 w-6 text-sky-500" />
             <div>
               <p className="text-sky-800 font-medium">وضعیت انتخاب‌ها:</p>
               <p className="text-sky-700 text-sm">
@@ -160,7 +160,7 @@ export default function QuestionPage({
         </div>
         <p className={`text-sm mt-2 ${
           totalSelected >= selectionRules.minTotal && totalSelected <= selectionRules.maxTotal
-            ? 'text-sky-600'
+            ? 'text-sky-500'
             : 'text-red-600'
         }`}>
           {totalSelected < selectionRules.minTotal

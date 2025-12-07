@@ -124,9 +124,9 @@ export default function NotificationsPage() {
   const getTypeColor = (type: string) => {
     switch (type) {
       case 'success':
-        return 'bg-sky-100 text-sky-800 border-green-200';
+        return 'bg-sky-100 text-sky-800 border-sky-200';
       case 'warning':
-        return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+        return 'bg-sky-100 text-sky-800 border-sky-200';
       case 'info':
         return 'bg-sky-100 text-sky-800 border-sky-200';
       default:
@@ -185,7 +185,7 @@ export default function NotificationsPage() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-3">
-            <Bell className="h-8 w-8 text-sky-600" />
+            <Bell className="h-8 w-8 text-sky-500" />
             اعلان‌ها
           </h1>
           <p className="text-gray-600 mt-2">
@@ -196,7 +196,7 @@ export default function NotificationsPage() {
         <div className="flex items-center gap-3">
           <button
             onClick={markAllAsRead}
-            className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-700 transition-colors"
           >
             <CheckCheck className="h-5 w-5" />
             خواندن همه
@@ -220,7 +220,7 @@ export default function NotificationsPage() {
               <h3 className="text-2xl font-bold text-gray-800 mt-1">{notifications.length}</h3>
             </div>
             <div className="p-3 bg-sky-50 rounded-lg">
-              <Bell className="h-6 w-6 text-sky-600" />
+              <Bell className="h-6 w-6 text-sky-500" />
             </div>
           </div>
         </div>
@@ -231,8 +231,8 @@ export default function NotificationsPage() {
               <p className="text-gray-500 text-sm">خوانده نشده</p>
               <h3 className="text-2xl font-bold text-gray-800 mt-1">{unreadCount}</h3>
             </div>
-            <div className="p-3 bg-yellow-50 rounded-lg">
-              <Eye className="h-6 w-6 text-yellow-600" />
+            <div className="p-3 bg-sky-50 rounded-lg">
+              <Eye className="h-6 w-6 text-sky-500" />
             </div>
           </div>
         </div>
@@ -257,8 +257,8 @@ export default function NotificationsPage() {
               <p className="text-gray-500 text-sm">امروز</p>
               <h3 className="text-2xl font-bold text-gray-800 mt-1">2</h3>
             </div>
-            <div className="p-3 bg-blue-50 rounded-lg">
-              <Calendar className="h-6 w-6 text-sky-600" />
+            <div className="p-3 bg-sky-50 rounded-lg">
+              <Calendar className="h-6 w-6 text-sky-500" />
             </div>
           </div>
         </div>
@@ -275,7 +275,7 @@ export default function NotificationsPage() {
                 onClick={() => setFilter('all')}
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   filter === 'all'
-                    ? 'bg-sky-600 text-white'
+                    ? 'bg-sky-500 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -285,7 +285,7 @@ export default function NotificationsPage() {
                 onClick={() => setFilter('unread')}
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   filter === 'unread'
-                    ? 'bg-sky-600 text-white'
+                    ? 'bg-sky-500 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -300,7 +300,7 @@ export default function NotificationsPage() {
                 onClick={() => setFilter('important')}
                 className={`px-4 py-2 rounded-lg transition-colors ${
                   filter === 'important'
-                    ? 'bg-sky-600 text-white'
+                    ? 'bg-sky-500 text-white'
                     : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
@@ -350,7 +350,7 @@ export default function NotificationsPage() {
                               </span>
                             )}
                             {notification.important && (
-                              <Star className="h-4 w-4 text-yellow-500 fill-current" />
+                              <Star className="h-4 w-4 text-sky-500 fill-current" />
                             )}
                           </div>
                           
@@ -375,7 +375,7 @@ export default function NotificationsPage() {
                           {!notification.read && (
                             <button
                               onClick={() => markAsRead(notification.id)}
-                              className="p-2 text-sky-600 hover:bg-sky-50 rounded-lg transition-colors"
+                              className="p-2 text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
                               title="علامت به عنوان خوانده شده"
                             >
                               <Eye className="h-5 w-5" />
@@ -420,7 +420,7 @@ export default function NotificationsPage() {
           </div>
           <Link
             href="/dashboard/settings/notifications"
-            className="inline-flex items-center gap-2 bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
+            className="inline-flex items-center gap-2 bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
           >
             <Settings className="h-5 w-5" />
             مدیریت تنظیمات

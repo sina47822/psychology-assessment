@@ -67,7 +67,7 @@ export default function HelpPage() {
       
       <main className="flex-1 bg-gradient-to-b from-sky-50 to-white">
         {/* هیرو */}
-        <div className="bg-gradient-to-r from-sky-600 to-sky-700 text-white">
+        <div className="bg-gradient-to-r from-sky-500 to-sky-700 text-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-20 h-20 bg-white/20 rounded-full mb-6">
@@ -109,7 +109,7 @@ export default function HelpPage() {
                   className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 hover:shadow-md hover:border-sky-300 transition-all text-right flex items-center justify-between group"
                 >
                   <span className="text-gray-700">{guide}</span>
-                  <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-sky-600 group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight className="h-4 w-4 text-gray-400 group-hover:text-sky-500 group-hover:translate-x-1 transition-transform" />
                 </button>
               ))}
             </div>
@@ -123,7 +123,7 @@ export default function HelpPage() {
                 <div className="flex space-x-2">
                   <button
                     onClick={() => setSelectedCategory('all')}
-                    className={`px-4 py-2 rounded-lg ${selectedCategory === 'all' ? 'bg-sky-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                    className={`px-4 py-2 rounded-lg ${selectedCategory === 'all' ? 'bg-sky-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
                   >
                     همه
                   </button>
@@ -131,7 +131,7 @@ export default function HelpPage() {
                     <button
                       key={category.id}
                       onClick={() => setSelectedCategory(category.id)}
-                      className={`px-4 py-2 rounded-lg flex items-center space-x-2 ${selectedCategory === category.id ? 'bg-sky-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
+                      className={`px-4 py-2 rounded-lg flex items-center space-x-2 ${selectedCategory === category.id ? 'bg-sky-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}
                     >
                       {category.id === 'general' && <HelpCircle className="h-4 w-4" />}
                       {category.id === 'assessment' && <FileText className="h-4 w-4" />}
@@ -201,7 +201,7 @@ export default function HelpPage() {
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                    <Video className="h-5 w-5 text-sky-600" />
+                    <Video className="h-5 w-5 text-sky-500" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-800">آموزش‌های ویدیویی</h3>
@@ -217,14 +217,14 @@ export default function HelpPage() {
                       onClick={() => window.open(`/tutorials/${tutorial.id}`, '_blank')}
                     >
                       <div className="relative rounded-lg overflow-hidden">
-                        <div className="w-full h-40 bg-gradient-to-br from-sky-500 to-sky-600 flex items-center justify-center">
+                        <div className="w-full h-40 bg-gradient-to-br from-sky-500 to-sky-500 flex items-center justify-center">
                           <Video className="h-12 w-12 text-white" />
                         </div>
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                        <div className="absolute inset-0 bg-gradient-to-t from-sky-500/50 to-transparent"></div>
                         <div className="absolute bottom-3 right-3 left-3">
                           <div className="flex items-center justify-between">
                             <span className="text-white text-sm font-medium">{tutorial.title}</span>
-                            <span className="bg-black/50 text-white text-xs px-2 py-1 rounded">
+                            <span className="bg-sky-500/50 text-white text-xs px-2 py-1 rounded">
                               {tutorial.duration}
                             </span>
                           </div>
@@ -247,7 +247,7 @@ export default function HelpPage() {
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
                 <div className="flex items-center space-x-3 mb-6">
                   <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                    <Download className="h-5 w-5 text-sky-600" />
+                    <Download className="h-5 w-5 text-sky-500" />
                   </div>
                   <div>
                     <h3 className="font-bold text-gray-800">راهنماهای PDF</h3>
@@ -264,9 +264,9 @@ export default function HelpPage() {
                     >
                       <div className="flex-shrink-0">
                         <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center">
-                          {index === 0 && <BookOpen className="h-5 w-5 text-sky-600" />}
-                          {index === 1 && <FileText className="h-5 w-5 text-sky-600" />}
-                          {index === 2 && <Users className="h-5 w-5 text-sky-600" />}
+                          {index === 0 && <BookOpen className="h-5 w-5 text-sky-500" />}
+                          {index === 1 && <FileText className="h-5 w-5 text-sky-500" />}
+                          {index === 2 && <Users className="h-5 w-5 text-sky-500" />}
                         </div>
                       </div>
                       <div className="flex-1">
@@ -285,7 +285,7 @@ export default function HelpPage() {
               {/* اطلاعات تماس */}
               <div className="bg-gradient-to-r from-sky-50 to-sky-50 rounded-xl border border-sky-200 p-6">
                 <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-10 h-10 bg-sky-600 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-sky-500 rounded-lg flex items-center justify-center">
                     <MessageSquare className="h-5 w-5 text-white" />
                   </div>
                   <div>
@@ -297,13 +297,13 @@ export default function HelpPage() {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                      <Phone className="h-4 w-4 text-sky-600" />
+                      <Phone className="h-4 w-4 text-sky-500" />
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">تلفن پشتیبانی</p>
                       <a
                         href={`tel:${CONTACT_INFO.supportPhone.replace(/-/g, '')}`}
-                        className="font-medium text-gray-800 hover:text-sky-600"
+                        className="font-medium text-gray-800 hover:text-sky-500"
                       >
                         {CONTACT_INFO.supportPhone}
                       </a>
@@ -312,13 +312,13 @@ export default function HelpPage() {
                   
                   <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                      <Mail className="h-4 w-4 text-sky-600" />
+                      <Mail className="h-4 w-4 text-sky-500" />
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">ایمیل پشتیبانی</p>
                       <a
                         href={`mailto:${CONTACT_INFO.supportEmail}`}
-                        className="font-medium text-gray-800 hover:text-sky-600"
+                        className="font-medium text-gray-800 hover:text-sky-500"
                       >
                         {CONTACT_INFO.supportEmail}
                       </a>
@@ -327,7 +327,7 @@ export default function HelpPage() {
                   
                   <div className="flex items-center space-x-3">
                     <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                      <Clock className="h-4 w-4 text-sky-600" />
+                      <Clock className="h-4 w-4 text-sky-500" />
                     </div>
                     <div>
                       <p className="text-sm text-gray-600">ساعات پاسخگویی</p>
@@ -338,7 +338,7 @@ export default function HelpPage() {
                 
                 <button
                   onClick={() => window.location.href = '/contact'}
-                  className="w-full mt-6 bg-sky-600 text-white py-3 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center space-x-2"
+                  className="w-full mt-6 bg-sky-500 text-white py-3 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center space-x-2"
                 >
                   <MessageSquare className="h-4 w-4" />
                   <span>ارسال پیام به پشتیبانی</span>

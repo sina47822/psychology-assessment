@@ -39,16 +39,16 @@ export default function Footer({ simplified = true }: FooterProps) {
           {/* Center - Quick Links */}
           {!simplified && (
             <div className="flex flex-wrap justify-center gap-4 text-sm text-gray-600">
-              <Link href="/privacy" className="hover:text-sky-600 transition-colors">
+              <Link href="/privacy" className="hover:text-sky-500 transition-colors">
                 حریم خصوصی
               </Link>
-              <Link href="/terms" className="hover:text-sky-600 transition-colors">
+              <Link href="/terms" className="hover:text-sky-500 transition-colors">
                 شرایط استفاده
               </Link>
-              <Link href="/help" className="hover:text-sky-600 transition-colors">
+              <Link href="/help" className="hover:text-sky-500 transition-colors">
                 راهنمای استفاده
               </Link>
-              <Link href="/contact" className="hover:text-sky-600 transition-colors">
+              <Link href="/contact" className="hover:text-sky-500 transition-colors">
                 تماس با ما
               </Link>
             </div>

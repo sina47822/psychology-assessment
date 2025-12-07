@@ -226,7 +226,7 @@ export default function AssessmentHistoryPage() {
         );
       case 'in-progress':
         return (
-          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+          <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-800">
             <Clock className="h-3 w-3 ml-1" />
             در حال انجام
           </span>
@@ -244,8 +244,8 @@ export default function AssessmentHistoryPage() {
   };
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-sky-600 bg-blue-50';
-    if (score >= 60) return 'text-yellow-600 bg-yellow-50';
+    if (score >= 80) return 'text-sky-500 bg-sky-50';
+    if (score >= 60) return 'text-sky-500 bg-sky-50';
     return 'text-red-600 bg-red-50';
   };
 
@@ -370,7 +370,7 @@ export default function AssessmentHistoryPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto"></div>
           <p className="mt-4 text-gray-600">در حال بارگذاری...</p>
         </div>
       </div>
@@ -387,7 +387,7 @@ export default function AssessmentHistoryPage() {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center">
                   <FileBarChart className="h-6 w-6 text-white" />
                 </div>
                 <div>
@@ -398,7 +398,7 @@ export default function AssessmentHistoryPage() {
               
               <button
                 onClick={() => router.push('/')}
-                className="bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2"
+                className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2"
               >
                 <FileText className="h-4 w-4" />
                 <span>ارزیابی جدید</span>
@@ -414,7 +414,7 @@ export default function AssessmentHistoryPage() {
                     <p className="text-2xl font-bold text-gray-800">{stats.completed}</p>
                   </div>
                   <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                    <FileText className="h-5 w-5 text-sky-600" />
+                    <FileText className="h-5 w-5 text-sky-500" />
                   </div>
                 </div>
               </div>
@@ -426,7 +426,7 @@ export default function AssessmentHistoryPage() {
                     <p className="text-2xl font-bold text-gray-800">{stats.avgScore}%</p>
                   </div>
                   <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="h-5 w-5 text-sky-600" />
+                    <TrendingUp className="h-5 w-5 text-sky-500" />
                   </div>
                 </div>
               </div>
@@ -438,7 +438,7 @@ export default function AssessmentHistoryPage() {
                     <p className="text-2xl font-bold text-gray-800">{stats.totalTime} دقیقه</p>
                   </div>
                   <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                    <Clock className="h-5 w-5 text-sky-600" />
+                    <Clock className="h-5 w-5 text-sky-500" />
                   </div>
                 </div>
               </div>
@@ -522,7 +522,7 @@ export default function AssessmentHistoryPage() {
               {loading ? (
                 <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto"></div>
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto"></div>
                     <p className="mt-4 text-gray-600">در حال بارگذاری تاریخچه...</p>
                   </div>
                 </div>
@@ -537,7 +537,7 @@ export default function AssessmentHistoryPage() {
                       setStatusFilter('all');
                       setDateFilter('all');
                     }}
-                    className="bg-sky-600 text-white px-6 py-2 rounded-lg hover:bg-sky-700 transition-colors"
+                    className="bg-sky-500 text-white px-6 py-2 rounded-lg hover:bg-sky-700 transition-colors"
                   >
                     مشاهده همه ارزیابی‌ها
                   </button>
@@ -586,7 +586,7 @@ export default function AssessmentHistoryPage() {
                                 </div>
                                 
                                 {assessment.score >= 80 && (
-                                  <div className="flex items-center text-yellow-500">
+                                  <div className="flex items-center text-sky-500">
                                     {[1, 2, 3, 4, 5].map((star) => (
                                       <Star key={star} className="h-4 w-4 fill-current" />
                                     ))}
@@ -599,7 +599,7 @@ export default function AssessmentHistoryPage() {
                           <div className="flex items-center space-x-2 mt-4 md:mt-0">
                             <button
                               onClick={() => handleViewDetails(assessment)}
-                              className="p-2 text-sky-600 hover:bg-sky-50 rounded-lg transition-colors"
+                              className="p-2 text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
                               title="مشاهده جزئیات"
                             >
                               <Eye className="h-5 w-5" />
@@ -607,7 +607,7 @@ export default function AssessmentHistoryPage() {
                             
                             <button
                               onClick={() => exportAssessment(assessment)}
-                              className="p-2 text-sky-600 hover:bg-blue-50 rounded-lg transition-colors"
+                              className="p-2 text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
                               title="دریافت گزارش"
                             >
                               <Download className="h-5 w-5" />
@@ -615,7 +615,7 @@ export default function AssessmentHistoryPage() {
                             
                             <button
                               onClick={() => printAssessment(assessment)}
-                              className="p-2 text-sky-600 hover:bg-sky-50 rounded-lg transition-colors"
+                              className="p-2 text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
                               title="چاپ گزارش"
                             >
                               <Printer className="h-5 w-5" />
@@ -636,7 +636,7 @@ export default function AssessmentHistoryPage() {
                           <div className="mt-4 pt-4 border-t border-gray-100">
                             <button
                               onClick={() => router.push(`/?continue=${assessment.id}`)}
-                              className="w-full bg-gradient-to-r from-sky-600 to-sky-600 text-white py-2 px-4 rounded-lg hover:from-sky-700 hover:to-sky-700 transition-colors flex items-center justify-center space-x-2"
+                              className="w-full bg-gradient-to-r from-sky-500 to-sky-500 text-white py-2 px-4 rounded-lg hover:from-sky-700 hover:to-sky-700 transition-colors flex items-center justify-center space-x-2"
                             >
                               <ChevronRight className="h-4 w-4" />
                               <span>ادامه ارزیابی</span>
@@ -656,7 +656,7 @@ export default function AssessmentHistoryPage() {
                     <div className="p-6">
                       <div className="flex items-center justify-between mb-6">
                         <div className="flex items-center space-x-3">
-                          <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-sky-600 rounded-lg flex items-center justify-center">
+                          <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-500 rounded-lg flex items-center justify-center">
                             <FileText className="h-6 w-6 text-white" />
                           </div>
                           <div>
@@ -703,7 +703,7 @@ export default function AssessmentHistoryPage() {
                                     <div
                                       className={`h-full rounded-full ${
                                         score >= 80 ? 'bg-sky-800' :
-                                        score >= 60 ? 'bg-yellow-500' :
+                                        score >= 60 ? 'bg-sky-500' :
                                         'bg-red-500'
                                       }`}
                                       style={{ width: `${score}%` }}
@@ -736,14 +736,14 @@ export default function AssessmentHistoryPage() {
                         </button>
                         <button
                           onClick={() => exportAssessment(selectedAssessment)}
-                          className="bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2"
+                          className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2"
                         >
                           <Download className="h-4 w-4" />
                           <span>دریافت گزارش</span>
                         </button>
                         <button
                           onClick={() => router.push(`/dashboard?assessment=${selectedAssessment.id}`)}
-                          className="bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2"
+                          className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2"
                         >
                           <BarChart className="h-4 w-4" />
                           <span>مشاهده تحلیل</span>

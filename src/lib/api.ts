@@ -1,11 +1,151 @@
-// lib/api.ts
+// src/lib/api.ts - نسخه تستی
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+// شبیه‌سازی API بدون نیاز به سرور واقعی
+const createMockApi = () => {
+  const mockResponses = new Map();
+  
+  const api: Partial<AxiosInstance> = {
+    defaults: {
+      headers: {
+        common: {}
+      }
+    },
+    
+    get: async (url: string, config?: AxiosRequestConfig): Promise<any> => {
+      console.log(`📥 Mock GET: ${url}`);
+      
+      // شبیه‌سازی تأخیر شبکه
+      await new Promise(resolve => setTimeout(resolve, 300));
+      
+      // پاسخ‌های از پیش تعریف شده برای endpointهای مختلف
+      if (url.includes('/users/me/')) {
+        const user = localStorage.getItem('user');
+        return {
+          data: user ? JSON.parse(user) : null,
+          status: 200,
+          statusText: 'OK'
+        };
+      }
+      
+      if (url.includes('/users/debug-session/')) {
+        const token = localStorage.getItem('access_token');
+        const user = localStorage.getItem('user');
+        return {
+          data: {
+            user_authenticated: !!(token && user),
+            session_info: {
+              exists: !!localStorage.getItem('session_id')
+            }
+          },
+          status: 200,
+          statusText: 'OK'
+        };
+      }
+      
+      // پاسخ پیش‌فرض
+      return {
+        data: { message: 'Mock GET response' },
+        status: 200,
+        statusText: 'OK'
+      };
+    },
+    
+    post: async (url: string, data?: any, config?: AxiosRequestConfig): Promise<any> => {
+      console.log(`📤 Mock POST: ${url}`, data);
+      
+      // شبیه‌سازی تأخیر شبکه
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // پاسخ‌های از پیش تعریف شده
+      if (url.includes('/users/login/')) {
+        // همیشه موفق
+        return {
+          data: {
+            user: {
+              id: Date.now(),
+              username: data?.username || 'testuser',
+              email: 'test@example.com',
+              first_name: 'کاربر',
+              last_name: 'تستی'
+            },
+            access: `mock_access_token_${Date.now()}`,
+            refresh: `mock_refresh_token_${Date.now()}`,
+            session_id: `mock_session_${Date.now()}`
+          },
+          status: 200,
+          statusText: 'OK'
+        };
+      }
+      
+      if (url.includes('/users/register/')) {
+        // همیشه موفق
+        return {
+          data: {
+            user: {
+              id: Date.now(),
+              ...data,
+              is_verified: true
+            },
+            access: `mock_access_token_${Date.now()}`,
+            refresh: `mock_refresh_token_${Date.now()}`,
+            session_id: `mock_session_${Date.now()}`
+          },
+          status: 201,
+          statusText: 'Created'
+        };
+      }
+      
+      if (url.includes('/users/logout/')) {
+        // همیشه موفق
+        return {
+          data: { message: 'Logged out successfully' },
+          status: 200,
+          statusText: 'OK'
+        };
+      }
+      
+      // پاسخ پیش‌فرض
+      return {
+        data: { message: 'Mock POST response' },
+        status: 200,
+        statusText: 'OK'
+      };
+    },
+    
+    put: async (url: string, data?: any, config?: AxiosRequestConfig): Promise<any> => {
+      console.log(`📝 Mock PUT: ${url}`, data);
+      
+      await new Promise(resolve => setTimeout(resolve, 400));
+      
+      return {
+        data: { ...data, updated_at: new Date().toISOString() },
+        status: 200,
+        statusText: 'OK'
+      };
+    },
+    
+    interceptors: {
+      request: {
+        use: (onFulfilled?: any, onRejected?: any) => {
+          // شبیه‌سازی interceptor
+        }
+      },
+      response: {
+        use: (onFulfilled?: any, onRejected?: any) => {
+          // شبیه‌سازی interceptor
+        }
+      }
+    }
+  };
+  
+  return api as AxiosInstance;
+};
 
-// ایجاد instance از axios
-const api: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
+// استفاده از mock API در محیط توسعه
+const isDevelopment = process.env.NODE_ENV === 'development';
+export const api = isDevelopment ? createMockApi() : axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api',
   timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
@@ -14,112 +154,7 @@ const api: AxiosInstance = axios.create({
   withCredentials: true,
 });
 
-// Interceptor برای اضافه کردن توکن و session
-api.interceptors.request.use(
-  (config) => {
-    // فقط در سمت کلاینت
-    if (typeof window !== 'undefined') {
-      // اضافه کردن توکن JWT
-      const token = localStorage.getItem('access_token');
-      if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`;
-      }
-      
-      // اضافه کردن session_id از localStorage به صورت دستی در کوکی
-      const sessionId = localStorage.getItem('session_id');
-      if (sessionId && sessionId !== 'null') {
-        // اگر کوکی sessionid وجود ندارد، آن را اضافه می‌کنیم
-        if (!document.cookie.includes('sessionid')) {
-          document.cookie = `sessionid=${sessionId}; path=/; SameSite=Lax`;
-        }
-      }
-    }
-    return config;
-  },
-  (error) => {
-    console.error('Request error:', error);
-    return Promise.reject(error);
-  }
-);
-
-// Interceptor برای مدیریت خطاها
-api.interceptors.response.use(
-  (response: AxiosResponse) => {
-    // اگر پاسخ حاوی session_id جدید است، آن را ذخیره کنید
-    if (response.data?.session_id) {
-      localStorage.setItem('session_id', response.data.session_id);
-    }
-    return response;
-  },
-  async (error: AxiosError) => {
-    // Check if it's a network error
-    if (!error.response) {
-      console.error('❌ Network Error:', {
-        message: error.message,
-        config: {
-          url: error.config?.url,
-          method: error.config?.method,
-          baseURL: error.config?.baseURL,
-        },
-      });
-      console.error('Please check if the server is running and accessible.');
-    } else {
-      console.error('❌ API Error Details:', {
-        url: error.config?.url,
-        method: error.config?.method,
-        status: error.response?.status,
-        statusText: error.response?.statusText,
-        headers: error.response?.headers,
-        data: error.response?.data,
-        requestHeaders: error.config?.headers,
-      });
-    }
-    
-    const originalRequest = error.config as any;
-    
-    // اگر خطا 401 بود
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-      
-      try {
-        // سعی در رفرش توکن
-        const refreshToken = localStorage.getItem('refresh_token');
-        
-        if (refreshToken) {
-          console.log('Attempting token refresh...');
-          const response = await api.post('/users/token/refresh/', {
-            refresh: refreshToken,
-          });
-          
-          const newAccessToken = response.data.access;
-          
-          // ذخیره توکن جدید
-          localStorage.setItem('access_token', newAccessToken);
-          console.log('Token refreshed successfully');
-          
-          // تکرار درخواست اصلی با توکن جدید
-          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-          return api(originalRequest);
-        }
-      } catch (refreshError) {
-        console.error('Token refresh failed:', refreshError);
-        // پاک کردن localStorage و ریدایرکت به login
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('user');
-          localStorage.removeItem('access_token');
-          localStorage.removeItem('refresh_token');
-          localStorage.removeItem('session_id');
-          document.cookie = 'sessionid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-          window.location.href = '/login';
-        }
-      }
-    }
-    
-    return Promise.reject(error);
-  }
-);
-
-// API Helper Functions
+// API Helper Functions - Mock versions
 export const authAPI = {
   login: (username: string, password: string) =>
     api.post('/users/login/', { username, password }),

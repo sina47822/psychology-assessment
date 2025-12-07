@@ -206,11 +206,11 @@ export default function OTPVerification({
           isVerified ? 'bg-sky-100' : 'bg-sky-100'
         }`}>
           {isVerified ? (
-            <CheckCircle className="h-8 w-8 text-sky-600" />
+            <CheckCircle className="h-8 w-8 text-sky-500" />
           ) : verificationType === 'phone' ? (
-            <Smartphone className="h-8 w-8 text-sky-600" />
+            <Smartphone className="h-8 w-8 text-sky-500" />
           ) : (
-            <Lock className="h-8 w-8 text-sky-600" />
+            <Lock className="h-8 w-8 text-sky-500" />
           )}
         </div>
         
@@ -252,7 +252,7 @@ export default function OTPVerification({
                   activeInput === index
                     ? 'border-sky-500 bg-sky-50'
                     : digit
-                    ? 'border-green-500 bg-blue-50'
+                    ? 'border-sky-500 bg-sky-50'
                     : 'border-gray-300 bg-white'
                 } ${
                   error ? 'border-red-300' : ''
@@ -277,7 +277,7 @@ export default function OTPVerification({
         )}
 
         {success && (
-          <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg flex items-center gap-3">
+          <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg flex items-center gap-3">
             <CheckCircle className="h-5 w-5 flex-shrink-0" />
             <span>{success}</span>
           </div>
@@ -290,7 +290,7 @@ export default function OTPVerification({
           className={`w-full py-3 px-6 rounded-lg font-medium text-white transition-all ${
             isLoading || otp.join('').length !== 6 || isVerified
               ? 'bg-gray-400 cursor-not-allowed'
-              : 'bg-sky-600 hover:bg-sky-700 shadow-md hover:shadow-lg'
+              : 'bg-sky-500 hover:bg-sky-700 shadow-md hover:shadow-lg'
           }`}
         >
           {isLoading ? (
@@ -322,7 +322,7 @@ export default function OTPVerification({
               className={`inline-flex items-center gap-2 px-4 py-2 rounded-lg transition-colors ${
                 isResending || timeLeft > 0
                   ? 'text-gray-400 cursor-not-allowed'
-                  : 'text-sky-600 hover:text-sky-800 hover:bg-sky-50'
+                  : 'text-sky-500 hover:text-sky-800 hover:bg-sky-50'
               }`}
             >
               <RotateCcw className={`h-5 w-5 ${isResending ? 'animate-spin' : ''}`} />
@@ -338,9 +338,9 @@ export default function OTPVerification({
         </div>
 
         {/* نکات مهم */}
-        <div className="mt-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <h4 className="font-medium text-yellow-800 mb-2">توجه:</h4>
-          <ul className="text-sm text-yellow-700 space-y-1 pr-4">
+        <div className="mt-6 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+          <h4 className="font-medium text-sky-800 mb-2">توجه:</h4>
+          <ul className="text-sm text-sky-700 space-y-1 pr-4">
             <li>• کد تأیید فقط ۱۰ دقیقه معتبر است</li>
             <li>• کد را با کسی به اشتراک نگذارید</li>
             <li>• در صورت عدم دریافت کد، شماره یا ایمیل خود را بررسی کنید</li>

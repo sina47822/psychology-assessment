@@ -71,8 +71,8 @@ export default function ResultsPage() {
   ];
 
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-sky-600';
-    if (score >= 60) return 'text-yellow-600';
+    if (score >= 80) return 'text-sky-500';
+    if (score >= 60) return 'text-sky-500';
     return 'text-red-600';
   };
 
@@ -88,7 +88,7 @@ export default function ResultsPage() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-3">
-            <Award className="h-8 w-8 text-sky-600" />
+            <Award className="h-8 w-8 text-sky-500" />
             نتایج ارزیابی
           </h1>
           <p className="text-gray-600 mt-2">
@@ -97,11 +97,11 @@ export default function ResultsPage() {
         </div>
         
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-700 transition-colors">
             <Download className="h-5 w-5" />
             دانلود گزارش
           </button>
-          <button className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-700 transition-colors">
             <Printer className="h-5 w-5" />
             چاپ نتایج
           </button>
@@ -109,7 +109,7 @@ export default function ResultsPage() {
       </div>
 
       {/* Overview Card */}
-      <div className="bg-gradient-to-r from-sky-600 to-sky-600 rounded-2xl p-6 text-white shadow-lg">
+      <div className="bg-gradient-to-r from-sky-500 to-sky-500 rounded-2xl p-6 text-white shadow-lg">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div>
             <div className="flex items-center gap-3 mb-4">
@@ -186,7 +186,7 @@ export default function ResultsPage() {
               onClick={() => setActiveTab('overview')}
               className={`px-6 py-4 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
                 activeTab === 'overview'
-                  ? 'border-sky-600 text-sky-600'
+                  ? 'border-sky-500 text-sky-500'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -199,7 +199,7 @@ export default function ResultsPage() {
               onClick={() => setActiveTab('detailed')}
               className={`px-6 py-4 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
                 activeTab === 'detailed'
-                  ? 'border-sky-600 text-sky-600'
+                  ? 'border-sky-500 text-sky-500'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -212,7 +212,7 @@ export default function ResultsPage() {
               onClick={() => setActiveTab('comparison')}
               className={`px-6 py-4 font-medium text-sm whitespace-nowrap border-b-2 transition-colors ${
                 activeTab === 'comparison'
-                  ? 'border-sky-600 text-sky-600'
+                  ? 'border-sky-500 text-sky-500'
                   : 'border-transparent text-gray-500 hover:text-gray-700'
               }`}
             >
@@ -267,30 +267,30 @@ export default function ResultsPage() {
               
               {/* Strengths and Improvements */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-blue-50 rounded-xl p-6 border border-green-200">
+                <div className="bg-sky-50 rounded-xl p-6 border border-sky-200">
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                    <Star className="h-5 w-5 text-sky-600" />
+                    <Star className="h-5 w-5 text-sky-500" />
                     نقاط قوت
                   </h3>
                   <ul className="space-y-3">
                     {assessmentResults.strengths.map((strength, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-sky-600 mt-0.5" />
+                        <CheckCircle className="h-5 w-5 text-sky-500 mt-0.5" />
                         <span className="text-gray-700">{strength}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
                 
-                <div className="bg-sky-50 rounded-xl p-6 border border-orange-200">
+                <div className="bg-sky-50 rounded-xl p-6 border border-sky-200">
                   <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                    <AlertCircle className="h-5 w-5 text-sky-600" />
+                    <AlertCircle className="h-5 w-5 text-sky-500" />
                     حوزه‌های بهبود
                   </h3>
                   <ul className="space-y-3">
                     {assessmentResults.areasForImprovement.map((area, index) => (
                       <li key={index} className="flex items-start gap-3">
-                        <AlertCircle className="h-5 w-5 text-sky-600 mt-0.5" />
+                        <AlertCircle className="h-5 w-5 text-sky-500 mt-0.5" />
                         <span className="text-gray-700">{area}</span>
                       </li>
                     ))}
@@ -332,14 +332,14 @@ export default function ResultsPage() {
               
               <div className="bg-sky-50 rounded-xl p-6 border border-sky-200">
                 <h3 className="text-lg font-semibold text-gray-800 mb-4 flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5 text-sky-600" />
+                  <MessageSquare className="h-5 w-5 text-sky-500" />
                   توصیه‌های تخصصی
                 </h3>
                 <ul className="space-y-3">
                   {assessmentResults.recommendations.map((recommendation, index) => (
                     <li key={index} className="flex items-start gap-3 p-3 bg-white rounded-lg">
                       <div className="p-2 bg-sky-100 rounded-lg">
-                        <FileText className="h-4 w-4 text-sky-600" />
+                        <FileText className="h-4 w-4 text-sky-500" />
                       </div>
                       <span className="text-gray-700">{recommendation}</span>
                     </li>
@@ -390,7 +390,7 @@ export default function ResultsPage() {
                 
                 <div className="mt-6 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-sky-600 mb-2">+۱۳%</div>
+                    <div className="text-3xl font-bold text-sky-500 mb-2">+۱۳%</div>
                     <div className="text-gray-600">پیشرفت کلی</div>
                   </div>
                 </div>
@@ -404,13 +404,13 @@ export default function ResultsPage() {
       <div className="flex flex-col sm:flex-row gap-4">
         <Link
           href="/dashboard/reports"
-          className="flex-1 bg-sky-600 text-white py-3 px-6 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-3"
+          className="flex-1 bg-sky-500 text-white py-3 px-6 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-3"
         >
           <FileText className="h-5 w-5" />
           مشاهده گزارش کامل
         </Link>
         
-        <button className="flex-1 bg-sky-600 text-white py-3 px-6 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-3">
+        <button className="flex-1 bg-sky-500 text-white py-3 px-6 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-3">
           <Share2 className="h-5 w-5" />
           اشتراک‌گذاری نتایج
         </button>

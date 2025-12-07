@@ -257,3 +257,143 @@ export const RESOURCE_INFO = {
     }
   ]
 };
+
+
+// src/data/constants.ts
+
+
+// کاربران تستی
+export const TEST_USERS = [
+  {
+    id: 1,
+    username: 'user1',
+    email: 'user1@example.com',
+    phone: '09123456789',
+    first_name: 'علی',
+    last_name: 'رضایی',
+    full_name: 'علی رضایی',
+    national_code: '0012345678',
+    birth_date: '1380-01-01',
+    gender: 'male',
+    province: 'تهران',
+    city: 'تهران',
+    is_verified: true,
+    is_parent: false,
+    is_staff: false,
+    avatar: null,
+    email_notifications: true,
+    sms_notifications: true,
+    two_factor_auth: false,
+    last_login: new Date().toISOString(),
+    last_activity: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    profile: {
+      education_level: 'دیپلم',
+      field_of_study: 'ریاضی',
+      occupation: 'دانشجو',
+      emergency_contact_name: 'پدر',
+      emergency_contact_phone: '09123456788',
+      emergency_contact_relation: 'پدر',
+      preferred_language: 'fa',
+      timezone: 'Asia/Tehran',
+      notify_new_assessment: true,
+      notify_results_ready: true,
+      notify_workshop: true,
+      notify_newsletter: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    },
+    assessmentCompleted: false
+  },
+  {
+    id: 2,
+    username: 'parent1',
+    email: 'parent@example.com',
+    phone: '09123456780',
+    first_name: 'مریم',
+    last_name: 'محمدی',
+    full_name: 'مریم محمدی',
+    national_code: '0023456789',
+    birth_date: '1360-01-01',
+    gender: 'female',
+    province: 'تهران',
+    city: 'تهران',
+    is_verified: true,
+    is_parent: true,
+    is_staff: false,
+    avatar: null,
+    email_notifications: true,
+    sms_notifications: true,
+    two_factor_auth: false,
+    last_login: new Date().toISOString(),
+    last_activity: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    profile: {
+      education_level: 'کارشناسی ارشد',
+      field_of_study: 'روانشناسی',
+      occupation: 'معلم',
+      emergency_contact_name: 'همسر',
+      emergency_contact_phone: '09123456781',
+      emergency_contact_relation: 'همسر',
+      preferred_language: 'fa',
+      timezone: 'Asia/Tehran',
+      notify_new_assessment: true,
+      notify_results_ready: true,
+      notify_workshop: true,
+      notify_newsletter: true,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+    },
+    assessmentCompleted: true,
+    assessmentData: {
+      demographics: {
+        age: '17',
+        education: 'متوسطه دوم',
+        occupation: 'دانشجو',
+        livingWith: 'parents',
+        fatherLiving: true,
+        motherLiving: true,
+        fatherAge: '45',
+        fatherEducation: 'کارشناسی',
+        fatherOccupation: 'مهندس',
+        motherAge: '42',
+        motherEducation: 'کارشناسی',
+        motherOccupation: 'معلم',
+        province: 'تهران',
+        city: 'تهران',
+        maritalStatus: 'مجرد'
+      },
+      answers: {},
+      completedAt: new Date().toISOString(),
+      totalSelected: 120
+    }
+  }
+];
+
+// OTP ثابت برای تست
+export const FIXED_OTP = '123456';
+
+// تأخیر شبیه‌سازی شبکه (میلی‌ثانیه)
+export const NETWORK_DELAY = 500;
+
+// خطاهای احراز هویت
+export const AUTH_ERRORS = {
+  userNotFound: 'کاربر یافت نشد',
+  invalidCredentials: 'نام کاربری یا رمز عبور نادرست است',
+  passwordMismatch: 'رمز عبور و تأیید آن مطابقت ندارند',
+  userExists: 'این کاربر قبلاً ثبت‌نام کرده است',
+  invalidOTP: 'کد تأیید نادرست است',
+  sessionExpired: 'نشست شما منقضی شده است',
+  networkError: 'خطا در اتصال به سرور'
+};
+
+// قوانین رمز عبور
+export const PASSWORD_RULES = {
+  minLength: 8,
+  requireUppercase: true,
+  requireLowercase: true,
+  requireNumbers: true,
+  requireSpecialChars: false
+};

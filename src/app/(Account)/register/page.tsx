@@ -289,9 +289,9 @@ export default function RegisterPage() {
 
   const getPasswordStrengthColor = () => {
     if (passwordStrength.score <= 2) return 'bg-red-500';
-    if (passwordStrength.score <= 3) return 'bg-yellow-500';
-    if (passwordStrength.score <= 4) return 'bg-blue-500';
-    return 'bg-green-500';
+    if (passwordStrength.score <= 3) return 'bg-sky-500';
+    if (passwordStrength.score <= 4) return 'bg-sky-500';
+    return 'bg-sky-500';
   };
 
   const getPhoneDisplay = () => {
@@ -304,7 +304,7 @@ export default function RegisterPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-sky-50">
         <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
           <p className="text-gray-600">در حال بررسی وضعیت احراز هویت...</p>
         </div>
       </div>
@@ -359,7 +359,7 @@ export default function RegisterPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-between items-center h-16">
               <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-                <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center shadow-md">
+                <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center shadow-md">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 <div>
@@ -371,7 +371,7 @@ export default function RegisterPage() {
               <div className="flex items-center space-x-4">
                 <Link
                   href="/"
-                  className="flex items-center space-x-2 text-gray-600 hover:text-sky-600 transition-colors"
+                  className="flex items-center space-x-2 text-gray-600 hover:text-sky-500 transition-colors"
                 >
                   <Home className="h-4 w-4" />
                   <span className="text-sm font-medium hidden md:inline">صفحه اصلی</span>
@@ -388,7 +388,7 @@ export default function RegisterPage() {
               {/* هدر کارت */}
               <div className="bg-gradient-to-r from-sky-50 to-sky-50 p-6 border-b border-sky-100">
                 <div className="flex flex-col items-center text-center space-y-4">
-                  <div className="w-16 h-16 rounded-full flex items-center justify-center bg-white shadow-lg text-sky-600 border border-sky-100">
+                  <div className="w-16 h-16 rounded-full flex items-center justify-center bg-white shadow-lg text-sky-500 border border-sky-100">
                     <UserPlus className="h-8 w-8" />
                   </div>
                   <div>
@@ -554,7 +554,7 @@ export default function RegisterPage() {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                       >
                         {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                       </button>
@@ -565,8 +565,8 @@ export default function RegisterPage() {
                           <span className="text-xs text-gray-600">قدرت رمز عبور:</span>
                           <span className={`text-xs font-medium ${
                             passwordStrength.score <= 2 ? 'text-red-600' :
-                            passwordStrength.score <= 3 ? 'text-yellow-600' :
-                            passwordStrength.score <= 4 ? 'text-blue-600' : 'text-green-600'
+                            passwordStrength.score <= 3 ? 'text-sky-500' :
+                            passwordStrength.score <= 4 ? 'text-sky-500' : 'text-sky-500'
                           }`}>
                             {passwordStrength.message}
                           </span>
@@ -600,7 +600,7 @@ export default function RegisterPage() {
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                       >
                         {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                       </button>
@@ -621,7 +621,7 @@ export default function RegisterPage() {
                   )}
 
                   {success && (
-                    <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                    <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg">
                       <div className="flex items-start">
                         <CheckCircle className="h-5 w-5 ml-2 flex-shrink-0 mt-0.5" />
                         <div>
@@ -636,7 +636,7 @@ export default function RegisterPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className={`w-full bg-gradient-to-r from-sky-600 to-sky-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg`}
+                    className={`w-full bg-gradient-to-r from-sky-500 to-sky-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg`}
                   >
                     {isLoading ? (
                       <span className="flex items-center justify-center">
@@ -656,7 +656,7 @@ export default function RegisterPage() {
                     قبلاً حساب کاربری دارید؟{' '}
                     <Link 
                       href="/login" 
-                      className="text-sky-600 font-semibold hover:text-sky-800 transition-colors"
+                      className="text-sky-500 font-semibold hover:text-sky-800 transition-colors"
                     >
                       وارد شوید
                     </Link>
@@ -668,11 +668,11 @@ export default function RegisterPage() {
                   <div className="space-y-2 text-xs text-gray-500">
                     <p className="text-center">
                       با ثبت‌نام، شما با{' '}
-                      <Link href="/terms" className="text-sky-600 hover:text-sky-800 font-medium">
+                      <Link href="/terms" className="text-sky-500 hover:text-sky-800 font-medium">
                         شرایط استفاده
                       </Link>{' '}
                       و{' '}
-                      <Link href="/privacy" className="text-sky-600 hover:text-sky-800 font-medium">
+                      <Link href="/privacy" className="text-sky-500 hover:text-sky-800 font-medium">
                         حریم خصوصی
                       </Link>{' '}
                       موافقت می‌کنید

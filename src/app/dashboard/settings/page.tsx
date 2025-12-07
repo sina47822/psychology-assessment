@@ -283,7 +283,7 @@ export default function SettingsPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto"></div>
           <p className="mt-4 text-gray-600">در حال بارگذاری...</p>
         </div>
       </div>
@@ -298,7 +298,7 @@ export default function SettingsPage() {
           <div className="mb-8">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center">
+                <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center">
                   <SettingsIcon className="h-6 w-6 text-white" />
                 </div>
                 <div>
@@ -310,7 +310,7 @@ export default function SettingsPage() {
               <button
                 onClick={saveSettings}
                 disabled={isSaving}
-                className="bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
+                className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
               >
                 {isSaving ? (
                   <>
@@ -328,7 +328,7 @@ export default function SettingsPage() {
             
             {/* پیام‌های موفقیت/خطا */}
             {saveSuccess && (
-              <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg mb-4 flex items-start">
+              <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg mb-4 flex items-start">
                 <CheckCircle className="h-5 w-5 ml-2 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium">موفقیت‌آمیز</p>
@@ -355,7 +355,7 @@ export default function SettingsPage() {
                 <nav className="space-y-1">
                   <button
                     onClick={() => setActiveTab('general')}
-                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'general' ? 'bg-sky-50 text-sky-600' : 'text-gray-600 hover:bg-gray-50'}`}
+                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'general' ? 'bg-sky-50 text-sky-500' : 'text-gray-600 hover:bg-gray-50'}`}
                   >
                     <SettingsIcon className="h-5 w-5" />
                     <span>عمومی</span>
@@ -363,7 +363,7 @@ export default function SettingsPage() {
                   
                   <button
                     onClick={() => setActiveTab('notifications')}
-                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'notifications' ? 'bg-sky-50 text-sky-600' : 'text-gray-600 hover:bg-gray-50'}`}
+                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'notifications' ? 'bg-sky-50 text-sky-500' : 'text-gray-600 hover:bg-gray-50'}`}
                   >
                     <Bell className="h-5 w-5" />
                     <span>اعلان‌ها</span>
@@ -371,7 +371,7 @@ export default function SettingsPage() {
                   
                   <button
                     onClick={() => setActiveTab('privacy')}
-                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'privacy' ? 'bg-sky-50 text-sky-600' : 'text-gray-600 hover:bg-gray-50'}`}
+                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'privacy' ? 'bg-sky-50 text-sky-500' : 'text-gray-600 hover:bg-gray-50'}`}
                   >
                     <Shield className="h-5 w-5" />
                     <span>حریم خصوصی</span>
@@ -379,7 +379,7 @@ export default function SettingsPage() {
                   
                   <button
                     onClick={() => setActiveTab('appearance')}
-                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'appearance' ? 'bg-sky-50 text-sky-600' : 'text-gray-600 hover:bg-gray-50'}`}
+                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'appearance' ? 'bg-sky-50 text-sky-500' : 'text-gray-600 hover:bg-gray-50'}`}
                   >
                     <Palette className="h-5 w-5" />
                     <span>ظاهر</span>
@@ -387,7 +387,7 @@ export default function SettingsPage() {
                   
                   <button
                     onClick={() => setActiveTab('security')}
-                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'security' ? 'bg-sky-50 text-sky-600' : 'text-gray-600 hover:bg-gray-50'}`}
+                    className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'security' ? 'bg-sky-50 text-sky-500' : 'text-gray-600 hover:bg-gray-50'}`}
                   >
                     <Lock className="h-5 w-5" />
                     <span>امنیت</span>
@@ -396,7 +396,7 @@ export default function SettingsPage() {
                   <div className="border-t border-gray-200 pt-4 mt-4">
                     <button
                       onClick={() => setActiveTab('data')}
-                      className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'data' ? 'bg-sky-50 text-sky-600' : 'text-gray-600 hover:bg-gray-50'}`}
+                      className={`flex items-center space-x-3 w-full p-3 rounded-lg transition-colors ${activeTab === 'data' ? 'bg-sky-50 text-sky-500' : 'text-gray-600 hover:bg-gray-50'}`}
                     >
                       <Download className="h-5 w-5" />
                       <span>مدیریت داده‌ها</span>
@@ -456,7 +456,7 @@ export default function SettingsPage() {
                               onChange={(e) => handleSettingChange('appearance', 'rtl', e.target.checked)}
                               className="sr-only peer"
                             />
-                            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-600">
+                            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500">
                               <span className="absolute top-1/2 transform -translate-y-1/2 text-xs text-gray-700 left-2">LTR</span>
                               <span className="absolute top-1/2 transform -translate-y-1/2 text-xs text-white right-2">RTL</span>
                             </div>
@@ -498,7 +498,7 @@ export default function SettingsPage() {
                               onChange={(e) => handleSettingChange('notifications', key as keyof SettingsType['notifications'], e.target.checked)}
                               className="sr-only peer"
                             />
-                            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-600"></div>
+                            <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
                           </label>
                         </div>
                       ))}
@@ -549,7 +549,7 @@ export default function SettingsPage() {
                                 onChange={(e) => handleSettingChange('privacy', key, e.target.checked)}
                                 className="sr-only peer"
                               />
-                              <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-600"></div>
+                              <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
                             </label>
                           </div>
                         ))}
@@ -646,7 +646,7 @@ export default function SettingsPage() {
                             onChange={(e) => handleSecuritySettingChange('twoFactorAuth', e.target.checked)}
                             className="sr-only peer"
                           />
-                          <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-600"></div>
+                          <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
                         </label>
                       </div>
                     </div>
@@ -666,7 +666,7 @@ export default function SettingsPage() {
                             onChange={(e) => handleSecuritySettingChange('loginAlerts', e.target.checked)}
                             className="sr-only peer"
                           />
-                          <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-600"></div>
+                          <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-sky-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
                         </label>
                       </div>
                       
@@ -762,7 +762,7 @@ export default function SettingsPage() {
                         <button
                           onClick={changePassword}
                           disabled={isSaving}
-                          className="bg-sky-600 text-white px-6 py-3 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
+                          className="bg-sky-500 text-white px-6 py-3 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2 disabled:opacity-50"
                         >
                           <Key className="h-4 w-4" />
                           <span>تغییر رمز عبور</span>
@@ -779,10 +779,10 @@ export default function SettingsPage() {
                     
                     <div className="space-y-6">
                       {/* خروجی گرفتن از داده‌ها */}
-                      <div className="p-6 bg-blue-50 rounded-lg border border-green-200">
+                      <div className="p-6 bg-sky-50 rounded-lg border border-sky-200">
                         <div className="flex items-start space-x-4">
                           <div className="flex-shrink-0">
-                            <Download className="h-8 w-8 text-sky-600" />
+                            <Download className="h-8 w-8 text-sky-500" />
                           </div>
                           <div className="flex-1">
                             <h3 className="font-bold text-gray-800 mb-2">دریافت داده‌های حساب</h3>
@@ -791,7 +791,7 @@ export default function SettingsPage() {
                             </p>
                             <button
                               onClick={exportData}
-                              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors flex items-center space-x-2"
+                              className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors flex items-center space-x-2"
                             >
                               <Download className="h-4 w-4" />
                               <span>دریافت فایل داده‌ها</span>
@@ -804,7 +804,7 @@ export default function SettingsPage() {
                       <div className="p-6 bg-sky-50 rounded-lg border border-sky-200">
                         <div className="flex items-start space-x-4">
                           <div className="flex-shrink-0">
-                            <Upload className="h-8 w-8 text-sky-600" />
+                            <Upload className="h-8 w-8 text-sky-500" />
                           </div>
                           <div className="flex-1">
                             <h3 className="font-bold text-gray-800 mb-2">وارد کردن داده‌ها</h3>
@@ -818,7 +818,7 @@ export default function SettingsPage() {
                                 className="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-sky-50 file:text-sky-700 hover:file:bg-sky-100"
                               />
                               <button
-                                className="bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
+                                className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
                                 onClick={() => alert('این قابلیت به زودی فعال خواهد شد')}
                               >
                                 آپلود فایل

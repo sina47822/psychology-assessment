@@ -59,7 +59,7 @@ export default function UserWelcomeCard({
         <div className="flex items-center space-x-3">
           <div className="hidden md:flex flex-col items-end">
             <p className="text-sm text-gray-600">وضعیت حساب:</p>
-            <div className={`px-3 py-1 rounded-full text-sm font-medium ${user.isVerified ? 'bg-sky-100 text-sky-800' : 'bg-yellow-100 text-yellow-800'}`}>
+            <div className={`px-3 py-1 rounded-full text-sm font-medium ${user.isVerified ? 'bg-sky-100 text-sky-800' : 'bg-sky-100 text-sky-800'}`}>
               {user.isVerified ? 'تأیید شده' : 'در انتظار تأیید'}
             </div>
           </div>
@@ -80,7 +80,7 @@ export default function UserWelcomeCard({
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                <FileText className="h-5 w-5 text-sky-600" />
+                <FileText className="h-5 w-5 text-sky-500" />
               </div>
               <div>
                 <p className="text-sm text-gray-600">مرحله فعلی</p>
@@ -92,7 +92,7 @@ export default function UserWelcomeCard({
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                <svg className="h-5 w-5 text-sky-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="h-5 w-5 text-sky-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                 </svg>
               </div>
@@ -108,7 +108,7 @@ export default function UserWelcomeCard({
           <div className="bg-white p-4 rounded-lg border border-gray-200">
             <div className="flex items-center space-x-3">
               <div className="w-10 h-10 bg-sky-100 rounded-lg flex items-center justify-center">
-                <Clock className="h-5 w-5 text-sky-600" />
+                <Clock className="h-5 w-5 text-sky-500" />
               </div>
               <div>
                 <p className="text-sm text-gray-600">آخرین فعالیت</p>
@@ -123,7 +123,7 @@ export default function UserWelcomeCard({
       <div className="mt-6 flex flex-wrap gap-3">
         <Link
           href="/dashboard"
-          className="flex items-center space-x-2 bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
+          className="flex items-center space-x-2 bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
         >
           <BarChart className="h-4 w-4" />
           <span>داشبورد</span>

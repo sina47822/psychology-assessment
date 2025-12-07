@@ -251,7 +251,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
     if (/[!@#$%^&*(),.?":{}|<>]/.test(password)) score++;
     
     const texts = ['خیلی ضعیف', 'ضعیف', 'متوسط', 'قوی', 'خیلی قوی'];
-    const colors = ['bg-red-500', 'bg-orange-500', 'bg-yellow-500', 'bg-green-500', 'bg-green-700'];
+    const colors = ['bg-red-500', 'bg-sky-500', 'bg-sky-500', 'bg-sky-500', 'bg-sky-700'];
     
     return { score, text: texts[score - 1] || '', color: colors[score - 1] || 'bg-red-500' };
   };
@@ -261,7 +261,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
   if (authLoading) {
     return (
       <div className="flex justify-center items-center p-8">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -334,7 +334,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.firstName.touched
                   ? validation.firstName.isValid
-                    ? 'border-green-500'
+                    ? 'border-sky-500'
                     : 'border-red-500'
                   : 'border-gray-300'
               }`}
@@ -345,7 +345,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             {validation.firstName.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.firstName.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -376,7 +376,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.lastName.touched
                   ? validation.lastName.isValid
-                    ? 'border-green-500'
+                    ? 'border-sky-500'
                     : 'border-red-500'
                   : 'border-gray-300'
               }`}
@@ -387,7 +387,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             {validation.lastName.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.lastName.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -421,7 +421,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.email.touched
                   ? validation.email.isValid
-                    ? 'border-green-500'
+                    ? 'border-sky-500'
                     : 'border-red-500'
                   : 'border-gray-300'
               }`}
@@ -432,7 +432,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             {validation.email.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.email.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -465,7 +465,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.username.touched
                   ? validation.username.isValid
-                    ? 'border-green-500'
+                    ? 'border-sky-500'
                     : 'border-red-500'
                   : 'border-gray-300'
               }`}
@@ -476,7 +476,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             {validation.username.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.username.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -509,7 +509,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
                 validation.phone.touched
                   ? validation.phone.isValid
-                    ? 'border-green-500'
+                    ? 'border-sky-500'
                     : 'border-red-500'
                   : 'border-gray-300'
               }`}
@@ -520,7 +520,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             {validation.phone.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
                 {validation.phone.isValid ? (
-                  <Check className="h-5 w-5 text-green-500" />
+                  <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
                 )}
@@ -533,7 +533,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             </p>
           )}
           {formData.phone && validation.phone.isValid && (
-            <p className="text-green-600 text-xs mt-1">
+            <p className="text-sky-500 text-xs mt-1">
               کد تأیید به شماره {formatPhoneNumber(formData.phone)} ارسال خواهد شد
             </p>
           )}
@@ -615,7 +615,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
               validation.password.touched
                 ? validation.password.isValid
-                  ? 'border-green-500'
+                  ? 'border-sky-500'
                   : 'border-red-500'
                 : 'border-gray-300'
             }`}
@@ -626,14 +626,14 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >
             {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
           {validation.password.touched && (
             <div className="absolute left-12 top-1/2 transform -translate-y-1/2">
               {validation.password.isValid ? (
-                <Check className="h-5 w-5 text-green-500" />
+                <Check className="h-5 w-5 text-sky-500" />
               ) : (
                 <X className="h-5 w-5 text-red-500" />
               )}
@@ -647,9 +647,9 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             <div className="flex justify-between items-center mb-1">
               <span className="text-xs text-gray-600">قدرت رمز عبور:</span>
               <span className={`text-xs font-medium ${
-                passwordStrength.score >= 4 ? 'text-green-600' :
-                passwordStrength.score >= 3 ? 'text-yellow-600' :
-                passwordStrength.score >= 2 ? 'text-orange-600' :
+                passwordStrength.score >= 4 ? 'text-sky-500' :
+                passwordStrength.score >= 3 ? 'text-sky-500' :
+                passwordStrength.score >= 2 ? 'text-sky-500' :
                 'text-red-600'
               }`}>
                 {passwordStrength.text}
@@ -668,23 +668,23 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
         <div className="mt-3 space-y-1">
           <p className="text-sm text-gray-600">رمز عبور باید شامل:</p>
           <ul className="text-xs text-gray-500 space-y-1 pr-4">
-            <li className={`flex items-center gap-1 ${formData.password.length >= 8 ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${formData.password.length >= 8 ? 'text-sky-500' : ''}`}>
               {formData.password.length >= 8 ? <Check className="h-3 w-3" /> : '○'}
               حداقل ۸ کاراکتر
             </li>
-            <li className={`flex items-center gap-1 ${/[A-Z]/.test(formData.password) ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/[A-Z]/.test(formData.password) ? 'text-sky-500' : ''}`}>
               {/[A-Z]/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک حرف بزرگ
             </li>
-            <li className={`flex items-center gap-1 ${/[a-z]/.test(formData.password) ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/[a-z]/.test(formData.password) ? 'text-sky-500' : ''}`}>
               {/[a-z]/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک حرف کوچک
             </li>
-            <li className={`flex items-center gap-1 ${/\d/.test(formData.password) ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/\d/.test(formData.password) ? 'text-sky-500' : ''}`}>
               {/\d/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک عدد
             </li>
-            <li className={`flex items-center gap-1 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-green-600' : ''}`}>
+            <li className={`flex items-center gap-1 ${/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? 'text-sky-500' : ''}`}>
               {/[!@#$%^&*(),.?":{}|<>]/.test(formData.password) ? <Check className="h-3 w-3" /> : '○'}
               حداقل یک نماد ویژه
             </li>
@@ -710,7 +710,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
               validation.confirmPassword.touched
                 ? validation.confirmPassword.isValid
-                  ? 'border-green-500'
+                  ? 'border-sky-500'
                   : 'border-red-500'
                 : 'border-gray-300'
             }`}
@@ -721,14 +721,14 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
           <button
             type="button"
             onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >
             {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
           </button>
           {validation.confirmPassword.touched && (
             <div className="absolute left-12 top-1/2 transform -translate-y-1/2">
               {validation.confirmPassword.isValid ? (
-                <Check className="h-5 w-5 text-green-500" />
+                <Check className="h-5 w-5 text-sky-500" />
               ) : (
                 <X className="h-5 w-5 text-red-500" />
               )}
@@ -753,7 +753,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
       )}
 
       {success && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+        <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg">
           <div className="flex items-center">
             <Check className="h-5 w-5 ml-2" />
             {success}
@@ -765,7 +765,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
       <button
         type="submit"
         disabled={isLoading || !isFormValid()}
-        className={`w-full bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 ${
+        className={`w-full bg-sky-500 text-white font-medium py-3 px-6 rounded-lg transition duration-200 ${
           isLoading || !isFormValid()
             ? 'opacity-50 cursor-not-allowed'
             : 'hover:bg-sky-700 shadow-md hover:shadow-lg'
@@ -786,7 +786,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
         قبلاً حساب کاربری دارید؟{' '}
         <Link 
           href="/login" 
-          className="text-sky-600 font-medium hover:text-sky-800 transition-colors"
+          className="text-sky-500 font-medium hover:text-sky-800 transition-colors"
         >
           وارد شوید
         </Link>
@@ -796,11 +796,11 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
       <div className="pt-4 border-t border-gray-200">
         <p className="text-xs text-gray-500 text-center">
           با ثبت‌نام، شما با{' '}
-          <Link href="/terms" className="text-sky-600 hover:text-sky-800">
+          <Link href="/terms" className="text-sky-500 hover:text-sky-800">
             شرایط استفاده
           </Link>{' '}
           و{' '}
-          <Link href="/privacy" className="text-sky-600 hover:text-sky-800">
+          <Link href="/privacy" className="text-sky-500 hover:text-sky-800">
             حریم خصوصی
           </Link>{' '}
           موافقت می‌کنید

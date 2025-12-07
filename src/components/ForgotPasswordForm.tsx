@@ -212,7 +212,7 @@ export default function ForgotPasswordForm({
           ایمیل / نام کاربری / شماره موبایل
         </label>
         <div className="relative">
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
             {getIdentifierIcon()}
           </div>
           <input
@@ -233,7 +233,7 @@ export default function ForgotPasswordForm({
       <button
         type="submit"
         disabled={isSendingOTP || !identifier.trim()}
-        className={`w-full bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition-all ${
+        className={`w-full bg-sky-500 text-white font-medium py-3 px-6 rounded-lg transition-all ${
           isSendingOTP || !identifier.trim()
             ? 'opacity-50 cursor-not-allowed'
             : 'hover:bg-sky-700 shadow-md hover:shadow-lg'
@@ -256,7 +256,7 @@ export default function ForgotPasswordForm({
     <form onSubmit={handleOTPSubmit} className="space-y-6">
       <div className="text-center mb-4">
         <div className="inline-flex items-center justify-center w-12 h-12 bg-sky-100 rounded-full mb-3">
-          <Key className="h-6 w-6 text-sky-600" />
+          <Key className="h-6 w-6 text-sky-500" />
         </div>
         <p className="text-gray-600">
           کد ۶ رقمی ارسال شده را وارد کنید
@@ -287,7 +287,7 @@ export default function ForgotPasswordForm({
           type="button"
           onClick={handleResendOTP}
           disabled={isSendingOTP || timeLeft > 0}
-          className={`text-sm ${isSendingOTP || timeLeft > 0 ? 'text-gray-400' : 'text-sky-600 hover:text-sky-800'}`}
+          className={`text-sm ${isSendingOTP || timeLeft > 0 ? 'text-gray-400' : 'text-sky-500 hover:text-sky-800'}`}
         >
           {isSendingOTP ? 'در حال ارسال...' : 'ارسال مجدد کد'}
           {timeLeft > 0 && ` (${timeLeft} ثانیه)`}
@@ -305,7 +305,7 @@ export default function ForgotPasswordForm({
         <button
           type="submit"
           disabled={otp.length !== 6}
-          className={`flex-1 bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
+          className={`flex-1 bg-sky-500 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
             otp.length !== 6 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-sky-700'
           }`}
         >
@@ -323,7 +323,7 @@ export default function ForgotPasswordForm({
           رمز عبور جدید
         </label>
         <div className="relative">
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
             <Lock className="h-5 w-5" />
           </div>
           <input
@@ -359,7 +359,7 @@ export default function ForgotPasswordForm({
               ) : (
                 <XCircle className="h-4 w-4 text-gray-300" />
               )}
-              <span className={`text-sm ${item.isValid ? 'text-sky-600' : 'text-gray-500'}`}>
+              <span className={`text-sm ${item.isValid ? 'text-sky-500' : 'text-gray-500'}`}>
                 {item.text}
               </span>
             </div>
@@ -372,7 +372,7 @@ export default function ForgotPasswordForm({
           تأیید رمز عبور جدید
         </label>
         <div className="relative">
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
             <Lock className="h-5 w-5" />
           </div>
           <input
@@ -408,7 +408,7 @@ export default function ForgotPasswordForm({
         <button
           type="submit"
           disabled={isLoading || newPassword !== confirmPassword || !passwordValidation.length}
-          className={`flex-1 bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
+          className={`flex-1 bg-sky-500 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
             isLoading || newPassword !== confirmPassword || !passwordValidation.length
               ? 'opacity-50 cursor-not-allowed'
               : 'hover:bg-sky-700'
@@ -431,7 +431,7 @@ export default function ForgotPasswordForm({
   const renderStep4 = () => (
     <div className="text-center space-y-6">
       <div className="inline-flex items-center justify-center w-20 h-20 bg-sky-100 rounded-full mb-4">
-        <CheckCircle className="h-10 w-10 text-sky-600" />
+        <CheckCircle className="h-10 w-10 text-sky-500" />
       </div>
       
       <div>
@@ -444,7 +444,7 @@ export default function ForgotPasswordForm({
       <div className="space-y-3">
         <Link
           href="/login"
-          className="block w-full bg-sky-600 text-white font-medium py-3 px-6 rounded-lg hover:bg-sky-700 transition-colors"
+          className="block w-full bg-sky-500 text-white font-medium py-3 px-6 rounded-lg hover:bg-sky-700 transition-colors"
         >
           ورود به حساب کاربری
         </Link>
@@ -474,7 +474,7 @@ export default function ForgotPasswordForm({
             <div
               key={s}
               className={`h-2 flex-1 rounded-full transition-all ${
-                s <= step ? 'bg-sky-600' : 'bg-gray-200'
+                s <= step ? 'bg-sky-500' : 'bg-gray-200'
               }`}
             />
           ))}
@@ -489,7 +489,7 @@ export default function ForgotPasswordForm({
       )}
 
       {success && step !== 4 && (
-        <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg mb-6">
+        <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg mb-6">
           {success}
         </div>
       )}
@@ -506,7 +506,7 @@ export default function ForgotPasswordForm({
           <div className="text-center space-y-3">
             <Link
               href="/login"
-              className="text-sm text-sky-600 hover:text-sky-800 transition-colors block"
+              className="text-sm text-sky-500 hover:text-sky-800 transition-colors block"
             >
               ← بازگشت به صفحه ورود
             </Link>

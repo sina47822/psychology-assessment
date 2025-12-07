@@ -42,7 +42,7 @@ export default function RootLayout({
       </head>
       <body className="bg-gray-50">
         <AuthProvider>
-          <div className="min-h-screen bg-gradient-to-br from-blue-50 to-sky-50">
+          <div className="min-h-screen bg-gradient-to-br from-sky-50 to-sky-50">
             {children}
           </div>
         </AuthProvider>

@@ -23,7 +23,7 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <div className="bg-sky-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-center mb-4">
-            <Shield className="h-12 w-12 text-sky-600" />
+            <Shield className="h-12 w-12 text-sky-500" />
           </div>
           <h3 className="font-bold text-lg text-gray-800 mb-2">محرمانگی اطلاعات</h3>
           <p className="text-gray-600">تمامی پاسخ‌های شما کاملاً محرمانه نگهداری می‌شود.</p>
@@ -31,15 +31,15 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
 
         <div className="bg-sky-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-center mb-4">
-            <Clock className="h-12 w-12 text-sky-600" />
+            <Clock className="h-12 w-12 text-sky-500" />
           </div>
           <h3 className="font-bold text-lg text-gray-800 mb-2">زمان مورد نیاز</h3>
           <p className="text-gray-600">ارزیابی کامل حدود ۱۰-۱۲ دقیقه زمان می‌برد.</p>
         </div>
 
-        <div className="bg-sky-50 p-6 rounded-xl border border-pink-100">
+        <div className="bg-sky-50 p-6 rounded-xl border border-sky-100">
           <div className="flex items-center justify-center mb-4">
-            <Heart className="h-12 w-12 text-sky-600" />
+            <Heart className="h-12 w-12 text-sky-500" />
           </div>
           <h3 className="font-bold text-lg text-gray-800 mb-2">هدف ما</h3>
           <p className="text-gray-600">کمک به بهبود روابط و سلامت روانی نوجوانان</p>
@@ -58,9 +58,9 @@ export default function WelcomeScreen({ onStart }: WelcomeScreenProps) {
         </div>
       </div>
 
-      <div className="mb-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-        <p className="text-yellow-800 font-medium mb-2">توجه مهم:</p>
-        <p className="text-yellow-700 text-sm">
+      <div className="mb-8 p-4 bg-sky-50 border border-sky-200 rounded-lg">
+        <p className="text-sky-800 font-medium mb-2">توجه مهم:</p>
+        <p className="text-sky-700 text-sm">
           این پرسشنامه برای نوجوانان ۱۲ تا ۱۸ سال طراحی شده است. لطفاً بر اساس رفتارهای مشاهده شده در یک ماه گذشته پاسخ دهید.
         </p>
       </div>

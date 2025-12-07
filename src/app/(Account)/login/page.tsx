@@ -129,7 +129,7 @@ export default function LoginPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-sky-50">
         <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
           <p className="text-gray-600">در حال بررسی وضعیت احراز هویت...</p>
         </div>
       </div>
@@ -143,7 +143,7 @@ export default function LoginPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-              <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center shadow-md">
+              <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center shadow-md">
                 <Shield className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -155,7 +155,7 @@ export default function LoginPage() {
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <Link
                 href="/"
-                className="flex items-center space-x-2 text-gray-600 hover:text-sky-600 transition-colors"
+                className="flex items-center space-x-2 text-gray-600 hover:text-sky-500 transition-colors"
               >
                 <Home className="h-4 w-4" />
                 <span className="text-sm font-medium hidden md:inline">صفحه اصلی</span>
@@ -172,7 +172,7 @@ export default function LoginPage() {
             {/* هدر کارت */}
             <div className="bg-gradient-to-r from-sky-50 to-sky-50 p-6 border-b border-sky-100">
               <div className="flex flex-col items-center text-center space-y-4">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-white shadow-lg text-sky-600 border border-sky-100">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-white shadow-lg text-sky-500 border border-sky-100">
                   <Shield className="h-8 w-8" />
                 </div>
                 <div>
@@ -189,7 +189,7 @@ export default function LoginPage() {
             {/* بدنه کارت */}
             <div className="p-6">
               {sessionExpired && (
-                <div className="mb-4 bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg">
+                <div className="mb-4 bg-sky-50 border border-sky-200 text-sky-800 px-4 py-3 rounded-lg">
                   <div className="flex items-start">
                     <AlertCircle className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
                     <div className="text-right">
@@ -236,7 +236,7 @@ export default function LoginPage() {
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                      className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
                     >
                       {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                     </button>
@@ -244,13 +244,13 @@ export default function LoginPage() {
                 </div>
 
                 {loginType === 'phone' && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <div className="bg-sky-50 border border-sky-200 rounded-lg p-4">
                     <div className="flex items-start">
                       <div className="text-right">
-                        <p className="text-sm text-blue-800">
+                        <p className="text-sm text-sky-800">
                           با شماره موبایل <span className="font-bold">{formatIranianPhone(identifier)}</span> لاگین می‌کنید.
                         </p>
-                        <p className="text-xs text-blue-600 mt-1">
+                        <p className="text-xs text-sky-500 mt-1">
                           کد تأیید به شماره شما ارسال خواهد شد.
                         </p>
                       </div>
@@ -273,7 +273,7 @@ export default function LoginPage() {
 
                 {/* نمایش موفقیت */}
                 {success && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                  <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg">
                     <div className="flex items-start">
                       <CheckCircle className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
                       <div className="text-right">
@@ -287,7 +287,7 @@ export default function LoginPage() {
                 <div className="flex items-center justify-between">
                   <Link 
                     href="/forgot-password" 
-                    className="text-sm text-sky-600 hover:text-sky-800 transition-colors font-medium"
+                    className="text-sm text-sky-500 hover:text-sky-800 transition-colors font-medium"
                   >
                     رمز عبور را فراموش کرده‌اید؟
                   </Link>
@@ -306,8 +306,8 @@ export default function LoginPage() {
                   disabled={isLoading}
                   className={`w-full ${
                     loginType === 'phone' 
-                      ? 'bg-gradient-to-r from-blue-600 to-blue-600 hover:from-blue-700 hover:to-blue-700 focus:ring-blue-500' 
-                      : 'bg-gradient-to-r from-sky-600 to-sky-600 hover:from-sky-700 hover:to-sky-700 focus:ring-sky-500'
+                      ? 'bg-gradient-to-r from-sky-500 to-sky-500 hover:from-sky-700 hover:to-sky-700 focus:ring-sky-500' 
+                      : 'bg-gradient-to-r from-sky-500 to-sky-500 hover:from-sky-700 hover:to-sky-700 focus:ring-sky-500'
                   } text-white py-3 px-4 rounded-xl font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg flex items-center justify-center space-x-2`}
                 >
                   {isLoading ? (
@@ -330,7 +330,7 @@ export default function LoginPage() {
                   حساب کاربری ندارید؟{' '}
                   <Link 
                     href="/register" 
-                    className="text-sky-600 font-semibold hover:text-sky-800 transition-colors"
+                    className="text-sky-500 font-semibold hover:text-sky-800 transition-colors"
                   >
                     ثبت نام کنید
                   </Link>
@@ -342,11 +342,11 @@ export default function LoginPage() {
                 <div className="space-y-2 text-xs text-gray-500 text-center">
                   <p>
                     با ورود یا ثبت‌نام، شما با{' '}
-                    <Link href="/terms" className="text-sky-600 hover:text-sky-800 font-medium">
+                    <Link href="/terms" className="text-sky-500 hover:text-sky-800 font-medium">
                       شرایط استفاده
                     </Link>{' '}
                     و{' '}
-                    <Link href="/privacy" className="text-sky-600 hover:text-sky-800 font-medium">
+                    <Link href="/privacy" className="text-sky-500 hover:text-sky-800 font-medium">
                       حریم خصوصی
                     </Link>{' '}
                     موافقت می‌کنید

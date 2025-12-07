@@ -32,8 +32,8 @@ export default function AboutPage() {
       
       <main className="flex-1">
         {/* هیرو */}
-        <div className="relative bg-gradient-to-r from-sky-600 to-sky-700 text-white overflow-hidden">
-          <div className="absolute inset-0 bg-black/10"></div>
+        <div className="relative bg-gradient-to-r from-sky-500 to-sky-700 text-white overflow-hidden">
+          <div className="absolute inset-0 bg-sky-500/10"></div>
           <div className="absolute top-0 left-0 w-full h-full opacity-10">
             <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
               <defs>
@@ -78,10 +78,10 @@ export default function AboutPage() {
                 className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200 text-center hover:shadow-xl transition-shadow"
               >
                 <div className="w-14 h-14 bg-gradient-to-br from-sky-100 to-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  {index === 0 && <Users className="h-6 w-6 text-sky-600" />}
-                  {index === 1 && <Star className="h-6 w-6 text-yellow-600" />}
-                  {index === 2 && <Clock className="h-6 w-6 text-sky-600" />}
-                  {index === 3 && <Award className="h-6 w-6 text-sky-600" />}
+                  {index === 0 && <Users className="h-6 w-6 text-sky-500" />}
+                  {index === 1 && <Star className="h-6 w-6 text-sky-500" />}
+                  {index === 2 && <Clock className="h-6 w-6 text-sky-500" />}
+                  {index === 3 && <Award className="h-6 w-6 text-sky-500" />}
                 </div>
                 <div className="text-3xl font-bold text-gray-800 mb-2">{achievement.number}</div>
                 <div className="text-gray-600">{achievement.label}</div>
@@ -125,7 +125,7 @@ export default function AboutPage() {
                 <div className="absolute -inset-4 bg-gradient-to-r from-sky-500 to-sky-500 rounded-3xl opacity-20 blur-xl"></div>
                 <div className="relative bg-white p-8 rounded-2xl shadow-lg border border-gray-200">
                   <div className="flex items-center space-x-4 mb-6">
-                    <div className="w-12 h-12 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center">
+                    <div className="w-12 h-12 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center">
                       <Target className="h-6 w-6 text-white" />
                     </div>
                     <div>
@@ -164,9 +164,9 @@ export default function AboutPage() {
                 >
                   <div className="w-16 h-16 bg-gradient-to-br from-sky-100 to-sky-100 rounded-full flex items-center justify-center mx-auto mb-4">
                     {index === 0 && <Heart className="h-6 w-6 text-red-500" />}
-                    {index === 1 && <Shield className="h-6 w-6 text-sky-600" />}
-                    {index === 2 && <BarChart className="h-6 w-6 text-sky-600" />}
-                    {index === 3 && <Lightbulb className="h-6 w-6 text-yellow-600" />}
+                    {index === 1 && <Shield className="h-6 w-6 text-sky-500" />}
+                    {index === 2 && <BarChart className="h-6 w-6 text-sky-500" />}
+                    {index === 3 && <Lightbulb className="h-6 w-6 text-sky-500" />}
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-3">{value.title}</h3>
                   <p className="text-gray-600">{value.description}</p>
@@ -202,9 +202,9 @@ export default function AboutPage() {
                     <div className="flex items-start justify-between mb-3">
                       <div>
                         <h3 className="font-bold text-gray-800 text-lg">{member.name}</h3>
-                        <p className="text-sky-600 font-medium">{member.role}</p>
+                        <p className="text-sky-500 font-medium">{member.role}</p>
                       </div>
-                      <div className="bg-sky-50 text-sky-600 text-xs px-2 py-1 rounded-full">
+                      <div className="bg-sky-50 text-sky-500 text-xs px-2 py-1 rounded-full">
                         {member.experience} سابقه
                       </div>
                     </div>
@@ -215,7 +215,7 @@ export default function AboutPage() {
                       <button className="flex-1 bg-gray-100 text-gray-700 py-2 rounded-lg hover:bg-gray-200 transition-colors text-sm">
                         پروفایل
                       </button>
-                      <button className="flex-1 bg-sky-600 text-white py-2 rounded-lg hover:bg-sky-700 transition-colors text-sm">
+                      <button className="flex-1 bg-sky-500 text-white py-2 rounded-lg hover:bg-sky-700 transition-colors text-sm">
                         پیام
                       </button>
                     </div>
@@ -249,7 +249,7 @@ export default function AboutPage() {
                         <>
                           <div className="md:w-1/2 md:pr-8 mb-4 md:mb-0">
                             <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
-                              <div className="text-sky-600 font-bold text-2xl mb-2">{milestone.year}</div>
+                              <div className="text-sky-500 font-bold text-2xl mb-2">{milestone.year}</div>
                               <h3 className="text-xl font-bold text-gray-800 mb-2">{milestone.title}</h3>
                               <p className="text-gray-600">{milestone.description}</p>
                             </div>
@@ -267,7 +267,7 @@ export default function AboutPage() {
                           </div>
                           <div className="md:w-1/2 md:pl-8 mb-4 md:mb-0">
                             <div className="bg-white p-6 rounded-2xl shadow-lg border border-gray-200">
-                              <div className="text-sky-600 font-bold text-2xl mb-2">{milestone.year}</div>
+                              <div className="text-sky-500 font-bold text-2xl mb-2">{milestone.year}</div>
                               <h3 className="text-xl font-bold text-gray-800 mb-2">{milestone.title}</h3>
                               <p className="text-gray-600">{milestone.description}</p>
                             </div>
@@ -282,7 +282,7 @@ export default function AboutPage() {
           </div>
 
           {/* فراخوان اقدام */}
-          <div className="bg-gradient-to-r from-sky-600 to-sky-700 rounded-3xl p-12 text-center text-white">
+          <div className="bg-gradient-to-r from-sky-500 to-sky-700 rounded-3xl p-12 text-center text-white">
             <div className="max-w-2xl mx-auto">
               <h2 className="text-3xl font-bold mb-6">به خانواده ما بپیوندید</h2>
               <p className="text-xl opacity-90 mb-8">
@@ -292,7 +292,7 @@ export default function AboutPage() {
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <button
                   onClick={() => window.location.href = '/careers'}
-                  className="bg-white text-sky-600 px-8 py-3 rounded-lg hover:bg-sky-50 transition-colors font-bold"
+                  className="bg-white text-sky-500 px-8 py-3 rounded-lg hover:bg-sky-50 transition-colors font-bold"
                 >
                   فرصت‌های شغلی
                 </button>

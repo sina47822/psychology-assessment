@@ -15,7 +15,7 @@ import {
 } from '@/lib/jalali';
 
 import api from '@/lib/api';
-import PersianDatePicker from './PersianDatePicker';
+import PersianDatePicker from '@/components/PersianDatePicker';
 
 interface UserProfileProps {
   onClose?: () => void;
@@ -219,13 +219,12 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
       if (dataToSend.birth_date) {
         const date = persianStringToDate(dataToSend.birth_date);
         if (date) {
-          // تبدیل به فرمت YYYY-MM-DD برای Django
           dataToSend.birth_date = date.toISOString().split('T')[0];
         } else {
-          delete dataToSend.birth_date;
+          dataToSend.birth_date = ''; // ✅ به جای delete، رشته خالی قرار دهید
         }
       } else {
-        delete dataToSend.birth_date;
+        dataToSend.birth_date = ''; // ✅ به جای delete، رشته خالی قرار دهید
       }
 
       // استفاده از تابع updateProfile از AuthProvider
@@ -361,25 +360,25 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
   };
 
   // تولید ماه‌های شمسی
-  const persianMonths = [
-    { id: 1, name: 'فروردین', days: 31 },
-    { id: 2, name: 'اردیبهشت', days: 31 },
-    { id: 3, name: 'خرداد', days: 31 },
-    { id: 4, name: 'تیر', days: 31 },
-    { id: 5, name: 'مرداد', days: 31 },
-    { id: 6, name: 'شهریور', days: 31 },
-    { id: 7, name: 'مهر', days: 30 },
-    { id: 8, name: 'آبان', days: 30 },
-    { id: 9, name: 'آذر', days: 30 },
-    { id: 10, name: 'دی', days: 30 },
-    { id: 11, name: 'بهمن', days: 30 },
-    { id: 12, name: 'اسفند', days: isLeapJalaaliYear(new Date().getFullYear()) ? 30 : 29 }
-  ];
+    const persianMonths = [
+      { id: 1, name: 'فروردین', days: 31 },
+      { id: 2, name: 'اردیبهشت', days: 31 },
+      { id: 3, name: 'خرداد', days: 31 },
+      { id: 4, name: 'تیر', days: 31 },
+      { id: 5, name: 'مرداد', days: 31 },
+      { id: 6, name: 'شهریور', days: 31 },
+      { id: 7, name: 'مهر', days: 30 },
+      { id: 8, name: 'آبان', days: 30 },
+      { id: 9, name: 'آذر', days: 30 },
+      { id: 10, name: 'دی', days: 30 },
+      { id: 11, name: 'بهمن', days: 30 },
+      { id: 12, name: 'اسفند', days: 29 } // ✅ ساده شده - همیشه ۲۹ روز
+    ];
 
   if (!user) {
     return (
       <div className="text-center py-8">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600 mx-auto"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500 mx-auto"></div>
         <p className="mt-4 text-gray-600">در حال بارگذاری اطلاعات کاربر...</p>
       </div>
     );
@@ -416,28 +415,28 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
           <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-100">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-24 h-24 bg-sky-100 rounded-full mb-4">
-                <User className="h-12 w-12 text-sky-600" />
+                <User className="h-12 w-12 text-sky-500" />
               </div>
               <h3 className="text-xl font-bold text-gray-800">{user.full_name}</h3>
               <div className="mt-2">
                 <span className={`px-3 py-1 rounded-full text-sm ${
                   user.is_verified 
-                    ? 'bg-green-100 text-green-800' 
-                    : 'bg-yellow-100 text-yellow-800'
+                    ? 'bg-sky-100 text-sky-800' 
+                    : 'bg-sky-100 text-sky-800'
                 }`}>
                   {user.is_verified ? 'حساب تأیید شده ✓' : 'نیاز به تأیید حساب'}
                 </span>
               </div>
               {user.is_staff && (
                 <div className="mt-2">
-                  <span className="px-3 py-1 rounded-full text-sm bg-purple-100 text-purple-800">
+                  <span className="px-3 py-1 rounded-full text-sm bg-sky-100 text-sky-800">
                     کارمند سیستم
                   </span>
                 </div>
               )}
               {user.is_parent && (
                 <div className="mt-2">
-                  <span className="px-3 py-1 rounded-full text-sm bg-blue-100 text-blue-800">
+                  <span className="px-3 py-1 rounded-full text-sm bg-sky-100 text-sky-800">
                     والدین
                   </span>
                 </div>
@@ -461,7 +460,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                 </div>
               </div>
 
-              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg">
+              <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg" dir='ltr'>
                 <Smartphone className="h-5 w-5 text-gray-600" />
                 <div className="flex-1">
                   <p className="text-sm text-gray-600">شماره موبایل</p>
@@ -478,7 +477,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                     name="birth_date"
                     value={formData.birth_date}
                     onChange={handleInputChange}
-                    className="w-full p-3 pr-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                    className="w-full p-3 pl-12 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                     placeholder="13700101"
                     dir="ltr"
                     maxLength={8}
@@ -486,7 +485,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                   <button
                     type="button"
                     onClick={() => setShowDatePicker(!showDatePicker)}
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky-600 hover:text-sky-700"
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky-500 hover:text-sky-700"
                   >
                     تقویم
                   </button>
@@ -522,7 +521,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
               <>
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="w-full bg-sky-600 text-white font-medium py-3 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-sky-500 text-white font-medium py-3 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
                 >
                   <User className="h-5 w-5" />
                   ویرایش پروفایل
@@ -656,7 +655,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                         name="birth_date"
                         value={formData.birth_date}
                         onChange={handleInputChange}
-                        className="w-full p-3 pr-12 text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
+                        className="w-full p-3 pl-12 text-left border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all"
                         placeholder="13700101 (۸ رقم بدون جداکننده)"
                         dir="ltr"
                         maxLength={8}
@@ -664,7 +663,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                       <button
                         type="button"
                         onClick={openDatePicker}
-                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky-600 hover:text-sky-700"
+                        className="absolute left-3 top-1/2 transform -translate-y-1/2 text-sky-500 hover:text-sky-700"
                       >
                         تقویم
                       </button>
@@ -803,7 +802,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                 )}
 
                 {success && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                  <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg">
                     <div className="flex items-center">
                       <Check className="h-5 w-5 ml-2" />
                       {success}
@@ -822,7 +821,7 @@ export default function UserProfile({ onClose, isModal = false }: UserProfilePro
                   <button
                     type="submit"
                     disabled={loading}
-                    className={`flex-1 bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
+                    className={`flex-1 bg-sky-500 text-white font-medium py-3 px-6 rounded-lg transition-colors ${
                       loading ? 'opacity-50 cursor-not-allowed' : 'hover:bg-sky-700'
                     }`}
                   >

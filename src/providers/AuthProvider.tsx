@@ -1,10 +1,14 @@
-// providers/AuthProvider.tsx
+// src/providers/AuthProvider.tsx - نسخه تستی
 'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import { User, AuthContextType } from '@/types/types';
-import api from '@/lib/api';
+import { TEST_USERS, FIXED_OTP, NETWORK_DELAY, AUTH_ERRORS } from '@/data/constants';
+
+// شبیه‌سازی تأخیر شبکه
+const simulateNetworkDelay = () => 
+  new Promise(resolve => setTimeout(resolve, NETWORK_DELAY));
 
 // Context ایجاد
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,6 +39,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     const loadUserFromStorage = async () => {
       try {
+        await simulateNetworkDelay();
+        
         const storedUser = localStorage.getItem('user');
         const storedToken = localStorage.getItem('access_token');
         const storedSession = localStorage.getItem('session_id');
@@ -46,22 +52,12 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           
           if (storedSession && storedSession !== 'null') {
             setSessionId(storedSession);
-            // اضافه کردن session به کوکی برای درخواست‌های بعدی
-            document.cookie = `sessionid=${storedSession}; path=/; SameSite=Lax`;
           }
           
           setIsAuthenticated(true);
-          
-          // بررسی session در سرور
-          const sessionValid = await checkSession();
-          if (!sessionValid) {
-            console.warn('Session is not valid, logging out...');
-            logout();
-          }
         }
       } catch (error) {
         console.error('Error loading user from storage:', error);
-        clearAuthData();
       } finally {
         setIsLoading(false);
       }
@@ -70,79 +66,108 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     loadUserFromStorage();
   }, []);
 
-  // بررسی وضعیت سشن در سرور
-  const checkSession = async (): Promise<boolean> => {
-    try {
-      const response = await api.get('/users/debug-session/');
-      console.log('🔍 Session check result:', response.data);
-      return response.data.user_authenticated;
-    } catch (error) {
-      console.error('Session check failed:', error);
-      return false;
-    }
-  };
-
-  // login
+  // login - نسخه تستی
   const login = async (username: string, password: string) => {
     setIsLoading(true);
     try {
-      const response = await api.post('/users/login/', {
-        username,
-        password,
-      });
-
-      const { user, access, refresh, session_id } = response.data;
-
-      // ذخیره در localStorage
-      localStorage.setItem('user', JSON.stringify(user));
-      localStorage.setItem('access_token', access);
-      localStorage.setItem('refresh_token', refresh);
+      await simulateNetworkDelay();
       
-      // ذخیره session_id
-      if (session_id) {
-        localStorage.setItem('session_id', session_id);
-        setSessionId(session_id);
-        // اضافه کردن session به کوکی
-        document.cookie = `sessionid=${session_id}; path=/; SameSite=Lax`;
-      }
+      // در محیط تستی، هر رمزی قابل قبول است
+      // یا کاربران مشخصی را چک می‌کنیم
+      let foundUser = TEST_USERS.find(u => 
+        u.username === username || 
+        u.email === username || 
+        u.phone === username
+      );
 
-      // به‌روزرسانی state
-      setUser(user);
-      setAccessToken(access);
-      setIsAuthenticated(true);
-
-      // بررسی سشن در سرور
-      await checkSession();
-
-      return { success: true, user };
-    } catch (error: any) {
-      console.error('Login error:', error);
-      if (error.code === 'ERR_NETWORK') {
-        return {
-          success: false,
-          error: 'خطا در اتصال به سرور. لطفاً اتصال اینترنت خود را بررسی کنید.',
+      if (!foundUser) {
+        // ایجاد یک کاربر تستی جدید
+        foundUser = {
+          id: Date.now(),
+          username,
+          email: username.includes('@') ? username : `${username}@example.com`,
+          phone: username.startsWith('09') ? username : '09123456789',
+          first_name: 'کاربر',
+          last_name: 'تستی',
+          full_name: 'کاربر تستی',
+          national_code: '0012345678',
+          birth_date: '1380-01-01',
+          gender: 'male',
+          province: 'تهران',
+          city: 'تهران',
+          address: null,
+          is_verified: true,
+          is_parent: false,
+          is_staff: false,
+          avatar: null,
+          email_notifications: true,
+          sms_notifications: true,
+          two_factor_auth: false,
+          last_login: new Date().toISOString(),
+          last_activity: new Date().toISOString(),
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+          profile: {
+            education_level: 'دیپلم',
+            field_of_study: 'ریاضی',
+            occupation: 'دانشجو',
+            emergency_contact_name: 'پدر',
+            emergency_contact_phone: '09123456788',
+            emergency_contact_relation: 'پدر',
+            preferred_language: 'fa',
+            timezone: 'Asia/Tehran',
+            notify_new_assessment: true,
+            notify_results_ready: true,
+            notify_workshop: true,
+            notify_newsletter: true,
+            created_at: new Date().toISOString(),
+            updated_at: new Date().toISOString(),
+          },
+          assessmentCompleted: false
         };
       }
+
+      // ایجاد توکن تستی
+      const mockAccessToken = `mock_access_token_${Date.now()}`;
+      const mockRefreshToken = `mock_refresh_token_${Date.now()}`;
+      const mockSessionId = `mock_session_${Date.now()}`;
+
+      // ذخیره در localStorage
+      localStorage.setItem('user', JSON.stringify(foundUser));
+      localStorage.setItem('access_token', mockAccessToken);
+      localStorage.setItem('refresh_token', mockRefreshToken);
+      localStorage.setItem('session_id', mockSessionId);
+
+      // به‌روزرسانی state
+      setUser(foundUser);
+      setAccessToken(mockAccessToken);
+      setSessionId(mockSessionId);
+      setIsAuthenticated(true);
+
+      console.log('✅ Test login successful:', foundUser.username);
+
+      return { success: true, user: foundUser };
+    } catch (error: any) {
+      console.error('Login error:', error);
       return {
         success: false,
-        error: error.response?.data?.detail || 'خطا در ورود',
+        error: error.message || AUTH_ERRORS.invalidCredentials,
       };
     } finally {
       setIsLoading(false);
     }
   };
 
-  // لاگ‌اوت
+  // لاگ‌اوت - نسخه تستی
   const logout = async () => {
     try {
-      const refreshToken = localStorage.getItem('refresh_token');
+      await simulateNetworkDelay();
       
-      if (refreshToken) {
-        await api.post('/users/logout/', { refresh: refreshToken });
-      }
-
-      // پاک کردن localStorage و کوکی‌ها
-      clearAuthData();
+      // پاک کردن localStorage
+      localStorage.removeItem('user');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('session_id');
 
       // به‌روزرسانی state
       setUser(null);
@@ -150,15 +175,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setSessionId(null);
       setIsAuthenticated(false);
 
-      // پاک کردن کوکی sessionid
-      document.cookie = 'sessionid=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
+      console.log('✅ Test logout successful');
+      
       // هدایت به صفحه اصلی
       router.push('/');
     } catch (error) {
       console.error('Logout error:', error);
       // حتی در صورت خطا، داده‌های محلی پاک می‌شوند
-      clearAuthData();
+      localStorage.removeItem('user');
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      localStorage.removeItem('session_id');
       setUser(null);
       setAccessToken(null);
       setSessionId(null);
@@ -167,106 +194,109 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  // ثبت‌نام
-  // providers/AuthProvider.tsx - تابع register
+  // ثبت‌نام - نسخه تستی
   const register = async (userData: any) => {
     setIsLoading(true);
     try {
-      console.log('📤 Sending registration data:', userData);
+      await simulateNetworkDelay();
       
-      // برای اطمینان، فیلدهای خالی را حذف می‌کنیم
-      const cleanedData = { ...userData };
+      console.log('📤 Test registration data:', userData);
       
-      // حذف فیلدهای خالی رشته‌ای
-      Object.keys(cleanedData).forEach(key => {
-        if (typeof cleanedData[key] === 'string' && cleanedData[key].trim() === '') {
-          cleanedData[key] = null;
-        }
-      });
-      
-      // حذف فیلد confirm_password اگر خالی است
-      if (cleanedData.confirm_password === null) {
-        delete cleanedData.confirm_password;
-      }
-      
-      const response = await api.post('/users/register/', cleanedData);
-      console.log('✅ Registration response:', response.data);
-      
-      if (response.data.user && response.data.access) {
-        const { user, access, refresh, session_id } = response.data;
-        
-        // ذخیره در localStorage
-        localStorage.setItem('user', JSON.stringify(user));
-        localStorage.setItem('access_token', access);
-        localStorage.setItem('refresh_token', refresh);
-        
-        // ذخیره session_id
-        if (session_id) {
-          localStorage.setItem('session_id', session_id);
-          setSessionId(session_id);
-          
-          // تنظیم کوکی sessionid برای مرورگر
-          document.cookie = `sessionid=${session_id}; path=/; max-age=86400; SameSite=Lax`;
-        }
-        
-        // تنظیم state
-        setUser(user);
-        setAccessToken(access);
-        setIsAuthenticated(true);
-        
-        // تنظیم توکن برای درخواست‌های بعدی
-        api.defaults.headers.common['Authorization'] = `Bearer ${access}`;
-        
-        // بررسی سشن در سرور
-        await checkSession();
-      }
-      
-      return { success: true, data: response.data };
+      // ایجاد کاربر جدید
+      const newUser: User = {
+        id: Date.now(),
+        username: userData.username,
+        email: userData.email || `${userData.username}@example.com`,
+        phone: userData.phone || '09123456789',
+        first_name: userData.first_name || 'کاربر',
+        last_name: userData.last_name || 'جدید',
+        full_name: `${userData.first_name || 'کاربر'} ${userData.last_name || 'جدید'}`,
+        national_code: userData.national_code || null,
+        birth_date: userData.birth_date || null,
+        gender: userData.gender || null,
+        province: null,
+        city: null,
+        address: null,
+        is_verified: true, // در تست، همه کاربران تأیید شده‌اند
+        is_parent: false,
+        is_staff: false,
+        avatar: null,
+        email_notifications: true,
+        sms_notifications: true,
+        two_factor_auth: false,
+        last_login: new Date().toISOString(),
+        last_activity: new Date().toISOString(),
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString(),
+        profile: {
+          education_level: null,
+          field_of_study: null,
+          occupation: null,
+          emergency_contact_name: null,
+          emergency_contact_phone: null,
+          emergency_contact_relation: null,
+          preferred_language: 'fa',
+          timezone: 'Asia/Tehran',
+          notify_new_assessment: true,
+          notify_results_ready: true,
+          notify_workshop: true,
+          notify_newsletter: true,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString(),
+        },
+        assessmentCompleted: false
+      };
+
+      // ایجاد توکن تستی
+      const mockAccessToken = `mock_access_token_${Date.now()}`;
+      const mockRefreshToken = `mock_refresh_token_${Date.now()}`;
+      const mockSessionId = `mock_session_${Date.now()}`;
+
+      // ذخیره در localStorage
+      localStorage.setItem('user', JSON.stringify(newUser));
+      localStorage.setItem('access_token', mockAccessToken);
+      localStorage.setItem('refresh_token', mockRefreshToken);
+      localStorage.setItem('session_id', mockSessionId);
+
+      // به‌روزرسانی state
+      setUser(newUser);
+      setAccessToken(mockAccessToken);
+      setSessionId(mockSessionId);
+      setIsAuthenticated(true);
+
+      console.log('✅ Test registration successful:', newUser.username);
+
+      return { 
+        success: true, 
+        data: {
+          user: newUser,
+          access: mockAccessToken,
+          refresh: mockRefreshToken,
+          session_id: mockSessionId
+        } 
+      };
     } catch (error: any) {
-      console.error('❌ Registration error details:', {
-        message: error.message,
-        response: error.response?.data,
-        status: error.response?.status,
-      });
-      
-      // هندل کردن خطاهای مختلف
-      if (!error.response) {
-        return {
-          success: false,
-          error: { detail: 'خطا در اتصال به سرور' },
-        };
-      }
-      
-      if (error.response?.status === 400) {
-        return {
-          success: false,
-          error: error.response.data || { detail: 'داده‌های ورودی نامعتبر است.' },
-        };
-      }
-      
-      if (error.response?.status === 500) {
-        return {
-          success: false,
-          error: { detail: 'خطای سرور. لطفاً بعداً تلاش کنید.' },
-        };
-      }
-      
+      console.error('❌ Registration error:', error);
       return {
         success: false,
-        error: error.response?.data || { detail: 'خطا در ثبت‌نام' },
+        error: error.message || 'خطا در ثبت‌نام',
       };
     } finally {
       setIsLoading(false);
     }
   };
 
-  // بروزرسانی پروفایل
+  // بروزرسانی پروفایل - نسخه تستی
   const updateProfile = async (profileData: any) => {
     try {
-      const response = await api.put('/users/me/', profileData);
+      await simulateNetworkDelay();
       
-      // به‌روزرسانی localStorage
-      const updatedUser = { ...user, ...response.data };
+      if (!user) {
+        throw new Error('User not found');
+      }
+
+      // به‌روزرسانی کاربر
+      const updatedUser = { ...user, ...profileData };
       localStorage.setItem('user', JSON.stringify(updatedUser));
       
       // به‌روزرسانی state
@@ -277,33 +307,24 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       console.error('Profile update error:', error);
       return {
         success: false,
-        error: error.response?.data || 'خطا در بروزرسانی پروفایل',
+        error: error.message || 'خطا در بروزرسانی پروفایل',
       };
     }
   };
 
-  // پاک کردن داده‌های احراز هویت
-  const clearAuthData = () => {
-    localStorage.removeItem('user');
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
-    localStorage.removeItem('session_id');
-  };
-
-  // رفرش توکن
+  // رفرش توکن - نسخه تستی
   const refreshAccessToken = async () => {
     try {
+      await simulateNetworkDelay();
+      
       const refreshToken = localStorage.getItem('refresh_token');
       
       if (!refreshToken) {
         throw new Error('No refresh token available');
       }
 
-      const response = await api.post('/users/token/refresh/', {
-        refresh: refreshToken,
-      });
-
-      const newAccessToken = response.data.access;
+      // ایجاد توکن جدید
+      const newAccessToken = `mock_access_token_${Date.now()}`;
       
       // ذخیره توکن جدید
       localStorage.setItem('access_token', newAccessToken);
@@ -317,20 +338,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  // بررسی دوره‌ای سشن
-  useEffect(() => {
-    if (!isAuthenticated || pathname === '/login' || pathname === '/register') return;
-
-    const checkAuthInterval = setInterval(async () => {
-      const isValid = await checkSession();
-      if (!isValid) {
-        console.log('Session expired, logging out...');
-        logout();
-      }
-    }, 5 * 60 * 1000); // هر 5 دقیقه
-
-    return () => clearInterval(checkAuthInterval);
-  }, [isAuthenticated, pathname]);
+  // بررسی سشن - نسخه تستی
+  const checkSession = async (): Promise<boolean> => {
+    try {
+      await simulateNetworkDelay();
+      
+      const token = localStorage.getItem('access_token');
+      const storedUser = localStorage.getItem('user');
+      
+      // اگر توکن و کاربر وجود دارند، سشن معتبر است
+      return !!(token && storedUser);
+    } catch (error) {
+      console.error('Session check failed:', error);
+      return false;
+    }
+  };
 
   // مقدار context
   const contextValue: AuthContextType = {

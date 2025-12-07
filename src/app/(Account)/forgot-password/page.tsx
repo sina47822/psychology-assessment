@@ -166,9 +166,9 @@ export default function ForgotPasswordPage() {
 
   const getPasswordStrengthColor = () => {
     if (passwordStrength.score <= 2) return 'bg-red-500';
-    if (passwordStrength.score <= 3) return 'bg-yellow-500';
-    if (passwordStrength.score <= 4) return 'bg-blue-500';
-    return 'bg-green-500';
+    if (passwordStrength.score <= 3) return 'bg-sky-500';
+    if (passwordStrength.score <= 4) return 'bg-sky-500';
+    return 'bg-sky-500';
   };
 
   const getIdentifierIcon = () => {
@@ -190,7 +190,7 @@ export default function ForgotPasswordPage() {
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-500"></div>
       </div>
     );
   }
@@ -202,7 +202,7 @@ export default function ForgotPasswordPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-              <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center shadow-md">
+              <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center shadow-md">
                 <Shield className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -214,7 +214,7 @@ export default function ForgotPasswordPage() {
             <div className="flex items-center space-x-4">
               <Link
                 href="/"
-                className="flex items-center space-x-2 text-gray-600 hover:text-sky-600 transition-colors"
+                className="flex items-center space-x-2 text-gray-600 hover:text-sky-500 transition-colors"
               >
                 <Home className="h-4 w-4" />
                 <span className="text-sm font-medium hidden md:inline">صفحه اصلی</span>
@@ -231,7 +231,7 @@ export default function ForgotPasswordPage() {
             {/* هدر کارت */}
             <div className="bg-gradient-to-r from-sky-50 to-sky-50 p-6 border-b border-sky-100">
               <div className="flex flex-col items-center text-center space-y-4">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-white shadow-lg text-sky-600 border border-sky-100">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-white shadow-lg text-sky-500 border border-sky-100">
                   <Key className="h-8 w-8" />
                 </div>
                 <div>
@@ -259,7 +259,7 @@ export default function ForgotPasswordPage() {
                       ایمیل / نام کاربری / شماره موبایل
                     </label>
                     <div className="relative">
-                      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                         {getIdentifierIcon()}
                       </div>
                       <input
@@ -291,7 +291,7 @@ export default function ForgotPasswordPage() {
                   )}
 
                   {success && (
-                    <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg">
+                    <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg">
                       <div className="flex items-start">
                         <CheckCircle className="h-5 w-5 ml-2 flex-shrink-0 mt-0.5" />
                         <div>
@@ -305,7 +305,7 @@ export default function ForgotPasswordPage() {
                   <button
                     type="submit"
                     disabled={isLoading}
-                    className={`w-full bg-gradient-to-r from-sky-600 to-sky-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg`}
+                    className={`w-full bg-gradient-to-r from-sky-500 to-sky-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg`}
                   >
                     {isLoading ? (
                       <span className="flex items-center justify-center">
@@ -323,7 +323,7 @@ export default function ForgotPasswordPage() {
                   <div className="text-center text-sm text-gray-600">
                     <Link 
                       href="/login" 
-                      className="text-sky-600 font-semibold hover:text-sky-800 transition-colors"
+                      className="text-sky-500 font-semibold hover:text-sky-800 transition-colors"
                     >
                       ← بازگشت به صفحه ورود
                     </Link>
@@ -372,7 +372,7 @@ export default function ForgotPasswordPage() {
                   )}
 
                   {success && (
-                    <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg">
+                    <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg">
                       <div className="flex items-start">
                         <CheckCircle className="h-5 w-5 ml-2 flex-shrink-0 mt-0.5" />
                         <div>
@@ -387,7 +387,7 @@ export default function ForgotPasswordPage() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className={`w-full bg-gradient-to-r from-sky-600 to-sky-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg`}
+                      className={`w-full bg-gradient-to-r from-sky-500 to-sky-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg`}
                     >
                       {isLoading ? (
                         <span className="flex items-center justify-center">
@@ -440,14 +440,14 @@ export default function ForgotPasswordPage() {
                       رمز عبور جدید *
                     </label>
                     <div className="relative">
-                      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                         <Lock className="h-5 w-5" />
                       </div>
                       <input
                         type={showPassword ? "text" : "password"}
                         value={newPassword}
                         onChange={(e) => setNewPassword(e.target.value)}
-                        className="w-full p-3 pl-12 pr-12 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                        className="w-full p-3 pl-12 pr-12 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all"
                         placeholder="رمز عبور جدید"
                         required
                         dir="ltr"
@@ -467,8 +467,8 @@ export default function ForgotPasswordPage() {
                           <span className="text-xs text-gray-600">قدرت رمز عبور:</span>
                           <span className={`text-xs font-medium ${
                             passwordStrength.score <= 2 ? 'text-red-600' :
-                            passwordStrength.score <= 3 ? 'text-yellow-600' :
-                            passwordStrength.score <= 4 ? 'text-blue-600' : 'text-green-600'
+                            passwordStrength.score <= 3 ? 'text-sky-500' :
+                            passwordStrength.score <= 4 ? 'text-sky-500' : 'text-sky-500'
                           }`}>
                             {passwordStrength.message}
                           </span>
@@ -488,14 +488,14 @@ export default function ForgotPasswordPage() {
                       تأیید رمز عبور جدید *
                     </label>
                     <div className="relative">
-                      <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+                      <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
                         <Lock className="h-5 w-5" />
                       </div>
                       <input
                         type={showConfirmPassword ? "text" : "password"}
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        className="w-full p-3 pl-12 pr-12 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition-all"
+                        className="w-full p-3 pl-12 pr-12 border-2 border-gray-300 rounded-xl focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition-all"
                         placeholder="تکرار رمز عبور جدید"
                         required
                         dir="ltr"
@@ -524,7 +524,7 @@ export default function ForgotPasswordPage() {
                   )}
 
                   {success && (
-                    <div className="bg-blue-50 border border-green-200 text-sky-700 px-4 py-3 rounded-lg">
+                    <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg">
                       <div className="flex items-start">
                         <CheckCircle className="h-5 w-5 ml-2 flex-shrink-0 mt-0.5" />
                         <div>
@@ -539,7 +539,7 @@ export default function ForgotPasswordPage() {
                     <button
                       type="submit"
                       disabled={isLoading}
-                      className={`w-full bg-gradient-to-r from-green-600 to-green-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-green-700 hover:to-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg`}
+                      className={`w-full bg-gradient-to-r from-sky-500 to-sky-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg`}
                     >
                       {isLoading ? (
                         <span className="flex items-center justify-center">

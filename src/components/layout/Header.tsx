@@ -73,7 +73,7 @@ export default function Header({
               </button>
               
               <Link href="/" className="flex items-center space-x-3 mr-4">
-                <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center shadow-md">
+                <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center shadow-md">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 <div className="hidden md:block">
@@ -92,13 +92,13 @@ export default function Header({
               {showAssessmentNav && totalSteps > 0 && (
                 <div className="flex items-center space-x-2 text-sm text-gray-600">
                   <span className="font-medium">مرحله:</span>
-                  <span className="text-sky-600 font-bold">{currentStep}/{totalSteps}</span>
+                  <span className="text-sky-500 font-bold">{currentStep}/{totalSteps}</span>
                 </div>
               )}
               
               <Link
                 href="/"
-                className="flex items-center space-x-2 text-gray-600 hover:text-sky-600 transition-colors"
+                className="flex items-center space-x-2 text-gray-600 hover:text-sky-500 transition-colors"
               >
                 <Home className="h-5 w-5" />
                 <span>صفحه اصلی</span>
@@ -106,7 +106,7 @@ export default function Header({
               
               <Link
                 href="/dashboard"
-                className="flex items-center space-x-2 text-gray-600 hover:text-sky-600 transition-colors"
+                className="flex items-center space-x-2 text-gray-600 hover:text-sky-500 transition-colors"
               >
                 <BarChart className="h-5 w-5" />
                 <span>داشبورد</span>
@@ -114,7 +114,7 @@ export default function Header({
               
               <Link
                 href="/help"
-                className="flex items-center space-x-2 text-gray-600 hover:text-sky-600 transition-colors"
+                className="flex items-center space-x-2 text-gray-600 hover:text-sky-500 transition-colors"
               >
                 <HelpCircle className="h-5 w-5" />
                 <span>راهنما</span>
@@ -214,13 +214,13 @@ export default function Header({
                 <div className="flex items-center space-x-4">
                   <Link
                     href="/login"
-                    className="text-gray-600 hover:text-sky-600 transition-colors"
+                    className="text-gray-600 hover:text-sky-500 transition-colors"
                   >
                     ورود
                   </Link>
                   <Link
                     href="/register"
-                    className="bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
+                    className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
                   >
                     ثبت‌نام
                   </Link>
@@ -335,7 +335,7 @@ export default function Header({
                   <div className="text-sm text-gray-600">
                     <p className="font-medium">{userFullName}</p>
                     <p className="text-xs mt-1">{userEmailPhone}</p>
-                    <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs mt-2 ${user.isVerified ? 'bg-sky-100 text-sky-800' : 'bg-yellow-100 text-yellow-800'}`}>
+                    <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs mt-2 ${user.isVerified ? 'bg-sky-100 text-sky-800' : 'bg-sky-100 text-sky-800'}`}>
                       {user.isVerified ? '✓ حساب تأیید شده' : 'در انتظار تأیید'}
                     </div>
                   </div>

@@ -23,7 +23,7 @@ export default function HomePage() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <Loader2 className="h-12 w-12 animate-spin text-sky-600" />
+        <Loader2 className="h-12 w-12 animate-spin text-sky-500" />
         <p className="mt-4 text-gray-600">در حال بارگذاری...</p>
       </div>
     );
@@ -33,7 +33,7 @@ export default function HomePage() {
   if (user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <Loader2 className="h-12 w-12 animate-spin text-sky-600" />
+        <Loader2 className="h-12 w-12 animate-spin text-sky-500" />
       </div>
     );
   }
@@ -50,7 +50,7 @@ export default function HomePage() {
           <p className="text-lg text-gray-600 mb-8">
             سیستم تخصصی ارزیابی و تحلیل ویژگی‌های رفتاری نوجوانان
           </p>
-          <div className="bg-gradient-to-r from-sky-50 to-blue-50 rounded-2xl p-8 shadow-lg">
+          <div className="bg-gradient-to-r from-sky-50 to-sky-50 rounded-2xl p-8 shadow-lg">
             <h2 className="text-2xl font-semibold text-gray-800 mb-4">
               خوش آمدید
             </h2>
@@ -60,13 +60,13 @@ export default function HomePage() {
             <div className="flex justify-center gap-4">
               <button
                 onClick={() => router.push('/login')}
-                className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+                className="bg-sky-500 hover:bg-sky-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
               >
                 ورود به سیستم
               </button>
               <button
                 onClick={() => router.push('/register')}
-                className="bg-white hover:bg-gray-50 text-sky-600 border border-sky-600 px-6 py-3 rounded-lg font-medium transition-colors"
+                className="bg-white hover:bg-gray-50 text-sky-500 border border-sky-500 px-6 py-3 rounded-lg font-medium transition-colors"
               >
                 ثبت‌نام
               </button>

@@ -55,7 +55,7 @@ export default function DashboardLayout({ children, title = 'داشبورد' }: 
   if (isLoading) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center">
-        <Loader2 className="h-12 w-12 animate-spin text-sky-600" />
+        <Loader2 className="h-12 w-12 animate-spin text-sky-500" />
         <p className="mt-4 text-gray-600">در حال بارگذاری...</p>
       </div>
     );
@@ -70,7 +70,7 @@ export default function DashboardLayout({ children, title = 'داشبورد' }: 
         <p className="text-gray-600 mb-6">برای دسترسی به این صفحه باید وارد حساب کاربری خود شوید.</p>
         <button
           onClick={() => router.push('/login')}
-          className="bg-sky-600 hover:bg-sky-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+          className="bg-sky-500 hover:bg-sky-700 text-white px-6 py-3 rounded-lg font-medium transition-colors"
         >
           ورود به سیستم
         </button>
@@ -82,7 +82,7 @@ export default function DashboardLayout({ children, title = 'داشبورد' }: 
     <div className="min-h-screen bg-gray-50">
       {/* Session Check Indicator */}
       {sessionChecking && (
-        <div className="fixed top-4 left-4 z-50 bg-yellow-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
+        <div className="fixed top-4 left-4 z-50 bg-sky-500 text-white px-4 py-2 rounded-lg shadow-lg flex items-center gap-2">
           <Loader2 className="h-4 w-4 animate-spin" />
           <span className="text-sm">در حال بررسی نشست...</span>
         </div>

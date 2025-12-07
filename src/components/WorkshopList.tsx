@@ -66,7 +66,7 @@ export default function WorkshopList({ type = 'upcoming', limit }: WorkshopListP
         <p className="text-red-600">{error}</p>
         <button
           onClick={fetchWorkshops}
-          className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+          className="mt-4 px-4 py-2 bg-sky-500 text-white rounded hover:bg-sky-700"
         >
           تلاش مجدد
         </button>
@@ -101,10 +101,10 @@ export default function WorkshopList({ type = 'upcoming', limit }: WorkshopListP
               <h3 className="font-bold text-lg">{workshop.title}</h3>
               <span className={`px-2 py-1 text-xs rounded-full ${
                 workshop.workshop_type === 'online' 
-                  ? 'bg-blue-100 text-blue-800'
+                  ? 'bg-sky-100 text-sky-800'
                   : workshop.workshop_type === 'in_person'
-                  ? 'bg-green-100 text-green-800'
-                  : 'bg-purple-100 text-purple-800'
+                  ? 'bg-sky-100 text-sky-800'
+                  : 'bg-sky-100 text-sky-800'
               }`}>
                 {workshop.workshop_type === 'online' ? 'آنلاین' : 
                  workshop.workshop_type === 'in_person' ? 'حضوری' : 'ترکیبی'}
@@ -129,7 +129,7 @@ export default function WorkshopList({ type = 'upcoming', limit }: WorkshopListP
             <div className="flex items-center justify-between">
               <div>
                 {workshop.is_free ? (
-                  <span className="font-bold text-green-600">رایگان</span>
+                  <span className="font-bold text-sky-500">رایگان</span>
                 ) : (
                   <div>
                     {workshop.discount_price ? (
@@ -159,7 +159,7 @@ export default function WorkshopList({ type = 'upcoming', limit }: WorkshopListP
             {workshop.is_registration_open && (
               <button
                 onClick={() => handleRegister(workshop.id)}
-                className="mt-4 w-full py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 transition-colors"
+                className="mt-4 w-full py-2 bg-sky-500 text-white rounded hover:bg-sky-700 transition-colors"
                 disabled={workshop.available_seats <= 0}
               >
                 {workshop.available_seats > 0 ? 'ثبت‌نام' : 'تکمیل ظرفیت'}

@@ -121,7 +121,7 @@ export default function ReportsPage() {
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-3">
-            <BarChart3 className="h-8 w-8 text-sky-600" />
+            <BarChart3 className="h-8 w-8 text-sky-500" />
             گزارش‌ها و تحلیل‌ها
           </h1>
           <p className="text-gray-600 mt-2">
@@ -130,7 +130,7 @@ export default function ReportsPage() {
         </div>
         
         <div className="flex items-center gap-3">
-          <button className="flex items-center gap-2 px-4 py-2 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition-colors">
+          <button className="flex items-center gap-2 px-4 py-2 bg-sky-500 text-white rounded-lg hover:bg-sky-700 transition-colors">
             <RefreshCw className="h-5 w-5" />
             ایجاد گزارش جدید
           </button>
@@ -146,7 +146,7 @@ export default function ReportsPage() {
               <h3 className="text-2xl font-bold text-gray-800 mt-1">{stats.totalReports}</h3>
             </div>
             <div className="p-3 bg-sky-50 rounded-lg">
-              <FileText className="h-6 w-6 text-sky-600" />
+              <FileText className="h-6 w-6 text-sky-500" />
             </div>
           </div>
         </div>
@@ -157,8 +157,8 @@ export default function ReportsPage() {
               <p className="text-gray-500 text-sm">تعداد دانلود</p>
               <h3 className="text-2xl font-bold text-gray-800 mt-1">{stats.totalDownloads}</h3>
             </div>
-            <div className="p-3 bg-blue-50 rounded-lg">
-              <Download className="h-6 w-6 text-sky-600" />
+            <div className="p-3 bg-sky-50 rounded-lg">
+              <Download className="h-6 w-6 text-sky-500" />
             </div>
           </div>
         </div>
@@ -170,7 +170,7 @@ export default function ReportsPage() {
               <h3 className="text-2xl font-bold text-gray-800 mt-1">{stats.averageScore}%</h3>
             </div>
             <div className="p-3 bg-sky-50 rounded-lg">
-              <TrendingUp className="h-6 w-6 text-sky-600" />
+              <TrendingUp className="h-6 w-6 text-sky-500" />
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@ export default function ReportsPage() {
               <h3 className="text-2xl font-bold text-gray-800 mt-1">{stats.completionRate}%</h3>
             </div>
             <div className="p-3 bg-sky-50 rounded-lg">
-              <Award className="h-6 w-6 text-sky-600" />
+              <Award className="h-6 w-6 text-sky-500" />
             </div>
           </div>
         </div>
@@ -287,7 +287,7 @@ export default function ReportsPage() {
                 </div>
                 
                 <div className="flex items-center gap-3">
-                  <button className="flex-1 bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2">
+                  <button className="flex-1 bg-sky-500 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2">
                     <Eye className="h-4 w-4" />
                     مشاهده
                   </button>
@@ -307,7 +307,7 @@ export default function ReportsPage() {
         {/* Recent Activity */}
         <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6">
           <h3 className="text-lg font-semibold text-gray-800 mb-6 flex items-center gap-2">
-            <Clock className="h-5 w-5 text-sky-600" />
+            <Clock className="h-5 w-5 text-sky-500" />
             فعالیت‌های اخیر
           </h3>
           
@@ -334,7 +334,7 @@ export default function ReportsPage() {
             <button className="bg-white border border-gray-200 rounded-lg p-4 hover:border-sky-300 hover:shadow-md transition-all">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-sky-50 rounded-lg">
-                  <Printer className="h-5 w-5 text-sky-600" />
+                  <Printer className="h-5 w-5 text-sky-500" />
                 </div>
                 <div className="text-left">
                   <p className="font-medium text-gray-800">چاپ گزارش‌ها</p>
@@ -343,10 +343,10 @@ export default function ReportsPage() {
               </div>
             </button>
             
-            <button className="bg-white border border-gray-200 rounded-lg p-4 hover:border-green-300 hover:shadow-md transition-all">
+            <button className="bg-white border border-gray-200 rounded-lg p-4 hover:border-sky-300 hover:shadow-md transition-all">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-blue-50 rounded-lg">
-                  <Share2 className="h-5 w-5 text-sky-600" />
+                <div className="p-2 bg-sky-50 rounded-lg">
+                  <Share2 className="h-5 w-5 text-sky-500" />
                 </div>
                 <div className="text-left">
                   <p className="font-medium text-gray-800">اشتراک‌گذاری</p>
@@ -358,7 +358,7 @@ export default function ReportsPage() {
             <button className="bg-white border border-gray-200 rounded-lg p-4 hover:border-sky-300 hover:shadow-md transition-all">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-sky-50 rounded-lg">
-                  <Download className="h-5 w-5 text-sky-600" />
+                  <Download className="h-5 w-5 text-sky-500" />
                 </div>
                 <div className="text-left">
                   <p className="font-medium text-gray-800">دانلود همه</p>
@@ -367,10 +367,10 @@ export default function ReportsPage() {
               </div>
             </button>
             
-            <button className="bg-white border border-gray-200 rounded-lg p-4 hover:border-orange-300 hover:shadow-md transition-all">
+            <button className="bg-white border border-gray-200 rounded-lg p-4 hover:border-sky-300 hover:shadow-md transition-all">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-sky-50 rounded-lg">
-                  <RefreshCw className="h-5 w-5 text-sky-600" />
+                  <RefreshCw className="h-5 w-5 text-sky-500" />
                 </div>
                 <div className="text-left">
                   <p className="font-medium text-gray-800">بروزرسانی</p>

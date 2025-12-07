@@ -111,8 +111,8 @@ export const resultTabs = [
 ];
 
 export const scoreLabels = {
-  80: { label: 'عالی', color: 'text-sky-600', bg: 'bg-sky-100' },
-  60: { label: 'متوسط', color: 'text-yellow-600', bg: 'bg-yellow-100' },
+  80: { label: 'عالی', color: 'text-sky-500', bg: 'bg-sky-100' },
+  60: { label: 'متوسط', color: 'text-sky-500', bg: 'bg-sky-100' },
   0: { label: 'نیاز به بهبود', color: 'text-red-600', bg: 'bg-red-100' }
 };
 

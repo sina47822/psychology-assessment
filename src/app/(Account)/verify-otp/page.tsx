@@ -105,7 +105,7 @@ export default function VerifyOTPPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 hover:opacity-80 transition-opacity">
-              <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center shadow-md">
+              <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center shadow-md">
                 <Shield className="h-6 w-6 text-white" />
               </div>
               <div>
@@ -129,7 +129,7 @@ export default function VerifyOTPPage() {
           <div className="bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
             <div className="p-6">
               <div className="text-center mb-6">
-                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-sky-50 text-sky-600 mx-auto mb-4">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-sky-50 text-sky-500 mx-auto mb-4">
                   <Smartphone className="h-8 w-8" />
                 </div>
                 <h2 className="text-xl font-bold text-gray-800 mb-2">
@@ -137,7 +137,7 @@ export default function VerifyOTPPage() {
                 </h2>
                 <p className="text-gray-600 text-sm">
                   کد تأیید به شماره{' '}
-                  <span className="font-bold text-sky-600">
+                  <span className="font-bold text-sky-500">
                     {formatIranianPhone(identifier)}
                   </span>{' '}
                   ارسال شد
@@ -167,14 +167,14 @@ export default function VerifyOTPPage() {
                 <div className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                   <div className="flex items-center space-x-2">
                     <span className="text-gray-600">زمان باقی‌مانده:</span>
-                    <span className="font-bold text-sky-600">{formatTime(timer)}</span>
+                    <span className="font-bold text-sky-500">{formatTime(timer)}</span>
                   </div>
                   
                   <button
                     type="button"
                     onClick={handleResendOTP}
                     disabled={!canResend}
-                    className={`text-sm ${canResend ? 'text-sky-600 hover:text-sky-800' : 'text-gray-400'} font-medium`}
+                    className={`text-sm ${canResend ? 'text-sky-500 hover:text-sky-800' : 'text-gray-400'} font-medium`}
                   >
                     {canResend ? 'ارسال مجدد کد' : 'صبر کنید'}
                   </button>
@@ -193,7 +193,7 @@ export default function VerifyOTPPage() {
                 )}
 
                 {success && (
-                  <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg">
+                  <div className="bg-sky-50 border border-sky-200 text-sky-700 px-4 py-3 rounded-lg">
                     <div className="flex items-start">
                       <CheckCircle className="h-5 w-5 ml-2 flex-shrink-0 mt-0.5" />
                       <div>
@@ -207,7 +207,7 @@ export default function VerifyOTPPage() {
                 <button
                   type="submit"
                   disabled={isLoading}
-                  className="w-full bg-gradient-to-r from-sky-600 to-sky-600 text-white py-3 px-4 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg"
+                  className="w-full bg-gradient-to-r from-sky-500 to-sky-500 text-white py-3 px-4 rounded-xl font-semibold hover:from-sky-700 hover:to-sky-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-sky-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-md hover:shadow-lg"
                 >
                   {isLoading ? (
                     <span className="flex items-center justify-center">

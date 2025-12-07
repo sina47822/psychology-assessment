@@ -44,7 +44,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
               </button>
               
               <Link href="/dashboard" className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-br from-sky-600 to-sky-600 rounded-xl flex items-center justify-center shadow-md">
+                <div className="w-10 h-10 bg-gradient-to-br from-sky-500 to-sky-500 rounded-xl flex items-center justify-center shadow-md">
                   <Shield className="h-6 w-6 text-white" />
                 </div>
                 <div className="hidden md:block">
@@ -85,7 +85,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
               {/* Help Button */}
               <Link
                 href="/help"
-                className="hidden md:flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-sky-600 hover:bg-sky-50 rounded-lg transition-colors"
+                className="hidden md:flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
               >
                 <HelpCircle className="h-5 w-5" />
                 <span className="text-sm">راهنما</span>
@@ -94,7 +94,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
               {/* Home Button */}
               <Link
                 href="/"
-                className="hidden md:flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-sky-600 hover:bg-blue-50 rounded-lg transition-colors"
+                className="hidden md:flex items-center space-x-2 px-3 py-2 text-gray-600 hover:text-sky-500 hover:bg-sky-50 rounded-lg transition-colors"
               >
                 <Home className="h-5 w-5" />
                 <span className="text-sm">صفحه اصلی</span>
@@ -130,7 +130,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
                         </div>
                       </div>
                       <div className="px-4 py-2 border-t border-gray-100">
-                        <Link href="/notifications" className="text-sm text-sky-600 hover:text-sky-800 text-center block py-2">
+                        <Link href="/notifications" className="text-sm text-sky-500 hover:text-sky-800 text-center block py-2">
                           مشاهده همه اعلان‌ها
                         </Link>
                       </div>

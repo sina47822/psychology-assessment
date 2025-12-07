@@ -37,7 +37,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
           ایمیل / نام کاربری / شماره موبایل
         </label>
         <div className="relative">
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
             {getIdentifierIcon()}
           </div>
           <input
@@ -60,7 +60,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
           رمز عبور
         </label>
         <div className="relative">
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
             <Lock className="h-5 w-5" />
           </div>
           <input
@@ -76,7 +76,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
         <div className="mt-2">
           <Link 
             href="/forgot-password" 
-            className="text-sm text-sky-600 hover:text-sky-800 transition-colors"
+            className="text-sm text-sky-500 hover:text-sky-800 transition-colors"
           >
             رمز عبور را فراموش کرده‌اید؟
           </Link>
@@ -93,7 +93,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
         <button
           type="submit"
           disabled={isLoading}
-          className={`w-full bg-sky-600 text-white font-medium py-3 px-6 rounded-lg transition duration-200 ${
+          className={`w-full bg-sky-500 text-white font-medium py-3 px-6 rounded-lg transition duration-200 ${
             isLoading 
               ? 'opacity-50 cursor-not-allowed' 
               : 'hover:bg-sky-700 shadow-md hover:shadow-lg'
@@ -113,7 +113,7 @@ export default function LoginForm({ onSubmit, isLoading, error }: LoginFormProps
           حساب کاربری ندارید؟{' '}
           <Link 
             href="/register" 
-            className="text-sky-600 font-medium hover:text-sky-800 transition-colors"
+            className="text-sky-500 font-medium hover:text-sky-800 transition-colors"
           >
             ثبت نام کنید
           </Link>
