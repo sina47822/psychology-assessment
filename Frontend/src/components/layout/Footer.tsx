@@ -65,7 +65,7 @@ export default function Footer({
                 <Shield className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h3 className="text-lg font-bold">سامانه ارزیابی نوجوانان</h3>
+                <h3 className="text-lg font-bold">سامانه کوچینگ تیناپ</h3>
                 <p className="text-sm text-gray-300">شناخت چالش‌ها، قدم اول برای بهبود است</p>
               </div>
             </div>

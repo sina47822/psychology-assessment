@@ -50,7 +50,7 @@ export default function Header({ onMenuClick, user }: HeaderProps) {
                 </div>
                 <div className="hidden md:block">
                   <h1 className="text-lg font-bold text-gray-800">
-                    سامانه ارزیابی نوجوانان
+                    سامانه کوچینگ تیناپ
                   </h1>
                   <p className="text-xs text-gray-500">
                     داشبورد کاربری

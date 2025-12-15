@@ -88,7 +88,7 @@ export default function AuthLayout({
       default:
         return {
           title: title || 'احراز هویت',
-          subtitle: subtitle || 'به سامانه ارزیابی نوجوانان خوش آمدید',
+          subtitle: subtitle || 'به سامانه کوچینگ تیناپ خوش آمدید',
           icon: <Shield className="h-8 w-8" />,
           bgColor: 'bg-gradient-to-r from-gray-100 to-gray-50',
           iconColor: 'text-gray-600',

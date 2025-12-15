@@ -45,7 +45,7 @@ export default function HomePage() {
       <main className="flex-1 flex flex-col items-center justify-center p-8">
         <div className="max-w-4xl text-center">
           <h1 className="text-4xl font-bold text-gray-800 mb-4">
-            سامانه ارزیابی نوجوانان
+            سامانه کوچینگ تیناپ
           </h1>
           <p className="text-lg text-gray-600 mb-8">
             سیستم تخصصی ارزیابی و تحلیل ویژگی‌های رفتاری نوجوانان

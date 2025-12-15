@@ -5,7 +5,7 @@ export const APP_INFO = {
   lastUpdate: new Date().toLocaleDateString('fa-IR'),
   currentYear: new Date().getFullYear(),
   buildDate: new Date().toISOString(),
-  name: 'سامانه ارزیابی نوجوانان',
+  name: 'سامانه کوچینگ تیناپ',
   description: 'شناخت چالش‌ها، قدم اول برای بهبود است'
 };
 
@@ -15,7 +15,7 @@ export const CONTACT_INFO = {
   supportPhone: '۰۲۱-۱۲۳۴۵۶۷۸',
   supportEmail: 'support@teen-assessment.ir',
   supportHours: '۹ صبح تا ۵ عصر',
-  organization: 'مرکز مشاوره نوجوانان یاسان',
+  organization: 'مرکز مشاوره نوجوانان تیناپ',
   address: 'تهران، دانشگاه تهران، دانشکده روانشناسی',
   socialMedia: {
     telegram: 'https://t.me/teen_assessment',
@@ -117,8 +117,8 @@ export const HELP_INFO = {
       icon: 'HelpCircle', // اضافه کردن icon
       questions: [
         {
-          question: 'سامانه ارزیابی نوجوانان چیست؟',
-          answer: 'سامانه ارزیابی نوجوانان یک پلتفرم تخصصی برای شناسایی و ارزیابی چالش‌های رفتاری، عاطفی و روانشناختی نوجوانان است. این سامانه با استفاده از پرسشنامه‌های علمی و معتبر، به والدین و مربیان کمک می‌کند تا شناخت بهتری از وضعیت نوجوانان داشته باشند.'
+          question: 'سامانه کوچینگ تیناپ چیست؟',
+          answer: 'سامانه کوچینگ تیناپ یک پلتفرم تخصصی برای شناسایی و ارزیابی چالش‌های رفتاری، عاطفی و روانشناختی نوجوانان است. این سامانه با استفاده از پرسشنامه‌های علمی و معتبر، به والدین و مربیان کمک می‌کند تا شناخت بهتری از وضعیت نوجوانان داشته باشند.'
         },
         {
           question: 'چگونه از سامانه استفاده کنم؟',
