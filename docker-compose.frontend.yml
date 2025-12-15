@@ -1,0 +1,20 @@
+services:
+  teenapp_next_app:
+    container_name: teenapp_next_app
+    build:
+      context: ./Frontend
+      dockerfile: prod.Dockerfile
+      args:
+        ENV_VARIABLE: ${ENV_VARIABLE}
+        NEXT_PUBLIC_ENV_VARIABLE: ${NEXT_PUBLIC_ENV_VARIABLE}
+    restart: always
+    expose:
+      - "3000" # internal port Next listens on
+    ports:
+      - "3006:3000"
+    networks:
+      - teenapp_network
+
+networks:
+  teenapp_network:
+    external: true

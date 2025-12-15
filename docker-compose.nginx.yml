@@ -1,0 +1,25 @@
+# docker-compose.nginx.yml
+services:
+  teenapp_nginx:
+    image: nginx:stable
+    container_name: teenapp_nginx
+    restart: always
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+        #- ./Backend/core/static:/app/static:ro
+        #- gandom_media_volume:/app/media:ro
+    ports:
+      - "9004:80"
+    networks:
+      - teenapp_network
+    depends_on:
+      #- teenapp_backend
+      - teenapp_next_app
+
+        #volumes:
+  #teenapp_media_volume:
+    #    external: true
+
+networks:
+  gandom_network:
+    external: true
