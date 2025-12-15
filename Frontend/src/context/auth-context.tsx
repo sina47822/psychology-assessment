@@ -1,4 +1,4 @@
-// context/auth-context.tsx
+// context/auth-context.tsx - نسخه اصلاح شده
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { authAPI, User } from '@/lib/api';
 
@@ -30,12 +30,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      const userData = await authApi.me();
-      setUser(userData);
+      const response = await authAPI.me();
+      setUser(response.data);
     } catch (error) {
       console.error('Auth check failed:', error);
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
+      localStorage.removeItem('user');
     } finally {
       setIsLoading(false);
     }
@@ -44,12 +45,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login = async (identifier: string, password: string) => {
     setIsLoading(true);
     try {
-      const data = await authApi.login(identifier, password);
+      const response = await authAPI.login(identifier, password);
+      const { data } = response;
       
       localStorage.setItem('access_token', data.access);
       localStorage.setItem('refresh_token', data.refresh);
+      localStorage.setItem('user', JSON.stringify(data.user));
       
       setUser(data.user);
+    } catch (error) {
+      console.error('Login failed:', error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -58,12 +64,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (data: any) => {
     setIsLoading(true);
     try {
-      const response = await authApi.register(data);
+      const response = await authAPI.register(data);
+      const { data: responseData } = response;
       
-      localStorage.setItem('access_token', response.access);
-      localStorage.setItem('refresh_token', response.refresh);
+      localStorage.setItem('access_token', responseData.access);
+      localStorage.setItem('refresh_token', responseData.refresh);
+      localStorage.setItem('user', JSON.stringify(responseData.user));
       
-      setUser(response.user);
+      setUser(responseData.user);
+    } catch (error) {
+      console.error('Registration failed:', error);
+      throw error;
     } finally {
       setIsLoading(false);
     }
@@ -72,12 +83,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = async () => {
     setIsLoading(true);
     try {
-      await authApi.logout();
+      await authAPI.logout();
     } catch (error) {
       console.error('Logout error:', error);
     } finally {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
+      localStorage.removeItem('user');
       setUser(null);
       setIsLoading(false);
     }
@@ -85,7 +97,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const updateUser = async (data: any) => {
     try {
-      const updatedUser = await authApi.updateProfile(data);
+      const response = await authAPI.updateProfile(data);
+      const updatedUser = response.data;
+      localStorage.setItem('user', JSON.stringify(updatedUser));
       setUser(updatedUser);
     } catch (error) {
       console.error('Update user error:', error);

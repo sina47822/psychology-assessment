@@ -3,22 +3,24 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  
+  output: 'standalone',
   // Rewrite API requests to Django backend
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost:8000/api/:path*',
+        destination: process.env.NEXT_PUBLIC_API_URL 
+          ? `${process.env.NEXT_PUBLIC_API_URL}/api/:path*`
+          : 'http://localhost:8000/api/:path*',
       },
     ];
   },
   
   // برای نمایش خطاهای فارسی
-  i18n: {
-    locales: ['fa'],
-    defaultLocale: 'fa',
-  },
+  // i18n: {
+  //   locales: ['fa'],
+  //   defaultLocale: 'fa',
+  // },
   
   // اضافه کردن هدرهای امنیتی
   async headers() {

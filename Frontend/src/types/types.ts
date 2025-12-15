@@ -83,6 +83,8 @@ export interface User {
     completedAt: string;
     totalSelected: number;
   };
+  level: string;
+  total_points : string;
 }
 export interface UserProfile {
   education_level: string | null;
@@ -104,7 +106,7 @@ export interface UserProfile {
 // انواع Context
 export interface AuthContextType {
   user: User | null;
-  isAuthenticated: boolean;
+  is_authenticated: boolean;
   isLoading: boolean;
   accessToken: string | null;
   login: (username: string, password: string) => Promise<{

@@ -255,7 +255,7 @@ export default function SettingsPage() {
     const data = {
       user: {
         id: user?.id,
-        name: user?.fullName,
+        name: user?.full_name,
         email: user?.email,
         phone: user?.phone
       },

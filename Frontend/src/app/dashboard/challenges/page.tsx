@@ -124,7 +124,7 @@ export default function ChallengesPage() {
   const userStats = {
     completedChallenges: 5,
     activeChallenges: 2,
-    totalPoints: 1250,
+    total_points: 1250,
     currentStreak: 14,
   };
 
@@ -207,7 +207,7 @@ export default function ChallengesPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-600">امتیاز کل</p>
-                <p className="text-2xl font-bold text-gray-800">{userStats.totalPoints}</p>
+                <p className="text-2xl font-bold text-gray-800">{userStats.total_points}</p>
               </div>
               <div className="p-3 rounded-lg bg-white">
                 <Star className="h-6 w-6 text-yellow-600" />

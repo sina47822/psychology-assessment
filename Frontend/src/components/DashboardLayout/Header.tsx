@@ -18,15 +18,16 @@ import {
 
 interface HeaderProps {
   onMenuClick?: () => void;
+  user?: any; // اضافه کردن این خط
 }
 
-export default function Header({ onMenuClick }: HeaderProps) {
-  const { user } = useAuth();
+export default function Header({ onMenuClick, user }: HeaderProps) {
+  const { user: authUser } = useAuth()
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
-  const userInitials = `${user?.firstName?.charAt(0) || ''}${user?.lastName?.charAt(0) || ''}`.toUpperCase();
+  const userInitials = `${user?.first_name?.charAt(0) || ''}${user?.last_name?.charAt(0) || ''}`.toUpperCase();
 
   return (
     <>
@@ -144,7 +145,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
                 <div className="hidden md:flex items-center space-x-3">
                   <div className="text-left">
                     <p className="text-sm font-medium text-gray-700 truncate max-w-[150px]">
-                      {user?.fullName || 'کاربر'}
+                      {user?.full_name || 'کاربر'}
                     </p>
                     <p className="text-xs text-gray-500 truncate max-w-[150px]">
                       {user?.email || user?.phone || ''}
@@ -257,7 +258,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
                       </span>
                     </div>
                     <div>
-                      <p className="font-medium text-gray-800">{user.fullName}</p>
+                      <p className="font-medium text-gray-800">{user.full_name}</p>
                       <p className="text-sm text-gray-500">{user.email || user.phone}</p>
                     </div>
                   </div>

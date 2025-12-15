@@ -33,7 +33,7 @@ export default function OTPVerification({
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [timeLeft, setTimeLeft] = useState(120); // 2 دقیقه
-  const [isVerified, setIsVerified] = useState(false);
+  const [is_verified, setis_verified] = useState(false);
   
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
 
@@ -132,7 +132,7 @@ export default function OTPVerification({
       const result = await onVerify(otpCode);
       
       if (result.success) {
-        setIsVerified(true);
+        setis_verified(true);
         setSuccess(result.message || 'کد تأیید صحیح است!');
         
         // ریدایرکت بعد از 2 ثانیه
@@ -203,9 +203,9 @@ export default function OTPVerification({
       {/* هدر */}
       <div className="text-center mb-8">
         <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-4 ${
-          isVerified ? 'bg-sky-100' : 'bg-sky-100'
+          is_verified ? 'bg-sky-100' : 'bg-sky-100'
         }`}>
-          {isVerified ? (
+          {is_verified ? (
             <CheckCircle className="h-8 w-8 text-sky-500" />
           ) : verificationType === 'phone' ? (
             <Smartphone className="h-8 w-8 text-sky-500" />
@@ -238,7 +238,7 @@ export default function OTPVerification({
             {otp.map((digit, index) => (
               <input
                 key={index}
-                ref={el => inputRefs.current[index] = el}
+                ref={el => {inputRefs.current[index] = el}}
                 type="text"
                 inputMode="numeric"
                 pattern="\d*"
@@ -257,7 +257,7 @@ export default function OTPVerification({
                 } ${
                   error ? 'border-red-300' : ''
                 }`}
-                disabled={isLoading || isVerified}
+                disabled={isLoading || is_verified}
                 autoComplete="one-time-code"
               />
             ))}
@@ -286,9 +286,9 @@ export default function OTPVerification({
         {/* دکمه تأیید */}
         <button
           type="submit"
-          disabled={isLoading || otp.join('').length !== 6 || isVerified}
+          disabled={isLoading || otp.join('').length !== 6 || is_verified}
           className={`w-full py-3 px-6 rounded-lg font-medium text-white transition-all ${
-            isLoading || otp.join('').length !== 6 || isVerified
+            isLoading || otp.join('').length !== 6 || is_verified
               ? 'bg-gray-400 cursor-not-allowed'
               : 'bg-sky-500 hover:bg-sky-700 shadow-md hover:shadow-lg'
           }`}
@@ -298,7 +298,7 @@ export default function OTPVerification({
               <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
               در حال تأیید...
             </span>
-          ) : isVerified ? (
+          ) : is_verified ? (
             <span className="flex items-center justify-center gap-2">
               <CheckCircle className="h-5 w-5" />
               تأیید شده

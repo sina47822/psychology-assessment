@@ -32,7 +32,7 @@ const PATH_DETAILS = {
   duration: 4,
   enrolledCount: 245,
   rating: 4.8,
-  totalPoints: 500,
+  total_points: 500,
   prerequisites: [],
   isEnrolled: true,
   progress: 75,
@@ -238,7 +238,7 @@ export default function PathDetailsPage() {
               </div>
               <div className="flex items-center gap-2">
                 <Award className="h-5 w-5" />
-                <span>{path.totalPoints} امتیاز</span>
+                <span>{path.total_points} امتیاز</span>
               </div>
               <div className="flex items-center gap-2">
                 <Target className="h-5 w-5" />
@@ -346,7 +346,7 @@ export default function PathDetailsPage() {
                 <span className="text-gray-600">امتیاز کسب شده</span>
                 <span className="font-bold flex items-center gap-1">
                   <Star className="h-4 w-4 text-yellow-500" />
-                  {Math.floor((path.progress / 100) * path.totalPoints)}
+                  {Math.floor((path.progress / 100) * path.total_points)}
                 </span>
               </div>
             </div>

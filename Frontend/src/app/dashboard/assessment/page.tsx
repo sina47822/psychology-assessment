@@ -46,7 +46,10 @@ export default function Home() {
     motherOccupation: '',
     province: '',
     city: '',
-    maritalStatus: ''
+    maritalStatus: '',
+    age: '',       
+    education: '',   
+    occupation: '' 
   });
 
   // هدایت به لاگین اگر کاربر لاگین نکرده
@@ -58,14 +61,14 @@ export default function Home() {
 
   // بارگذاری دسته‌ها از JSON
   const categories = [
-    { ...category1, id: 1 },
-    { ...category2, id: 2 },
-    { ...category3, id: 3 },
-    { ...category4, id: 4 },
-    { ...category5, id: 5 },
-    { ...category6, id: 6 },
-    { ...category7, id: 7 },
-    { ...category8, id: 8 }
+    { ...category1, id: 1, title: category1.categoryTitle, questions: category1.questions.map(q => ({ ...q, categoryTitle: q.category })) },
+    { ...category2, id: 2, title: category2.categoryTitle, questions: category2.questions.map(q => ({ ...q, categoryTitle: q.category })) },
+    { ...category3, id: 3, title: category3.categoryTitle, questions: category3.questions.map(q => ({ ...q, categoryTitle: q.category })) },
+    { ...category4, id: 4, title: category4.categoryTitle, questions: category4.questions.map(q => ({ ...q, categoryTitle: q.category })) },
+    { ...category5, id: 5, title: category5.categoryTitle, questions: category5.questions.map(q => ({ ...q, categoryTitle: q.category })) },
+    { ...category6, id: 6, title: category6.categoryTitle, questions: category6.questions.map(q => ({ ...q, categoryTitle: q.category })) },
+    { ...category7, id: 7, title: category7.categoryTitle, questions: category7.questions.map(q => ({ ...q, categoryTitle: q.category })) },
+    { ...category8, id: 8, title: category8.categoryTitle, questions: category8.questions.map(q => ({ ...q, categoryTitle: q.category })) }
   ];
 
   // ذخیره در localStorage برای حفظ وضعیت
@@ -119,13 +122,13 @@ export default function Home() {
     });
   };
 
-  const handleDemographicsChange = (field: keyof DemographicsData, value: string) => {
+  const handleDemographicsChange = (field: keyof DemographicsData, value: string | boolean) => {
     setDemographics(prev => {
       const newData = { ...prev, [field]: value };
       
       if (field === 'livingWith') {
-        const fatherLiving = value.includes('پدر');
-        const motherLiving = value.includes('مادر');
+        const fatherLiving = (value as string).includes('پدر');
+        const motherLiving = (value as string).includes('مادر');
         
         return {
           ...newData,
@@ -141,6 +144,25 @@ export default function Home() {
             motherEducation: '',
             motherOccupation: ''
           })
+        };
+      }
+      
+      // همچنین برای fatherLiving و motherLiving
+      if (field === 'fatherLiving' && value === false) {
+        return {
+          ...newData,
+          fatherAge: '',
+          fatherEducation: '',
+          fatherOccupation: ''
+        };
+      }
+      
+      if (field === 'motherLiving' && value === false) {
+        return {
+          ...newData,
+          motherAge: '',
+          motherEducation: '',
+          motherOccupation: ''
         };
       }
       
@@ -213,7 +235,10 @@ export default function Home() {
       motherOccupation: '',
       province: '',
       city: '',
-      maritalStatus: ''
+      maritalStatus: '',
+      age: '',      
+      education: '',  
+      occupation: ''
     });
     
     if (user) {

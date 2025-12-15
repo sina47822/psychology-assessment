@@ -28,7 +28,7 @@ interface AuthProviderProps {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [is_authenticated, setis_authenticated] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [sessionId, setSessionId] = useState<string | null>(null);
@@ -54,7 +54,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             setSessionId(storedSession);
           }
           
-          setIsAuthenticated(true);
+          setis_authenticated(true);
         }
       } catch (error) {
         console.error('Error loading user from storage:', error);
@@ -74,7 +74,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       
       // در محیط تستی، هر رمزی قابل قبول است
       // یا کاربران مشخصی را چک می‌کنیم
-      let foundUser = TEST_USERS.find(u => 
+      let foundUser: User | undefined = TEST_USERS.find(u => 
         u.username === username || 
         u.email === username || 
         u.phone === username
@@ -92,10 +92,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           full_name: 'کاربر تستی',
           national_code: '0012345678',
           birth_date: '1380-01-01',
-          gender: 'male',
+          gender: 'male' as 'male' | 'female' | null,
           province: 'تهران',
           city: 'تهران',
-          address: null,
+          address: 'تهران',
           is_verified: true,
           is_parent: false,
           is_staff: false,
@@ -123,7 +123,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             created_at: new Date().toISOString(),
             updated_at: new Date().toISOString(),
           },
-          assessmentCompleted: false
+          assessmentCompleted: false,
+          level: 'beginner',
+          total_points: '0'
         };
       }
 
@@ -142,7 +144,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(foundUser);
       setAccessToken(mockAccessToken);
       setSessionId(mockSessionId);
-      setIsAuthenticated(true);
+      setis_authenticated(true);
 
       console.log('✅ Test login successful:', foundUser.username);
 
@@ -173,7 +175,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(null);
       setAccessToken(null);
       setSessionId(null);
-      setIsAuthenticated(false);
+      setis_authenticated(false);
 
       console.log('✅ Test logout successful');
       
@@ -189,7 +191,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(null);
       setAccessToken(null);
       setSessionId(null);
-      setIsAuthenticated(false);
+      setis_authenticated(false);
       router.push('/');
     }
   };
@@ -244,7 +246,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
         },
-        assessmentCompleted: false
+        assessmentCompleted: false,
+        level: 'beginner',
+        total_points: '0'
       };
 
       // ایجاد توکن تستی
@@ -262,7 +266,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(newUser);
       setAccessToken(mockAccessToken);
       setSessionId(mockSessionId);
-      setIsAuthenticated(true);
+      setis_authenticated(true);
 
       console.log('✅ Test registration successful:', newUser.username);
 
@@ -357,7 +361,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   // مقدار context
   const contextValue: AuthContextType = {
     user,
-    isAuthenticated,
+    is_authenticated,
     isLoading,
     accessToken,
     login,

@@ -16,7 +16,7 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children, title = 'داشبورد' }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sessionChecking, setSessionChecking] = useState(false);
-  const { user, isLoading, isAuthenticated, checkSession, logout } = useAuth();
+  const { user, isLoading, is_authenticated, checkSession, logout } = useAuth();
   const router = useRouter();
 
   // بررسی دوره‌ای سشن
@@ -37,19 +37,19 @@ export default function DashboardLayout({ children, title = 'داشبورد' }: 
 
   useEffect(() => {
     // بررسی اولیه سشن
-    if (isAuthenticated) {
+    if (is_authenticated) {
       verifySession();
     }
 
     // بررسی دوره‌ای هر 10 دقیقه
     const interval = setInterval(() => {
-      if (isAuthenticated) {
+      if (is_authenticated) {
         verifySession();
       }
     }, 10 * 60 * 1000);
 
     return () => clearInterval(interval);
-  }, [isAuthenticated]);
+  }, [is_authenticated]);
 
   // اگر در حال لودینگ است
   if (isLoading) {
@@ -62,7 +62,7 @@ export default function DashboardLayout({ children, title = 'داشبورد' }: 
   }
 
   // اگر کاربر لاگین نکرده
-  if (!user || !isAuthenticated) {
+  if (!user || !is_authenticated) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-4">
         <AlertCircle className="h-16 w-16 text-red-500 mb-4" />
@@ -90,15 +90,12 @@ export default function DashboardLayout({ children, title = 'داشبورد' }: 
 
       <Header 
         onMenuClick={() => setSidebarOpen(true)} 
-        user={user}
       />
       
       <div className="flex">
         {/* Sidebar */}
         <Sidebar 
-          isOpen={sidebarOpen}
           onClose={() => setSidebarOpen(false)}
-          user={user}
         />
         
         {/* Main Content */}

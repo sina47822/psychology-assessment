@@ -13,7 +13,7 @@ import { Toaster } from 'react-hot-toast';
 
 export default function RegisterPage() {
   const router = useRouter();
-  const { user, register, isLoading: authLoading, isAuthenticated } = useAuth();
+  const { user, register, isLoading: authLoading, is_authenticated } = useAuth();
   
   // اطلاعات ثبت‌نام
   const [formData, setFormData] = useState({
@@ -39,10 +39,10 @@ export default function RegisterPage() {
   
   // اگر کاربر قبلاً لاگین کرده و سشن معتبر است، به داشبورد هدایت شود
   useEffect(() => {
-    if (user && isAuthenticated && !authLoading) {
+    if (user && is_authenticated && !authLoading) {
       router.push('/dashboard');
     }
-  }, [user, isAuthenticated, authLoading, router]);
+  }, [user, is_authenticated, authLoading, router]);
 
   // بررسی قدرت رمز عبور
   useEffect(() => {

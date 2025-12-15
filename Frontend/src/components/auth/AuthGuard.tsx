@@ -17,14 +17,14 @@ export default function AuthGuard({
   requiredRole = 'user',
   requireVerified = true 
 }: AuthGuardProps) {
-  const { user, isAuthenticated, isLoading, checkSession } = useAuth();
+  const { user, is_authenticated, isLoading, checkSession } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     const verifyAccess = async () => {
       if (!isLoading) {
         // اگر در حال بارگذاری نیستیم
-        if (!isAuthenticated || !user) {
+        if (!is_authenticated || !user) {
           // اگر احراز هویت نشده، به صفحه login هدایت کن
           router.push('/login?redirect=' + encodeURIComponent(window.location.pathname));
           return;
@@ -58,7 +58,7 @@ export default function AuthGuard({
     };
 
     verifyAccess();
-  }, [isAuthenticated, isLoading, router, checkSession, user, requiredRole, requireVerified]);
+  }, [is_authenticated, isLoading, router, checkSession, user, requiredRole, requireVerified]);
 
   // نمایش loading در حال بررسی
   if (isLoading) {
@@ -71,5 +71,5 @@ export default function AuthGuard({
   }
 
   // اگر همه چیز درست است، محتوا را نمایش بده
-  return isAuthenticated ? <>{children}</> : null;
+  return is_authenticated ? <>{children}</> : null;
 }

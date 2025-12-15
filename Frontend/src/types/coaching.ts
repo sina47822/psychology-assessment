@@ -34,6 +34,18 @@ export interface WeeklyModule {
   completedAt?: string;
 }
 
+// تعریف TaskQuestion
+export interface TaskQuestion {
+  id: string;
+  questionText: string;
+  questionType: 'multiple_choice' | 'text' | 'rating' | 'checkbox';
+  options?: string[];
+  correctAnswer?: string | string[];
+  userAnswer?: string | string[];
+  points: number;
+  explanation?: string;
+}
+
 // مدل تمرین روزانه
 export interface DailyTask {
   id: string;
@@ -98,7 +110,7 @@ export interface UserProgress {
   userId: string;
   currentPathId?: string;
   currentWeek?: number;
-  totalPoints: number;
+  total_points: number;
   streakDays: number;
   completedPaths: string[];
   achievements: Achievement[];

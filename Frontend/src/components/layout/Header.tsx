@@ -42,9 +42,9 @@ export default function Header({
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
 
-  const userFullName = user?.fullName || userName;
+  const userFullName = user?.full_name || userName;
   const userEmailPhone = user?.email || user?.phone || '';
-  const initials = userInitials || `${user?.firstName?.charAt(0) || ''}${user?.lastName?.charAt(0) || ''}`.toUpperCase();
+  const initials = userInitials || `${user?.first_name?.charAt(0) || ''}${user?.last_name?.charAt(0) || ''}`.toUpperCase();
 
   const handleLogout = async () => {
     await logout();
@@ -139,7 +139,7 @@ export default function Header({
                             {initials}
                           </span>
                         </div>
-                        {user.isVerified && (
+                        {user.is_verified && (
                           <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-sky-800 rounded-full border-2 border-white flex items-center justify-center">
                             <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -335,8 +335,8 @@ export default function Header({
                   <div className="text-sm text-gray-600">
                     <p className="font-medium">{userFullName}</p>
                     <p className="text-xs mt-1">{userEmailPhone}</p>
-                    <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs mt-2 ${user.isVerified ? 'bg-sky-100 text-sky-800' : 'bg-sky-100 text-sky-800'}`}>
-                      {user.isVerified ? '✓ حساب تأیید شده' : 'در انتظار تأیید'}
+                    <div className={`inline-flex items-center px-2 py-1 rounded-full text-xs mt-2 ${user.is_verified ? 'bg-sky-100 text-sky-800' : 'bg-sky-100 text-sky-800'}`}>
+                      {user.is_verified ? '✓ حساب تأیید شده' : 'در انتظار تأیید'}
                     </div>
                   </div>
                 </div>

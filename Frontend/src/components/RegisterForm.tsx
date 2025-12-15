@@ -17,8 +17,8 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
   const { register, isLoading: authLoading } = useAuth();
   
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+    first_name: '',
+    last_name: '',
     email: '',
     username: '',
     phone: '',
@@ -29,8 +29,8 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [validation, setValidation] = useState({
-    firstName: { isValid: false, touched: false },
-    lastName: { isValid: false, touched: false },
+    first_name: { isValid: false, touched: false },
+    last_name: { isValid: false, touched: false },
     email: { isValid: false, touched: false },
     username: { isValid: false, touched: false },
     phone: { isValid: false, touched: false },
@@ -61,8 +61,8 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
     let message = '';
 
     switch (name) {
-      case 'firstName':
-      case 'lastName':
+      case 'first_name':
+      case 'last_name':
         isValid = value.trim().length >= 2;
         break;
       
@@ -129,8 +129,8 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
     });
 
     // بررسی اعتبار همه فیلدهای ضروری
-    const isFirstNameValid = formData.firstName.trim().length >= 2;
-    const isLastNameValid = formData.lastName.trim().length >= 2;
+    const isfirst_nameValid = formData.first_name.trim().length >= 2;
+    const islast_nameValid = formData.last_name.trim().length >= 2;
     const isPasswordValid = validation.password.isValid;
     const isConfirmPasswordValid = formData.password === formData.confirmPassword && formData.confirmPassword.length > 0;
     
@@ -154,12 +154,12 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
         break;
     }
 
-    if (!isFirstNameValid) {
+    if (!isfirst_nameValid) {
       setError('نام باید حداقل ۲ حرف داشته باشد');
       return;
     }
     
-    if (!isLastNameValid) {
+    if (!islast_nameValid) {
       setError('نام خانوادگی باید حداقل ۲ حرف داشته باشد');
       return;
     }
@@ -184,8 +184,8 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
     try {
       // آماده‌سازی داده‌ها برای ارسال به backend
       const registerData = {
-        first_name: formData.firstName.trim(),
-        last_name: formData.lastName.trim(),
+        first_name: formData.first_name.trim(),
+        last_name: formData.last_name.trim(),
         email: registrationMethod === 'email' ? formData.email.trim() : (formData.email.trim() || undefined),
         username: registrationMethod === 'username' ? formData.username.trim() : (formData.username.trim() || undefined),
         phone: registrationMethod === 'phone' ? formData.phone.replace(/\D/g, '') : (formData.phone.replace(/\D/g, '') || undefined),
@@ -223,8 +223,8 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
   };
 
   const isFormValid = () => {
-    const baseValid = validation.firstName.isValid && 
-                     validation.lastName.isValid && 
+    const baseValid = validation.first_name.isValid && 
+                     validation.last_name.isValid && 
                      validation.password.isValid && 
                      validation.confirmPassword.isValid;
     
@@ -327,13 +327,13 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             </div>
             <input
               type="text"
-              name="firstName"
-              value={formData.firstName}
+              name="first_name"
+              value={formData.first_name}
               onChange={handleChange}
               onBlur={handleBlur}
               className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
-                validation.firstName.touched
-                  ? validation.firstName.isValid
+                validation.first_name.touched
+                  ? validation.first_name.isValid
                     ? 'border-sky-500'
                     : 'border-red-500'
                   : 'border-gray-300'
@@ -342,9 +342,9 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               required
               dir="rtl"
             />
-            {validation.firstName.touched && (
+            {validation.first_name.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                {validation.firstName.isValid ? (
+                {validation.first_name.isValid ? (
                   <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
@@ -352,7 +352,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               </div>
             )}
           </div>
-          {validation.firstName.touched && !validation.firstName.isValid && (
+          {validation.first_name.touched && !validation.first_name.isValid && (
             <p className="text-red-500 text-xs mt-1">
               نام باید حداقل ۲ حرف داشته باشد
             </p>
@@ -369,13 +369,13 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
             </div>
             <input
               type="text"
-              name="lastName"
-              value={formData.lastName}
+              name="last_name"
+              value={formData.last_name}
               onChange={handleChange}
               onBlur={handleBlur}
               className={`w-full p-3 pr-12 text-right border rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 transition-all ${
-                validation.lastName.touched
-                  ? validation.lastName.isValid
+                validation.last_name.touched
+                  ? validation.last_name.isValid
                     ? 'border-sky-500'
                     : 'border-red-500'
                   : 'border-gray-300'
@@ -384,9 +384,9 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               required
               dir="rtl"
             />
-            {validation.lastName.touched && (
+            {validation.last_name.touched && (
               <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
-                {validation.lastName.isValid ? (
+                {validation.last_name.isValid ? (
                   <Check className="h-5 w-5 text-sky-500" />
                 ) : (
                   <X className="h-5 w-5 text-red-500" />
@@ -394,7 +394,7 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
               </div>
             )}
           </div>
-          {validation.lastName.touched && !validation.lastName.isValid && (
+          {validation.last_name.touched && !validation.last_name.isValid && (
             <p className="text-red-500 text-xs mt-1">
               نام خانوادگی باید حداقل ۲ حرف داشته باشد
             </p>

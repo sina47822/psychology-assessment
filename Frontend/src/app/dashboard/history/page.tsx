@@ -264,7 +264,7 @@ export default function AssessmentHistoryPage() {
       assessment,
       user: {
         id: user?.id,
-        name: user?.fullName
+        name: user?.full_name
       },
       exportDate: new Date().toISOString()
     };
@@ -304,7 +304,7 @@ export default function AssessmentHistoryPage() {
             <div class="header">
               <h1>${assessment.title}</h1>
               <p>تاریخ: ${formatDate(assessment.date)}</p>
-              <p>کاربر: ${user?.fullName}</p>
+              <p>کاربر: ${user?.full_name}</p>
             </div>
             
             <div class="info">
@@ -379,7 +379,7 @@ export default function AssessmentHistoryPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <Header userName={user.fullName} />
+      <Header userName={user.full_name} />
       
       <main className="flex-1 bg-gray-50">
         <div className="max-w-7xl mx-auto p-4 md:p-6">

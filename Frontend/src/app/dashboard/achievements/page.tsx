@@ -188,7 +188,7 @@ export default function AchievementsPage() {
   const userStats = {
     totalAchievements: 15,
     unlockedAchievements: 8,
-    totalPoints: 2350,
+    total_points: 2350,
     rank: 'نوآموز',
     nextRank: 'کارآموز',
     progressToNextRank: 65,
@@ -236,7 +236,7 @@ export default function AchievementsPage() {
           </Badge>
           <Badge variant="outline" className="bg-gradient-to-r from-yellow-50 to-amber-50">
             <Star className="h-4 w-4 ml-1" />
-            {userStats.totalPoints} امتیاز
+            {userStats.total_points} امتیاز
           </Badge>
         </div>
       </div>
@@ -301,7 +301,7 @@ export default function AchievementsPage() {
               </div>
               <h3 className="font-bold text-gray-800 text-xl mb-2">رتبه شما</h3>
               <div className="text-3xl font-bold text-gray-800 mb-1">{userStats.rank}</div>
-              <p className="text-gray-600 mb-4">با {userStats.totalPoints} امتیاز</p>
+              <p className="text-gray-600 mb-4">با {userStats.total_points} امتیاز</p>
               
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-sm">
@@ -310,7 +310,7 @@ export default function AchievementsPage() {
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">امتیاز کل:</span>
-                  <span className="font-bold">{userStats.totalPoints}</span>
+                  <span className="font-bold">{userStats.total_points}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">رتبه بعدی:</span>

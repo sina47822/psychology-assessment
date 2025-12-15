@@ -66,7 +66,7 @@ export default function ForgotPasswordPage() {
       const type = identifyLoginType(identifier);
       setLoginType(type);
       
-      const result = await authApi.resetPassword(identifier);
+      const result = await authAPI.resetPassword(identifier);
       
       if (result) {
         setStep(2);
@@ -123,7 +123,7 @@ export default function ForgotPasswordPage() {
 
     try {
       const type = identifyLoginType(identifier);
-      const result = await authApi.resetPasswordConfirm({
+      const result = await authAPI.confirmPasswordReset({
         [type === 'phone' ? 'phone' : 'email']: identifier,
         code: otp,
         new_password: newPassword,
@@ -152,7 +152,7 @@ export default function ForgotPasswordPage() {
     setError('');
     
     try {
-      const result = await authApi.resetPassword(identifier);
+      const result = await authAPI.resetPassword(identifier);
       if (result) {
         setTimeLeft(120);
         setSuccess('کد تأیید مجدداً ارسال شد');

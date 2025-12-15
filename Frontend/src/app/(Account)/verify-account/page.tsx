@@ -10,7 +10,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 export default function VerifyAccountPage() {
   const router = useRouter();
-  const { user, isAuthenticated, isLoading, checkSession } = useAuth();
+  const { user, is_authenticated, isLoading, checkSession } = useAuth();
   const [isChecking, setIsChecking] = useState(true);
   const [verificationMethod, setVerificationMethod] = useState<'email' | 'phone' | null>(null);
   const [countdown, setCountdown] = useState(60);
@@ -20,7 +20,7 @@ export default function VerifyAccountPage() {
     const verifyAccess = async () => {
       if (!isLoading) {
         // اگر کاربر احراز هویت نشده، به لاگین هدایت کن
-        if (!isAuthenticated || !user) {
+        if (!is_authenticated || !user) {
           console.log('➡️ Redirecting to login - not authenticated');
           toast.error('لطفاً ابتدا وارد حساب کاربری خود شوید');
           setTimeout(() => {
@@ -66,7 +66,7 @@ export default function VerifyAccountPage() {
     };
 
     verifyAccess();
-  }, [user, isAuthenticated, isLoading, router, checkSession]);
+  }, [user, is_authenticated, isLoading, router, checkSession]);
 
   // تایمر برای ارسال مجدد کد
   useEffect(() => {

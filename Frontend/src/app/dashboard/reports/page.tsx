@@ -255,7 +255,7 @@ export default function ReportsPage() {
                   
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => setSelectedReport(report.id === selectedReport ? null : report.id.toString())}
+                      onClick={() => setSelectedReport(report.id.toString() === selectedReport ? null : report.id.toString())}
                       className="p-2 text-gray-500 hover:bg-gray-100 rounded-lg"
                     >
                       <MoreVertical className="h-5 w-5" />

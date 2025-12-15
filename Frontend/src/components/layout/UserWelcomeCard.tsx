@@ -23,9 +23,11 @@ export default function UserWelcomeCard({
 
   if (!user) return null;
 
-  const userFullName = user.fullName;
-  const userInitials = `${user.firstName?.charAt(0) || ''}${user.lastName?.charAt(0) || ''}`.toUpperCase();
-  const lastLoginDate = new Date(user.lastLogin).toLocaleDateString('fa-IR');
+  const userFullName = user.full_name;
+  const userInitials = `${user.first_name?.charAt(0) || ''}${user.last_name?.charAt(0) || ''}`.toUpperCase();
+  const lastLoginDate = user.last_login 
+    ? new Date(user.last_login).toLocaleDateString('fa-IR') 
+    : 'هنوز وارد نشده';
   const stepTitle = currentStep === 0 ? 'خوش‌آمدگویی' :
                    currentStep === 1 ? 'اطلاعات دموگرافیک' :
                    'پرسشنامه';
@@ -40,7 +42,7 @@ export default function UserWelcomeCard({
                 {userInitials}
               </span>
             </div>
-            {user.isVerified && (
+            {user.is_verified && (
               <div className="absolute bottom-0 right-0 w-6 h-6 bg-sky-800 rounded-full border-2 border-white flex items-center justify-center">
                 <CheckCircle className="w-3 h-3 text-white" />
               </div>
@@ -48,7 +50,7 @@ export default function UserWelcomeCard({
           </div>
           <div>
             <h2 className="text-xl font-bold text-gray-800">
-              سلام، {user.firstName} عزیز 👋
+              سلام، {user.first_name} عزیز 👋
             </h2>
             <p className="text-gray-600 mt-1">
               به سامانه ارزیابی رفتاری نوجوانان خوش آمدید
@@ -59,8 +61,8 @@ export default function UserWelcomeCard({
         <div className="flex items-center space-x-3">
           <div className="hidden md:flex flex-col items-end">
             <p className="text-sm text-gray-600">وضعیت حساب:</p>
-            <div className={`px-3 py-1 rounded-full text-sm font-medium ${user.isVerified ? 'bg-sky-100 text-sky-800' : 'bg-sky-100 text-sky-800'}`}>
-              {user.isVerified ? 'تأیید شده' : 'در انتظار تأیید'}
+            <div className={`px-3 py-1 rounded-full text-sm font-medium ${user.is_verified ? 'bg-sky-100 text-sky-800' : 'bg-sky-100 text-sky-800'}`}>
+              {user.is_verified ? 'تأیید شده' : 'در انتظار تأیید'}
             </div>
           </div>
           

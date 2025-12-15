@@ -277,6 +277,7 @@ export const TEST_USERS = [
     gender: 'male',
     province: 'تهران',
     city: 'تهران',
+    address: 'تهران، تهران خیابان شماره یک', // <-- اینجا اضافه شده
     is_verified: true,
     is_parent: false,
     is_staff: false,
@@ -304,7 +305,9 @@ export const TEST_USERS = [
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     },
-    assessmentCompleted: false
+    assessmentCompleted: false,
+    level: 'beginner',
+    total_points: '0'
   },
   {
     id: 2,
@@ -319,6 +322,7 @@ export const TEST_USERS = [
     gender: 'female',
     province: 'تهران',
     city: 'تهران',
+    address: 'تهران، تهران، خیابان شماره دو',
     is_verified: true,
     is_parent: true,
     is_staff: false,
@@ -347,6 +351,8 @@ export const TEST_USERS = [
       updated_at: new Date().toISOString(),
     },
     assessmentCompleted: true,
+    level: 'advance',
+    total_points: '200',
     assessmentData: {
       demographics: {
         age: '17',

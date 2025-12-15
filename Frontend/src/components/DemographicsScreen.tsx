@@ -6,7 +6,7 @@ import { useState, useEffect } from 'react';
 
 interface DemographicsScreenProps {
   demographics: DemographicsData;
-  onChange: (field: keyof DemographicsData, value: string) => void;
+  onChange: (field: keyof DemographicsData, value: string | boolean) => void;
   onNext: () => void;
   onPrev: () => void;
   isValid: boolean;

@@ -205,10 +205,10 @@ export default function CoachingSidebar({ onClose }: SidebarProps) {
           <div className="relative">
             <div className="w-14 h-14 bg-gradient-to-br from-sky-500 to-sky-500 rounded-2xl flex items-center justify-center shadow-md">
               <span className="text-white font-bold text-lg">
-                {user?.firstName?.charAt(0) || ''}{user?.lastName?.charAt(0) || ''}
+                {user?.first_name?.charAt(0) || ''}{user?.last_name?.charAt(0) || ''}
               </span>
             </div>
-            {user?.isVerified && (
+            {user?.is_verified && (
               <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-sky-500 rounded-full border-2 border-white flex items-center justify-center">
                 <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
@@ -218,17 +218,17 @@ export default function CoachingSidebar({ onClose }: SidebarProps) {
           </div>
           <div className="flex-1">
             <p className="font-bold text-gray-800 truncate">
-              {user?.fullName || 'والد عزیز'}
+              {user?.full_name || 'والد عزیز'}
             </p>
             <p className="text-xs text-gray-500 truncate">
-              {user?.isParent ? 'والد' : 'همراه نوجوان'}
+              {user?.is_parent ? 'والد' : 'همراه نوجوان'}
             </p>
             <div className="flex items-center gap-1 mt-1">
               <div className="text-xs px-2 py-0.5 bg-sky-100 text-sky-800 rounded-full">
                 سطح {user?.level || 1}
               </div>
               <div className="text-xs px-2 py-0.5 bg-sky-100 text-sky-800 rounded-full">
-                ⭐ {user?.totalPoints || 0}
+                ⭐ {user?.total_points || 0}
               </div>
             </div>
           </div>

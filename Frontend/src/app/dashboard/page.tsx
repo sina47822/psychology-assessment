@@ -10,7 +10,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner';
 
 export default function Dashboard() {
   const router = useRouter();
-  const { user, isLoading, isAuthenticated } = useAuth();
+  const { user, isLoading, is_authenticated } = useAuth();
   const [isRedirecting, setIsRedirecting] = useState(false);
   const [hasChecked, setHasChecked] = useState(false);
 
@@ -19,7 +19,7 @@ export default function Dashboard() {
     if (hasChecked) return;
 
     if (!isLoading) {
-      if (!isAuthenticated || !user) {
+      if (!is_authenticated || !user) {
         console.log('➡️ User not authenticated, redirecting to login');
         router.push('/login');
         setHasChecked(true);
@@ -28,7 +28,7 @@ export default function Dashboard() {
         setHasChecked(true);
       }
     }
-  }, [user, isAuthenticated, isLoading, router, hasChecked]);
+  }, [user, is_authenticated, isLoading, router, hasChecked]);
 
   // نمایش loading در حال بررسی
   if (isLoading || !hasChecked) {
@@ -40,7 +40,7 @@ export default function Dashboard() {
   }
 
   // اگر کاربر لاگین نکرده، چیزی نمایش نده (در حال redirect است)
-  if (!isAuthenticated || !user) {
+  if (!is_authenticated || !user) {
     return null;
   }
 

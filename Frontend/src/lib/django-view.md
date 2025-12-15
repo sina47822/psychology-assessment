@@ -14,7 +14,7 @@ class LearningPathViewSet(viewsets.ModelViewSet):
     
     queryset = LearningPath.objects.filter(is_active=True)
     serializer_class = LearningPathSerializer
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.is_authenticatedOrReadOnly]
     lookup_field = 'slug'
     
     def get_queryset(self):
@@ -313,7 +313,7 @@ class AchievementViewSet(viewsets.ReadOnlyModelViewSet):
 class UserStatsViewSet(viewsets.GenericViewSet):
     """ویو ست آمار کاربر"""
     
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.is_authenticated]
     
     @action(detail=False, methods=['get'])
     def dashboard(self, request):
@@ -375,7 +375,7 @@ class NotificationViewSet(viewsets.ModelViewSet):
     """ویو ست اعلان‌ها"""
     
     serializer_class = NotificationSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.is_authenticated]
     
     def get_queryset(self):
         return Notification.objects.filter(

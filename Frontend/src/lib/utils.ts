@@ -17,8 +17,8 @@ export interface RegisterData {
   phone?: string;
   password: string;
   confirmPassword: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   national_code?: string;
   birth_date?: string;
   gender?: string;
@@ -503,9 +503,9 @@ export const registerUser = async (
     email: data.email || null,
     username: data.username,
     phone: data.phone || null,
-    first_name: data.firstName,
-    last_name: data.lastName,
-    full_name: `${data.firstName} ${data.lastName}`,
+    first_name: data.first_name,
+    last_name: data.last_name,
+    full_name: `${data.first_name} ${data.last_name}`,
     national_code: data.national_code || null,
     birth_date: data.birth_date || null,
     gender: data.gender || null,
