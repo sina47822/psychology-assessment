@@ -78,7 +78,7 @@ export default function CoachingDashboard() {
               <div className="text-sm">روز متوالی</div>
               <div className="text-2xl font-bold">{streak} 🔥</div>
             </div>
-            <div className="text-center bg-white/20 px-4 py-2 rounded-lg">
+            <div className="text-center bg-white/20 px-4 mx-4 py-2 rounded-lg">
               <div className="text-sm">امتیاز</div>
               <div className="text-2xl font-bold">{points} ⭐</div>
             </div>

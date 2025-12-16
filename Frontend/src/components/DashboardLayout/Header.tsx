@@ -1,6 +1,7 @@
+// Frontend\src\components\DashboardLayout\Header.tsx
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/providers/AuthProvider';
 import Link from 'next/link';
 import { 
@@ -26,8 +27,38 @@ export default function Header({ onMenuClick, user }: HeaderProps) {
   const [showNotifications, setShowNotifications] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-
+  const notificationsRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
   const userInitials = `${user?.first_name?.charAt(0) || ''}${user?.last_name?.charAt(0) || ''}`.toUpperCase();
+  // مدیریت کلیک خارج از منوها
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      // بستن منوی اعلان‌ها
+      if (notificationsRef.current && 
+          !notificationsRef.current.contains(event.target as Node) &&
+          !(event.target as Element).closest('button[aria-label="اعلان‌ها"]')) {
+        setShowNotifications(false);
+      }
+      
+      // بستن منوی موبایل
+      if (mobileMenuRef.current && 
+          !mobileMenuRef.current.contains(event.target as Node) &&
+          !(event.target as Element).closest('button[aria-label="باز کردن منو"]')) {
+        setShowMobileMenu(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleMenuClick = () => {
+    if (onMenuClick) {
+      onMenuClick(); // فقط سایدبار را باز کن
+    } else {
+      setShowMobileMenu(true); // فقط منوی موبایل را باز کن
+    }
+  };
 
   return (
     <>
@@ -37,7 +68,7 @@ export default function Header({ onMenuClick, user }: HeaderProps) {
             {/* Left: Logo and Mobile Menu Button */}
             <div className="flex items-center space-x-4">
               <button
-                onClick={() => onMenuClick?.() || setShowMobileMenu(true)}
+                onClick={handleMenuClick}
                 className="lg:hidden p-2 text-gray-600 hover:text-gray-900 rounded-lg hover:bg-gray-100"
                 aria-label="باز کردن منو"
               >
