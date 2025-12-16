@@ -13,7 +13,7 @@ export const APP_INFO = {
 export const CONTACT_INFO = {
   appName: 'کوچینگ نوجوان',
   supportPhone: '۰۲۱-۱۲۳۴۵۶۷۸',
-  supportEmail: 'support@teen-assessment.ir',
+  supportEmail: 'support@teenapp.ir',
   supportHours: '۹ صبح تا ۵ عصر',
   organization: 'مرکز مشاوره نوجوانان تیناپ',
   address: 'تهران، دانشگاه تهران، دانشکده روانشناسی',
@@ -186,19 +186,19 @@ export const HELP_INFO = {
 export const DEPARTMENT_INFO = {
   technical: {
     name: 'پشتیبانی فنی',
-    email: 'support@teen-assessment.ir',
+    email: 'support@teenapp.ir',
     phone: '۰۲۱-۱۲۳۴۵۶۷۸',
     description: 'مشکلات فنی و راهنمایی استفاده از سامانه'
   },
   counseling: {
     name: 'مشاوره تخصصی',
-    email: 'counseling@teen-assessment.ir',
+    email: 'counseling@teenapp.ir',
     phone: '۰۲۱-۱۲۳۴۵۶۷۹',
     description: 'راهنمایی‌های تخصصی روانشناسی'
   },
   partnership: {
     name: 'همکاری و مشارکت',
-    email: 'partnership@teen-assessment.ir',
+    email: 'partnership@teenapp.ir',
     phone: '۰۲۱-۱۲۳۴۵۶۸۰',
     description: 'همکاری با مدارس، مراکز و متخصصان'
   }
